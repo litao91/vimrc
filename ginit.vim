@@ -1,1 +1,1 @@
-Guifont Consolas:h13
+Guifont Source Code Pro:h10
