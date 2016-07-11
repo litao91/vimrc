@@ -778,7 +778,7 @@ Shows the godef tag stack
 
                                                         *(go-def-stack-clear)*
 
-Resets and clers the tasg stack
+Resets and clears the tag stack
 
                                                               *(go-def-pop)*
 
@@ -1042,6 +1042,28 @@ Use this option to define the default snippet engine.  By default "ultisnips"
 is used. Use "neosnippet" for neosnippet.vim: >
 
   let g:go_snippet_engine = "ultisnips"
+<
+
+                                                  *'g:go_snippet_case_type'*
+
+Use this option to define the default conversion type of snippet expansion for
+field tags. For the following case, if `snakecase` is used the `json` snippet
+will expand to:
+>
+  type T struct {
+    FooBarQuz string `json:"foo_bar_quz"
+  }
+<
+
+If "camelcase" is used:
+>
+  type T struct {
+    FooBarQuz string `json:"fooBarQuz"
+  }
+<
+By default "snakecase" is used. Current values are: ["snakecase", "camelcase"].
+>
+  let g:go_snippet_case_type = "snakecase"
 <
 
                                                          *'g:go_get_update'*
