@@ -155,6 +155,7 @@ if has("gui_running")
     set t_Co=256
     set guitablabel=%M\ %t
 endif
+set t_Co=256
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8

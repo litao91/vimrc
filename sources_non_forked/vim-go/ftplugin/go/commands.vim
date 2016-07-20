@@ -4,6 +4,7 @@ command! -nargs=? GoRename call go#rename#Rename(<bang>0,<f-args>)
 " -- guru
 command! -nargs=* -complete=customlist,go#package#Complete GoGuruScope call go#guru#Scope(<f-args>)
 command! -range=% GoImplements call go#guru#Implements(<count>)
+command! -range=% GoWhicherrs call go#guru#Whicherrs(<count>)
 command! -range=% GoCallees call go#guru#Callees(<count>)
 command! -range=% GoDescribe call go#guru#Describe(<count>)
 command! -range=% GoCallers call go#guru#Callers(<count>)
@@ -12,9 +13,8 @@ command! -range=% GoFreevars call go#guru#Freevars(<count>)
 command! -range=% GoChannelPeers call go#guru#ChannelPeers(<count>)
 command! -range=% GoReferrers call go#guru#Referrers(<count>)
 command! -nargs=? GoGuruTags call go#guru#Tags(<f-args>)
-
-" TODO(arslan): enable this once the function is implemented
-" command! -range=% GoSameIds call go#guru#SameIds(<count>)
+command! -range=% GoSameIds call go#guru#SameIds(<count>)
+command! -range=0 GoSameIdsClear call go#guru#ClearSameIds()
 
 " -- tool
 command! -nargs=0 GoFiles echo go#tool#Files()
