@@ -147,13 +147,14 @@ catch
 endtry
 
 set background=dark
-
 " Set extra options when running in GUI mode
 if has("gui_running")
     set guioptions-=T
     set guioptions-=e
     set guitablabel=%M\ %t
 endif
+set term=xterm
+set termencoding=utf8
 set t_Co=256
 
 " Set utf8 as standard encoding and en_US as the standard language
