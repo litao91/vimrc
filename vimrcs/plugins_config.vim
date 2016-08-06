@@ -174,3 +174,8 @@ nnoremap <silent> <leader>d :GitGutterToggle<cr>
 " Override go-to.definition key shortcut to Ctrl-]
 let g:pymode_rope_goto_definition_bind = "<C-]>"
 let g:pymode_rope_complete_on_dot = 1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => TagBar
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <silent> <leader>tt :TagbarToggle<CR>
