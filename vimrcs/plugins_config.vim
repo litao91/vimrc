@@ -179,3 +179,8 @@ let g:pymode_rope_complete_on_dot = 1
 " => TagBar
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <silent> <leader>tt :TagbarToggle<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => YouCompleteMe
+" """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ycm_python_binary_path = '/usr/bin/python3'
