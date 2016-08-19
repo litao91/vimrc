@@ -57,6 +57,7 @@ django-plug.vim https://github.com/tweekmonster/django-plus.vim.git
 vim-javascript https://github.com/pangloss/vim-javascript
 base16-vim https://github.com/chriskempson/base16-vim
 tagbar https://github.com/majutsushi/tagbar
+indentLine https://github.com/Yggdroot/indentLine
 """.strip()
 
 GITHUB_ZIP = '%s/archive/master.zip'
