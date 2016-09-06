@@ -19,7 +19,7 @@ if has('reltime')
     lockvar! g:_SYNTASTIC_START
 endif
 
-let g:_SYNTASTIC_VERSION = '3.7.0-201'
+let g:_SYNTASTIC_VERSION = '3.7.0-214'
 lockvar g:_SYNTASTIC_VERSION
 
 " Sanity checks {{{1
@@ -132,12 +132,14 @@ let s:_DEBUG_DUMP_OPTIONS = [
         \ 'shellpipe',
         \ 'shellquote',
         \ 'shellredir',
-        \ 'shellslash',
         \ 'shelltemp',
         \ 'shellxquote'
     \ ]
 if exists('+shellxescape')
     call add(s:_DEBUG_DUMP_OPTIONS, 'shellxescape')
+endif
+if exists('+shellslash')
+    call add(s:_DEBUG_DUMP_OPTIONS, 'shellslash')
 endif
 lockvar! s:_DEBUG_DUMP_OPTIONS
 
@@ -216,6 +218,8 @@ function! SyntasticInfo(...) abort " {{{2
     call s:modemap.modeInfo(a:000)
     call s:registry.echoInfoFor(s:_resolve_filetypes(a:000))
     call s:_explain_skip(a:000)
+    call syntastic#log#debugShowOptions(g:_SYNTASTIC_DEBUG_TRACE, s:_DEBUG_DUMP_OPTIONS)
+    call syntastic#log#debugDump(g:_SYNTASTIC_DEBUG_VARIABLES)
 endfunction " }}}2
 
 function! SyntasticErrors() abort " {{{2
@@ -244,7 +248,9 @@ endfunction " }}}2
 
 augroup syntastic
     autocmd!
-    autocmd BufEnter * call s:BufEnterHook(expand('<afile>', 1))
+    autocmd VimEnter    * call s:VimEnterHook()
+    autocmd BufEnter    * call s:BufEnterHook(expand('<afile>', 1))
+    autocmd BufWinEnter * call s:BufWinEnterHook(expand('<afile>', 1))
 augroup END
 
 if g:syntastic_nested_autocommands
@@ -268,7 +274,7 @@ endif
 
 function! s:BufReadPostHook(fname) abort " {{{2
     let buf = syntastic#util#fname2buf(a:fname)
-    if g:syntastic_check_on_open
+    if g:syntastic_check_on_open && buf > 0
         call syntastic#log#debug(g:_SYNTASTIC_DEBUG_AUTOCOMMANDS,
             \ 'autocmd: BufReadPost, buffer ' . buf . ' = ' . string(a:fname))
         if index(s:_check_stack, buf) == -1
@@ -288,11 +294,13 @@ function! s:BufEnterHook(fname) abort " {{{2
     let buf = syntastic#util#fname2buf(a:fname)
     call syntastic#log#debug(g:_SYNTASTIC_DEBUG_AUTOCOMMANDS,
         \ 'autocmd: BufEnter, buffer ' . buf . ' = ' . string(a:fname) . ', &buftype = ' . string(&buftype))
-    if &buftype ==# ''
+    if buf > 0 && getbufvar(buf, '&buftype') ==# ''
         let idx = index(reverse(copy(s:_check_stack)), buf)
         if idx >= 0
-            call remove(s:_check_stack, -idx - 1)
-            call s:UpdateErrors(buf, 1, [])
+            if !has('vim_starting')
+                call remove(s:_check_stack, -idx - 1)
+                call s:UpdateErrors(buf, 1, [])
+            endif
         else
             call s:notifiers.refresh(g:SyntasticLoclist.current())
         endif
@@ -306,6 +314,37 @@ function! s:BufEnterHook(fname) abort " {{{2
         if !empty(get(w:, 'syntastic_loclist_set', [])) && !empty(loclist) && empty(filter( buffers, 'syntastic#util#bufIsActive(v:val)' ))
             call SyntasticLoclistHide()
         endif
+    endif
+endfunction " }}}2
+
+function! s:BufWinEnterHook(fname) abort " {{{2
+    let buf = syntastic#util#fname2buf(a:fname)
+    call syntastic#log#debug(g:_SYNTASTIC_DEBUG_AUTOCOMMANDS,
+        \ 'autocmd: BufWinEnter, buffer ' . buf . ' = ' . string(a:fname) . ', &buftype = ' . string(&buftype))
+    if buf > 0 && getbufvar(buf, '&buftype') ==# ''
+        let idx = index(reverse(copy(s:_check_stack)), buf)
+        if idx >= 0 && !has('vim_starting')
+            call remove(s:_check_stack, -idx - 1)
+            call s:UpdateErrors(buf, 1, [])
+        endif
+    endif
+endfunction " }}}2
+
+function! s:VimEnterHook() abort " {{{2
+    let g:syntastic_version =
+        \ g:_SYNTASTIC_VERSION .
+        \ ' (Vim ' . v:version . (has('nvim') ? ', Neovim' : '') . ', ' .
+        \ g:_SYNTASTIC_UNAME .
+        \ (has('gui') ? ', GUI' : '') . ')'
+    lockvar g:syntastic_version
+
+    let buf = bufnr('')
+    call syntastic#log#debug(g:_SYNTASTIC_DEBUG_AUTOCOMMANDS,
+        \ 'autocmd: VimEnter, buffer ' . buf . ' = ' . string(bufname(buf)) . ', &buftype = ' . string(&buftype))
+    let idx = index(reverse(copy(s:_check_stack)), buf)
+    if idx >= 0 && getbufvar(buf, '&buftype') ==# ''
+        call remove(s:_check_stack, -idx - 1)
+        call s:UpdateErrors(buf, 1, [])
     endif
 endfunction " }}}2
 
@@ -412,6 +451,7 @@ function! s:CacheErrors(buf, checker_names) abort " {{{2
     if !s:_skip_file(a:buf)
         " debug logging {{{3
         call syntastic#log#debugShowVariables(g:_SYNTASTIC_DEBUG_TRACE, 'aggregate_errors')
+        call syntastic#log#debug(g:_SYNTASTIC_DEBUG_CHECKERS, '$TERM = ' . string($TERM))
         call syntastic#log#debug(g:_SYNTASTIC_DEBUG_CHECKERS, '$PATH = ' . string($PATH))
         call syntastic#log#debug(g:_SYNTASTIC_DEBUG_TRACE, 'getcwd() = ' . string(getcwd()))
         " }}}3
@@ -570,7 +610,7 @@ function! SyntasticMake(options) abort " {{{2
             let err_lines = call('syntastic#preprocess#' . a:options['preprocess'], [err_lines])
             call syntastic#log#debug(g:_SYNTASTIC_DEBUG_LOCLIST, 'preprocess:', err_lines)
         endif
-        lgetexpr err_lines
+        noautocmd lgetexpr err_lines
 
         let errors = deepcopy(getloclist(0))
 
