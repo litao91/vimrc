@@ -10,7 +10,7 @@ let g:SyntasticLoclist = {}
 function! g:SyntasticLoclist.New(rawLoclist) abort " {{{2
     let newObj = copy(self)
 
-    let llist = filter(copy(a:rawLoclist), 'v:val["valid"] == 1')
+    let llist = filter(copy(a:rawLoclist), 'v:val["valid"]')
 
     for e in llist
         if get(e, 'type', '') ==# ''
@@ -281,7 +281,7 @@ endfunction " }}}2
 "
 "would return all errors for buffer 10.
 "
-"Note that all comparisons are done with ==?
+"Note that all string comparisons are done with ==?
 function! g:SyntasticLoclist.filter(filters) abort " {{{2
     let conditions = values(map(copy(a:filters), 's:_translate(v:key, v:val)'))
     let filter = len(conditions) == 1 ?
