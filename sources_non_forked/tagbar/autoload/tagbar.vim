@@ -421,10 +421,19 @@ function! s:InitTypes() abort
     " HTML {{{3
     let type_html = s:TypeInfo.New()
     let type_html.ctagstype = 'html'
-    let type_html.kinds     = [
-        \ {'short' : 'f', 'long' : 'JavaScript funtions', 'fold' : 0, 'stl' : 1},
-        \ {'short' : 'a', 'long' : 'named anchors',       'fold' : 0, 'stl' : 1}
-    \ ]
+    if s:ctags_is_uctags
+        let type_html.kinds = [
+            \ {'short' : 'a', 'long' : 'named anchors', 'fold' : 0, 'stl' : 1},
+            \ {'short' : 'h', 'long' : 'H1 headings',   'fold' : 0, 'stl' : 1},
+            \ {'short' : 'i', 'long' : 'H2 headings',   'fold' : 0, 'stl' : 1},
+            \ {'short' : 'j', 'long' : 'H3 headings',   'fold' : 0, 'stl' : 1},
+        \ ]
+    else
+        let type_html.kinds = [
+            \ {'short' : 'f', 'long' : 'JavaScript functions', 'fold' : 0, 'stl' : 1},
+            \ {'short' : 'a', 'long' : 'named anchors',        'fold' : 0, 'stl' : 1}
+        \ ]
+    endif
     let s:known_types.html = type_html
     " Java {{{3
     let type_java = s:TypeInfo.New()
@@ -1010,6 +1019,11 @@ function! s:MapKeys() abort
         \ ['help',                  'ToggleHelp()'],
     \ ]
 
+    let map_options = ' <script> <silent> <buffer> '
+    if v:version > 703 || (v:version == 703 && has('patch1261'))
+        let map_options .= ' <nowait> '
+    endif
+
     for [map, func] in maps
         let def = get(g:, 'tagbar_map_' . map)
         if type(def) == type("")
@@ -1018,7 +1032,7 @@ function! s:MapKeys() abort
             let keys = def
         endif
         for key in keys
-            execute 'nnoremap <script> <silent> <buffer> ' . key .
+            execute 'nnoremap' . map_options . key .
                         \ ' :call <SID>' . func . '<CR>'
         endfor
         unlet def
@@ -1033,7 +1047,10 @@ function! s:CreateAutocommands() abort
 
     augroup TagbarAutoCmds
         autocmd!
-        autocmd CursorHold __Tagbar__.* call s:ShowPrototype(1)
+
+        if !g:tagbar_silent
+            autocmd CursorHold __Tagbar__.* call s:ShowPrototype(1)
+        endif
         autocmd WinEnter   __Tagbar__.* call s:SetStatusLine()
         autocmd WinLeave   __Tagbar__.* call s:SetStatusLine()
 
@@ -1139,7 +1156,8 @@ function! s:CheckForExCtags(silent) abort
             \ ' Please download Exuberant Ctags from ctags.sourceforge.net' .
             \ ' and install it in a directory in your $PATH' .
             \ ' or set g:tagbar_ctags_bin.'
-        call s:CtagsErrMsg(errmsg, infomsg, a:silent, ctags_cmd, ctags_output)
+        call s:CtagsErrMsg(errmsg, infomsg, a:silent,
+                         \ ctags_cmd, ctags_output, v:shell_error)
         let s:checked_ctags = 2
         return 0
     elseif !s:CheckExCtagsVersion(ctags_output)
@@ -1159,10 +1177,18 @@ endfunction
 function! s:CtagsErrMsg(errmsg, infomsg, silent, ...) abort
     call s:debug(a:errmsg)
     let ctags_cmd    = a:0 > 0 ? a:1 : ''
-    let ctags_output = a:0 > 0 ? a:2 : ''
+    let ctags_output = a:0 > 1 ? a:2 : ''
+
+    let exit_code_set = a:0 > 2
+    if exit_code_set
+        let exit_code = a:3
+    endif
 
     if ctags_output != ''
         call s:debug("Command output:\n" . ctags_output)
+    endif
+    if exit_code_set
+        call s:debug("Exit code: " . exit_code)
     endif
 
     if !a:silent
@@ -1181,6 +1207,9 @@ function! s:CtagsErrMsg(errmsg, infomsg, silent, ...) abort
             endfor
         else
             echomsg 'Command output is empty.'
+        endif
+        if exit_code_set
+            echomsg 'Exit code: ' . exit_code
         endif
     endif
 endfunction
@@ -2311,6 +2340,7 @@ function! s:ExecuteCtagsOnFile(fname, realfname, typeinfo) abort
     if v:shell_error || ctags_output =~ 'Warning: cannot open source file'
         call s:debug('Command output:')
         call s:debug(ctags_output)
+        call s:debug('Exit code: ' . v:shell_error)
         " Only display an error message if the Tagbar window is open and we
         " haven't seen the error before.
         if bufwinnr(s:TagbarBufName()) != -1 &&
@@ -2324,6 +2354,7 @@ function! s:ExecuteCtagsOnFile(fname, realfname, typeinfo) abort
                     echomsg line
                 endfor
             endif
+            echomsg 'Exit code: ' . v:shell_error
         endif
         return -1
     endif
@@ -3999,6 +4030,12 @@ function! s:IsValidFile(fname, ftype) abort
 
     if getbufvar(a:fname, 'tagbar_ignore') == 1
         call s:debug('File is marked as ignored')
+        return 0
+    endif
+
+    let winnr = bufwinnr(a:fname)
+    if winnr != -1 && getwinvar(winnr, '&diff')
+        call s:debug('Window is in diff mode')
         return 0
     endif
 
