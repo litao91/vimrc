@@ -59,6 +59,7 @@ base16-vim https://github.com/chriskempson/base16-vim
 tagbar https://github.com/majutsushi/tagbar
 indentLine https://github.com/Yggdroot/indentLine
 vim-scala https://github.com/derekwyatt/vim-scala
+vim-vue https://github.com/posva/vim-vue
 """.strip()
 
 GITHUB_ZIP = '%s/archive/master.zip'
