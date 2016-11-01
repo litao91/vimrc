@@ -1849,14 +1849,19 @@ function! s:OpenWindow(flags) abort
     " since the window number can change due to the Tagbar window opening
     if exists('*win_getid')
         let prevwinid = win_getid()
-        call s:goto_win('p', 1)
-        let pprevwinid = win_getid()
+        if winnr('$') > 1
+            call s:goto_win('p', 1)
+            let pprevwinid = win_getid()
+            call s:goto_win('p', 1)
+        endif
     else
         let prevwinnr = winnr()
-        call s:goto_win('p', 1)
-        let pprevwinnr = winnr()
+        if winnr('$') > 1
+            call s:goto_win('p', 1)
+            let pprevwinnr = winnr()
+            call s:goto_win('p', 1)
+        endif
     endif
-    call s:goto_win('p', 1)
 
     " This is only needed for the CorrectFocusOnStartup() function
     let s:last_autofocus = autofocus
@@ -1903,17 +1908,22 @@ function! s:OpenWindow(flags) abort
 
     if !(g:tagbar_autoclose || autofocus || g:tagbar_autofocus)
         if exists('*win_getid')
-            noautocmd call win_gotoid(pprevwinid)
+            if exists('pprevwinid')
+                noautocmd call win_gotoid(pprevwinid)
+            endif
             call win_gotoid(prevwinid)
         else
             " If the Tagbar winnr is identical to one of the saved values
             " then that means that the window numbers have changed.
             " Just jump back to the previous window since we won't be able to
             " restore the window history.
-            if winnr() == pprevwinnr || winnr() == prevwinnr
+            if winnr() == prevwinnr
+             \ || (exists('pprevwinnr') && winnr() == pprevwinnr)
                 call s:goto_win('p')
             else
-                call s:goto_win(pprevwinnr, 1)
+                if exists('pprevwinnr')
+                    call s:goto_win(pprevwinnr, 1)
+                endif
                 call s:goto_win(prevwinnr)
             endif
         endif
@@ -4077,22 +4087,24 @@ function! s:SetStatusLine()
         let in_tagbar = 1
     endif
 
-    let sort = g:tagbar_sort ? 'Name' : 'Order'
-
     if !empty(s:TagbarState().getCurrent(0))
-        let fname = fnamemodify(s:TagbarState().getCurrent(0).fpath, ':t')
+        let fileinfo = s:TagbarState().getCurrent(0)
+        let fname = fnamemodify(fileinfo.fpath, ':t')
+        let sorted = get(fileinfo.typeinfo, 'sort', g:tagbar_sort)
     else
         let fname = ''
+        let sorted = g:tagbar_sort
     endif
+    let sortstr = sorted ? 'Name' : 'Order'
 
     let flags = []
     let flags += exists('w:autoclose') && w:autoclose ? ['c'] : []
     let flags += g:tagbar_autoclose ? ['C'] : []
-    let flags += (g:tagbar_sort && g:tagbar_case_insensitive) ? ['i'] : []
+    let flags += (sorted && g:tagbar_case_insensitive) ? ['i'] : []
     let flags += g:tagbar_hide_nonpublic ? ['v'] : []
 
     if exists('g:tagbar_status_func')
-        let args = [in_tagbar, sort, fname, flags]
+        let args = [in_tagbar, sortstr, fname, flags]
         let &l:statusline = call(g:tagbar_status_func, args)
     else
         let colour = in_tagbar ? '%#StatusLine#' : '%#StatusLineNC#'
@@ -4100,7 +4112,7 @@ function! s:SetStatusLine()
         if flagstr != ''
             let flagstr = '[' . flagstr . '] '
         endif
-        let text = colour . '[' . sort . '] ' . flagstr . fname
+        let text = colour . '[' . sortstr . '] ' . flagstr . fname
         let &l:statusline = text
     endif
 
