@@ -1884,13 +1884,16 @@ function! s:OpenWindow(flags) abort
 
     let s:window_opening = 1
     if g:tagbar_vertical == 0
-        let openpos = g:tagbar_left ? 'topleft vertical ' : 'botright vertical '
+        let mode = 'vertical '
+        let openpos = g:tagbar_left ? 'topleft ' : 'botright '
         let width = g:tagbar_width
     else
+        let mode = ''
         let openpos = g:tagbar_left ? 'leftabove ' : 'rightbelow '
         let width = g:tagbar_vertical
     endif
-    exe 'silent keepalt ' . openpos . width . 'split ' . s:TagbarBufName()
+    exe 'silent keepalt ' . openpos . mode . width . 'split ' . s:TagbarBufName()
+    exe 'silent ' . mode . 'resize ' . width
     unlet s:window_opening
 
     call s:InitWindow(autoclose)
@@ -3255,7 +3258,8 @@ function! s:ShowInPreviewWin() abort
     " explicitly before the :psearch below to better control its positioning.
     if !pwin_open
         silent execute
-            \ g:tagbar_previewwin_pos . ' pedit ' . taginfo.fileinfo.fpath
+            \ g:tagbar_previewwin_pos . ' pedit ' .
+            \ fnameescape(taginfo.fileinfo.fpath)
         if g:tagbar_vertical != 0
             silent execute 'vertical resize ' . g:tagbar_width
         endif
@@ -4140,7 +4144,7 @@ function! s:HandleOnlyWindow() abort
         " Before quitting Vim, delete the tagbar buffer so that the '0 mark is
         " correctly set to the previous buffer.
         if tabpagenr('$') == 1
-            keepalt bdelete
+            noautocmd keepalt bdelete
         endif
 
         try

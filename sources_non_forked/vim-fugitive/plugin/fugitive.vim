@@ -1776,13 +1776,17 @@ function! s:Diff(vert,keepfocus,...) abort
     let nr = bufnr('')
     execute 'leftabove '.vert.'split `=fugitive#buffer().repo().translate(s:buffer().expand('':2''))`'
     execute 'nnoremap <buffer> <silent> dp :diffput '.nr.'<Bar>diffupdate<CR>'
+    let nr2 = bufnr('')
     call s:diffthis()
     wincmd p
     execute 'rightbelow '.vert.'split `=fugitive#buffer().repo().translate(s:buffer().expand('':3''))`'
     execute 'nnoremap <buffer> <silent> dp :diffput '.nr.'<Bar>diffupdate<CR>'
+    let nr3 = bufnr('')
     call s:diffthis()
     wincmd p
     call s:diffthis()
+    execute 'nnoremap <buffer> <silent> d2o :diffget '.nr2.'<Bar>diffupdate<CR>'
+    execute 'nnoremap <buffer> <silent> d3o :diffget '.nr3.'<Bar>diffupdate<CR>'
     return post
   elseif len(args)
     let arg = join(args, ' ')
@@ -2317,7 +2321,7 @@ function! s:Browse(bang,line1,count,...) abort
     if empty(url) && raw ==# '.'
       call s:throw("Instaweb failed to start")
     elseif empty(url)
-      call s:throw('"'.remote."' is not a supported remote")
+      call s:throw("'".remote."' is not a supported remote")
     endif
 
     let url = s:gsub(url, '[ <>]', '\="%".printf("%02X",char2nr(submatch(0)))')
