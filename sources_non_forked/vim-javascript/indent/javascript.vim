@@ -2,7 +2,7 @@
 " Language: Javascript
 " Maintainer: Chris Paul ( https://github.com/bounceme )
 " URL: https://github.com/pangloss/vim-javascript
-" Last Change: November 12, 2016
+" Last Change: November 24, 2016
 
 " Only load this indent file when no other was loaded.
 if exists('b:did_indent')
@@ -14,9 +14,8 @@ let b:did_indent = 1
 setlocal indentexpr=GetJavascriptIndent()
 setlocal autoindent nolisp nosmartindent
 setlocal indentkeys=0{,0},0),0],:,!^F,o,O,e
-setlocal cinoptions+=j1,J1
 
-let b:undo_indent = 'setlocal indentexpr< smartindent< autoindent< indentkeys< cinoptions<'
+let b:undo_indent = 'setlocal indentexpr< smartindent< autoindent< indentkeys<'
 
 " Only define the function once.
 if exists('*GetJavascriptIndent')
@@ -45,12 +44,12 @@ let s:syng_strcom = 'string\|comment\|regex\|special\|doc\|template'
 let s:skip_expr = "synIDattr(synID(line('.'),col('.'),0),'name') =~? '".s:syng_strcom."'"
 function s:skip_func(lnum)
   if !s:free || search('`\|\*\/','nW',a:lnum)
-    let s:free = !eval(s:skip_expr . " . '\\|html'")
+    let s:free = !eval(s:skip_expr)
     let s:looksyn = s:free ? line('.') : s:looksyn
     return !s:free
   endif
   let s:looksyn = line('.')
-  return (search('\/','nbW',s:looksyn) || search('[''"\\]','nW',s:looksyn)) && eval(s:skip_expr . " . '\\|html'")
+  return (search('\/','nbW',s:looksyn) || search('[''"\\]','nW',s:looksyn)) && eval(s:skip_expr)
 endfunction
 
 if has('reltime')
@@ -63,21 +62,21 @@ else
   endfunction
 endif
 
-function s:current_char()
+function s:looking_at()
   return getline('.')[col('.')-1]
 endfunction
 
 function s:token()
-  return s:current_char() =~ '\k' ? expand('<cword>') : s:current_char()
+  return s:looking_at() =~ '\k' ? expand('<cword>') : s:looking_at()
 endfunction
 
 " NOTE: moves the cursor
 function s:previous_token()
   let l:ln = line('.')
   return search('\<\|[][`^!"%-/:-?{-~]','bW') ?
-        \ (s:token() == '/' || line('.') != l:ln) &&
+        \ (s:looking_at() == '/' || line('.') != l:ln) &&
         \ synIDattr(synID(line('.'),col('.'),0),'name') =~? 'comment' ?
-        \ search('\/[/*]\&','bW') ? s:previous_token() : ''
+        \ search('\%(\/\@<!\/\/\|\/\*\)\&','bW') ? s:previous_token() : ''
         \ : s:token()
         \ : ''
 endfunction
@@ -94,7 +93,7 @@ endfunction
 
 " configurable regexes that define continuation lines, not including (, {, or [.
 let s:opfirst = '^' . get(g:,'javascript_opfirst',
-      \ '\%([<>,?^%|*/&]\|\([-.:+]\)\1\@!\|=>\@!\|typeof\>\|in\%(stanceof\)\=\>\)')
+      \ '\%([<>,?^%|*/&]\|\([-.:+]\)\1\@!\|!=\|=>\@!\|typeof\>\|in\%(stanceof\)\=\>\)')
 let s:continuation = get(g:,'javascript_continuation',
       \ '\%([<=,.?/*^%|&:]\|+\@<!+\|-\@<!-\|=\@<!>\|\<typeof\|\<in\%(stanceof\)\=\)') . '$'
 
@@ -153,15 +152,13 @@ endfunction
 
 " Find line above 'lnum' that isn't empty, in a comment, or in a string.
 function s:PrevCodeLine(lnum)
-  let l:lnum = prevnonblank(a:lnum)
-  while l:lnum
-    let syn = synIDattr(synID(l:lnum,matchend(getline(l:lnum), '^\s*[^''"`]'),0),'name')
-    if syn =~? 'html'
-      return
-    elseif syn !~? 'comment\|doc\|string\|template'
-      return l:lnum
+  let curp = [line('.'),col('.')]
+  call cursor(a:lnum+1,1)
+  while search('^\s*\%(\/\/\)\@!\S','bW')
+    if synIDattr(synID(line('.'),matchend(getline('.'), '^\s*[^''"`]'),0),'name') !~?
+          \ 'comment\|doc\|string\|template'
+      return line('.') + call('cursor',curp)
     endif
-    let l:lnum = prevnonblank(l:lnum - 1)
   endwhile
 endfunction
 
@@ -192,7 +189,7 @@ function GetJavascriptIndent()
   if syns =~? 'comment\|doc'
     if l:line =~ '^\s*\*'
       return cindent(v:lnum)
-    elseif l:line !~ '^\s*\/'
+    elseif l:line !~ '^\s*\/[/*]'
       return -1
     endif
   elseif syns =~? 'string\|template' && l:line !~ '^[''"]'
@@ -225,7 +222,7 @@ function GetJavascriptIndent()
   endif
 
   if idx + 1
-    if idx == 2 && search('\S','bW',line('.')) && s:current_char() == ')'
+    if idx == 2 && search('\S','bW',line('.')) && s:looking_at() == ')'
       call s:GetPair('(',')','bW',s:skip_expr,200)
     endif
     return indent(line('.'))
@@ -235,16 +232,20 @@ function GetJavascriptIndent()
   let num = b:js_cache[1]
 
   let [s:W, pline, isOp, stmt, bL, switch_offset] = [s:sw(), s:Trim(l:lnum),0,0,0,0]
-  if num && s:current_char() == '{' && s:IsBlock()
-    let stmt = 1
-    if s:current_char() == ')' && s:GetPair('(', ')', 'bW', s:skip_expr, 100) > 0 && s:previous_token() ==# 'switch'
-      let switch_offset = &cino !~ ':' || !has('float') ? s:W :
-            \ float2nr(str2float(matchstr(&cino,'.*:\zs[-0-9.]*')) * (&cino =~# '\%(.*:\)\@>[^,]*s' ? s:W : 1))
-      if l:line =~# '^' . s:case_stmt
-        return indent(num) + switch_offset
+  if num && s:looking_at() == '{' && s:IsBlock()
+    if s:looking_at() == ')' && s:GetPair('(', ')', 'bW', s:skip_expr, 100) > 0
+      let num = line('.')
+      if s:previous_token() ==# 'switch'
+        let switch_offset = &cino !~ ':' || !has('float') ? s:W :
+              \ float2nr(str2float(matchstr(&cino,'.*:\zs[-0-9.]*')) * (&cino =~# '\%(.*:\)\@>[^,]*s' ? s:W : 1))
+        if l:line =~# '^' . s:case_stmt
+          return indent(num) + switch_offset
+        elseif pline =~# s:case_stmt . '$'
+          return indent(l:lnum) + s:W
+        endif
       endif
-      let stmt = pline !~# s:case_stmt . '$'
     endif
+    let stmt = 1
   endif
 
   if stmt || !num
