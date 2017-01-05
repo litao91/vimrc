@@ -68,9 +68,10 @@ fun! g:PymodeLocList.show() "{{{
     call setloclist(0, self._loclist)
     if self.is_empty()
         lclose
-    else
+    elseif g:pymode_lint_cwindow
         let num = winnr()
         lopen
+        setl nowrap
         execute max([min([line("$"), g:pymode_quickfix_maxheight]), g:pymode_quickfix_minheight]) . "wincmd _"
         if num != winnr()
             call setwinvar(winnr(), 'quickfix_title', self._title . ' <' . self._name . '>')

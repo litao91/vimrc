@@ -1076,7 +1076,7 @@ function! s:CreateAutocommands() abort
         autocmd BufReadPost,BufEnter,CursorHold,FileType * call
                     \ s:AutoUpdate(fnamemodify(expand('<afile>'), ':p'), 0)
         autocmd BufDelete,BufWipeout *
-                    \ nested call s:HandleBufDelete(expand('<afile>'))
+                    \ nested call s:HandleBufDelete(expand('<afile>'), expand('<abuf>'))
 
         " Suspend Tagbar while grep commands are running, since we don't want
         " to process files that only get loaded temporarily to search them
@@ -1255,7 +1255,7 @@ endfunction
 
 " s:GetSupportedFiletypes() {{{2
 function! s:GetSupportedFiletypes() abort
-    call s:debug('Getting filetypes sypported by Exuberant Ctags')
+    call s:debug('Getting filetypes supported by Exuberant Ctags')
 
     let ctags_cmd = s:EscapeCtagsCmd(g:tagbar_ctags_bin, '--list-languages')
     if ctags_cmd == ''
@@ -1273,7 +1273,9 @@ function! s:GetSupportedFiletypes() abort
     let types = split(ctags_output, '\n\+')
 
     for type in types
-        let s:ctags_types[tolower(type)] = 1
+        if match(type, '\[disabled\]') == -1
+            let s:ctags_types[tolower(type)] = 1
+        endif
     endfor
 
     let s:checked_ctags_types = 1
@@ -4159,7 +4161,13 @@ function! s:HandleOnlyWindow() abort
 endfunction
 
 " s:HandleBufDelete() {{{2
-function! s:HandleBufDelete(bufname) abort
+function! s:HandleBufDelete(bufname, bufnr) abort
+    " Ignore autocmd events generated for "set nobuflisted",
+    let nr = str2nr(a:bufnr)
+    if bufexists(nr) && !buflisted(nr)
+        return
+    endif
+
     let tagbarwinnr = bufwinnr(s:TagbarBufName())
     if tagbarwinnr == -1 || a:bufname =~ '__Tagbar__.*'
         return
@@ -4187,11 +4195,15 @@ function! s:HandleBufDelete(bufname) abort
                     enew
                 endif
             else
+                " Save a local copy as the global value will change
+                " during buffer switching
+                let last_alt_bufnr = s:last_alt_bufnr
+
                 " Ignore the buffer we're switching to for now, it will get
                 " processed due to the OpenWindow() call anyway
-                call setbufvar(s:last_alt_bufnr, 'tagbar_ignore', 1)
-                execute 'keepalt buffer' s:last_alt_bufnr
-                call setbufvar(s:last_alt_bufnr, 'tagbar_ignore', 0)
+                call setbufvar(last_alt_bufnr, 'tagbar_ignore', 1)
+                execute 'keepalt buffer' last_alt_bufnr
+                call setbufvar(last_alt_bufnr, 'tagbar_ignore', 0)
             endif
 
             " Reset Tagbar window-local options

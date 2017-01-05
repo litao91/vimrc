@@ -4,7 +4,7 @@
 " Prev Maintainer:  Eric Mc Sween <em@tomcom.de> (address invalid)
 " Original Author:  David Bustos <bustos@caltech.edu> (address invalid)
 " Last Change:      2012-06-21
-" License:          Public Domainlet
+" License:          Public Domain
 
 
 function! pymode#indent#get_indent(lnum)
@@ -110,7 +110,7 @@ function! s:SearchParensPair() " {{{
     " Skip strings and comments and don't look too far
     let skip = "line('.') < " . (line - 50) . " ? dummy :" .
                 \ 'synIDattr(synID(line("."), col("."), 0), "name") =~? ' .
-                \ '"string\\|comment"'
+                \ '"string\\|comment\\|doctest"'
 
     " Search for parentheses
     call cursor(line, col)

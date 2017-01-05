@@ -2,6 +2,7 @@
 
 FEATURES:
 
+* Travis test integration has been added. Now any file that is added as `<name>_test.vim` will be automatically tested in for every Pull Request (just like how we add tests to Go with `_test.go`). Going forward this will tremendously increase the stability and decrease the maintaince burden of vim-go. [gh-1157]
 * Add new `g:go_updatetime` setting to change the default updatetime (which was hardcoded previously) [gh-1055]
 * Add new `g:go_template_use_pkg` setting to enable to use cwd as package name instead of basic template file [gh-1124]
 
@@ -24,6 +25,7 @@ BUG FIXES:
 * Fix referencing a non defined variable for async commands when bang (!) was used
 * Fix `:GoDef` failing for a modified buffer if `hidden` was not set [gh-1132]
 * Fix `:GoDefStack` to allow popping from jump list when buffer is modified [gh-1133]
+* Improve internal defining of functions and referencing them for async operations [gh-1155]
 
 
 ## 1.10 (November 24, 2016)

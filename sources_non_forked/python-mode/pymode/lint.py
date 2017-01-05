@@ -1,4 +1,4 @@
-""" Pylama integration. """
+"""Pylama integration."""
 
 from .environment import env
 from .utils import silence_stderr
@@ -6,26 +6,44 @@ from .utils import silence_stderr
 import os.path
 
 
+from pylama.lint.extensions import LINTERS
+
+try:
+    from pylama.lint.pylama_pylint import Linter
+    LINTERS['pylint'] = Linter()
+except Exception: # noqa
+    pass
+
+
 def code_check():
-    """ Run pylama and check current file.
+    """Run pylama and check current file.
 
     :return bool:
 
     """
     with silence_stderr():
 
+        from pylama.core import run
         from pylama.main import parse_options
-        from pylama.tasks import check_path
 
         if not env.curbuf.name:
             return env.stop()
 
+        linters = env.var('g:pymode_lint_checkers')
+        env.debug(linters)
+
         options = parse_options(
+            linters=linters, force=1,
             ignore=env.var('g:pymode_lint_ignore'),
             select=env.var('g:pymode_lint_select'),
-            linters=env.var('g:pymode_lint_checkers'),
-            force=1,
         )
+
+        for linter in linters:
+            opts = env.var('g:pymode_lint_options_%s' % linter, silence=True)
+            if opts:
+                options.linters_params[linter] = options.linters_params.get(linter, {})
+                options.linters_params[linter].update(opts)
+
         env.debug(options)
 
         path = os.path.relpath(env.curbuf.name, env.curdir)
@@ -40,8 +58,7 @@ def code_check():
             from pylama.core import LOGGER, logging
             LOGGER.setLevel(logging.DEBUG)
 
-        errors = check_path(
-            path, options=options, code='\n'.join(env.curbuf) + '\n')
+        errors = run(path, code='\n'.join(env.curbuf) + '\n', options=options)
 
     env.debug("Find errors: ", len(errors))
     sort_rules = env.var('g:pymode_lint_sort')
@@ -58,7 +75,9 @@ def code_check():
 
     for e in errors:
         e._info['bufnr'] = env.curbuf.number
+        if e._info['col'] is None:
+            e._info['col'] = 1
 
     env.run('g:PymodeLocList.current().extend', [e._info for e in errors])
 
-# pylama:ignore=W0212
+# pylama:ignore=W0212,E1103
