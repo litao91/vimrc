@@ -2,7 +2,7 @@
 " Language: Javascript
 " Maintainer: Chris Paul ( https://github.com/bounceme )
 " URL: https://github.com/pangloss/vim-javascript
-" Last Change: January 16, 2017
+" Last Change: January 24, 2017
 
 " Only load this indent file when no other was loaded.
 if exists('b:did_indent')
@@ -48,14 +48,14 @@ else
 endif
 
 " Regex of syntax group names that are or delimit string or are comments.
-let s:syng_strcom = 'string\|comment\|regex\|special\|doc\|template'
+let s:syng_strcom = 'string\|comment\|regex\|special\|doc\|template\%(braces\)\@!'
 let s:syng_str = 'string\|template'
 let s:syng_com = 'comment\|doc'
 " Expression used to check whether we should skip a match with searchpair().
 let s:skip_expr = "synIDattr(synID(line('.'),col('.'),0),'name') =~? '".s:syng_strcom."'"
 
 function s:skip_func()
-  if !s:free || search('\m`\|\*\/','nW',s:looksyn)
+  if !s:free || search('\m`\|\${\|\*\/','nW',s:looksyn)
     let s:free = !eval(s:skip_expr)
     let s:looksyn = line('.')
     return !s:free
@@ -71,7 +71,7 @@ function s:alternatePair(stop)
     if !s:skip_func()
       let idx = stridx('])}',s:looking_at())
       if idx + 1
-        if !s:GetPair(['\[','(','{'][idx], '])}'[idx],'bW','s:skip_func()',2000,a:stop)
+        if s:GetPair(['\[','(','{'][idx], '])}'[idx],'bW','s:skip_func()',2000,a:stop) <= 0
           break
         endif
       else
@@ -149,13 +149,14 @@ endfunction
 let s:opfirst = '^' . get(g:,'javascript_opfirst',
       \ '\%([<>=,?^%|*/&]\|\([-.:+]\)\1\@!\|!=\|in\%(stanceof\)\=\>\)')
 let s:continuation = get(g:,'javascript_continuation',
-      \ '\%([<=,.~!?/*^%|&:]\|+\@<!+\|-\@<!-\|=\@<!>\|\<\%(typeof\|delete\|void\|in\|instanceof\)\)') . '$'
+      \ '\%([-+<>=,.~!?/*^%|&:]\|\<\%(typeof\|delete\|void\|in\|instanceof\)\)') . '$'
 
 function s:continues(ln,con)
   return !cursor(a:ln, match(' '.a:con,s:continuation)) &&
-        \ eval((['s:syn_at(line("."),col(".")) !~? "regex"'] +
+        \ eval( (['s:syn_at(line("."),col(".")) !~? "regex"'] +
+        \ repeat(['getline(".")[col(".")-2] != tr(s:looking_at(),">","=")'],3) +
         \ repeat(['s:previous_token() != "."'],5) + [1])[
-        \ index(split('/ typeof in instanceof void delete'),s:token())])
+        \ index(split('/ > - + typeof in instanceof void delete'),s:token())])
 endfunction
 
 " get the line of code stripped of comments and move cursor to the last
@@ -292,7 +293,7 @@ function GetJavascriptIndent()
   endif
 
   " the containing paren, bracket, or curly. Many hacks for performance
-  let idx = strlen(l:line) ? stridx('])}',l:line[0]) : -1
+  let idx = index([']',')','}'],l:line[0])
   if b:js_cache[0] >= l:lnum && b:js_cache[0] < v:lnum &&
         \ (b:js_cache[0] > l:lnum || s:Balanced(l:lnum))
     call call('cursor',b:js_cache[1:])
@@ -318,12 +319,13 @@ function GetJavascriptIndent()
     if num && s:looking_at() == ')' && s:GetPair('(', ')', 'bW', s:skip_expr, 100) > 0
       let num = ilnum == num ? line('.') : num
       if idx < 0 && s:previous_token() ==# 'switch' && s:previous_token() != '.'
-        if &cino !~ ':' || !has('float')
+        if &cino !~ ':'
           let switch_offset = s:W
         else
-          let cinc = matchlist(&cino,'.*:\(-\)\=\([0-9.]*\)\(s\)\=\C')
-          let switch_offset = float2nr(str2float(cinc[1].(strlen(cinc[2]) ? cinc[2] : strlen(cinc[3])))
-                \ * (strlen(cinc[3]) ? s:W : 1))
+          let cinc = matchlist(&cino,'.*:\zs\(-\)\=\(\d*\)\(\.\d\+\)\=\(s\)\=\C')
+          let switch_offset = max([cinc[0] is '' ? 0 : (cinc[1].1) *
+                \ ((strlen(cinc[2].cinc[3]) ? str2nr(cinc[2].str2nr(cinc[3][1])) : 10) *
+                \ (cinc[4] is '' ? 1 : s:W)) / 10, -indent(num)])
         endif
         if pline[-1:] != '.' && l:line =~# '^\%(default\|case\)\>'
           return indent(num) + switch_offset
@@ -333,9 +335,9 @@ function GetJavascriptIndent()
     if idx < 0 && pline !~ '[{;]$'
       if pline =~# ':\@<!:$'
         call cursor(l:lnum,strlen(pline))
-        let isOp = s:tern_col(b:js_cache[1:2])
+        let isOp = s:tern_col(b:js_cache[1:2]) * s:W
       else
-        let isOp = l:line =~# s:opfirst || s:continues(l:lnum,pline)
+        let isOp = (l:line =~# s:opfirst || s:continues(l:lnum,pline)) * s:W
       endif
       let bL = s:iscontOne(l:lnum,b:js_cache[1],isOp)
       let bL -= (bL && l:line[0] == '{') * s:W
@@ -345,12 +347,10 @@ function GetJavascriptIndent()
   " main return
   if idx + 1 || l:line[:1] == '|}'
     return indent(num)
-  elseif isOp
-    return (num ? indent(num) : -s:W) + (s:W * 2) + switch_offset + bL
   elseif num
-    return indent(num) + s:W + switch_offset + bL
+    return indent(num) + s:W + switch_offset + bL + isOp
   endif
-  return bL
+  return bL + isOp
 endfunction
 
 let &cpo = s:cpo_save

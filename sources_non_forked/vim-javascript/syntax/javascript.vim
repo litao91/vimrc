@@ -25,7 +25,8 @@ syntax sync fromstart
 syntax case match
 
 syntax match   jsNoise          /[:,\;]\{1}/
-syntax match   jsNoise          /[\.]\{1}/ skipwhite skipempty nextgroup=jsObjectProp
+syntax match   jsNoise          /[\.]\{1}/ skipwhite skipempty nextgroup=jsObjectProp,jsFuncCall
+syntax match   jsObjectProp     contained /\<[a-zA-Z_$][0-9a-zA-Z_$]*\>/
 syntax match   jsFuncCall       /\k\+\%(\s*(\)\@=/
 syntax match   jsParensError    /[)}\]]/
 
@@ -187,7 +188,7 @@ syntax match   jsClassNoise             contained /\./
 syntax match   jsClassMethodType        contained /\%(get\|set\|static\)\%( \k\+\)\@=/ skipwhite skipempty nextgroup=jsAsyncKeyword,jsFuncName,jsClassProperty
 syntax region  jsClassDefinition                  start=/\<class\>/ end=/\(\<extends\>\s\+\)\@<!{\@=/ contains=jsClassKeyword,jsExtendsKeyword,jsClassNoise,@jsExpression skipwhite skipempty nextgroup=jsCommentClass,jsClassBlock,jsFlowClassGroup
 syntax match   jsClassProperty          contained /\<[0-9a-zA-Z_$]*\>\(\s*=\)\@=/ skipwhite skipempty nextgroup=jsClassValue
-syntax region  jsClassValue             contained start=/=/ end=/\%(;\|}\|\n\)\@=/ contains=@jsExpression keepend
+syntax region  jsClassValue             contained start=/=/ end=/\%(;\|}\|\n\)\@=/ contains=@jsExpression
 syntax region  jsClassPropertyComputed  contained matchgroup=jsBrackets start=/\[/ end=/]/ contains=@jsExpression skipwhite skipempty nextgroup=jsFuncArgs,jsClassValue extend
 syntax match   jsClassFuncName          contained /\<[a-zA-Z_$][0-9a-zA-Z_$]*\>\%(\s*(\)\@=/ skipwhite skipempty nextgroup=jsFuncArgs
 syntax region  jsClassStringKey         contained start=+"+  skip=+\\\("\|$\)+  end=+"\|$+  contains=jsSpecial,@Spell extend skipwhite skipempty nextgroup=jsFuncArgs
@@ -221,7 +222,6 @@ syntax region  jsCommentMisc        contained start=/\/\*/ end=/\*\// contains=j
 " Decorators
 syntax match   jsDecorator                    /^\s*@/ nextgroup=jsDecoratorFunction
 syntax match   jsDecoratorFunction  contained /[a-zA-Z_][a-zA-Z0-9_.]*/ nextgroup=jsParenDecorator
-syntax match   jsObjectProp         contained /\<[a-zA-Z_$][0-9a-zA-Z_$]*\>/
 
 if exists("javascript_plugin_jsdoc")
   runtime extras/jsdoc.vim
