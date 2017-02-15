@@ -2,7 +2,7 @@
 " Language: Javascript
 " Maintainer: Chris Paul ( https://github.com/bounceme )
 " URL: https://github.com/pangloss/vim-javascript
-" Last Change: January 24, 2017
+" Last Change: February 8, 2017
 
 " Only load this indent file when no other was loaded.
 if exists('b:did_indent')
@@ -49,7 +49,7 @@ endif
 
 " Regex of syntax group names that are or delimit string or are comments.
 let s:syng_strcom = 'string\|comment\|regex\|special\|doc\|template\%(braces\)\@!'
-let s:syng_str = 'string\|template'
+let s:syng_str = 'string\|template\|special'
 let s:syng_com = 'comment\|doc'
 " Expression used to check whether we should skip a match with searchpair().
 let s:skip_expr = "synIDattr(synID(line('.'),col('.'),0),'name') =~? '".s:syng_strcom."'"
@@ -129,7 +129,7 @@ function s:tern_skip(p)
 endfunction
 
 function s:tern_col(p)
-  return s:GetPair('?',':\@<!::\@!','nbW',s:others(a:p)
+  return s:GetPair('?','\%([^:]\|^\)\zs::\@!','nbW',s:others(a:p)
         \ .' || s:tern_skip('.string(a:p).')',200,a:p[0]) > 0
 endfunction
 
@@ -177,7 +177,7 @@ function s:PrevCodeLine(lnum)
         return l:n
       endif
       let l:n = prevnonblank(l:n-1)
-    elseif s:syn_at(l:n,1) =~? s:syng_com
+    elseif getline(l:n) =~ '\([/*]\)\1\@![/*]' && s:syn_at(l:n,1) =~? s:syng_com
       let l:n = s:save_pos('eval',
             \ 'cursor('.l:n.',1) + search(''\m\/\*'',"bW")')
     else
@@ -243,18 +243,19 @@ function s:IsBlock()
   if s:looking_at() == '{'
     let l:n = line('.')
     let char = s:previous_token()
-    let syn = char =~ '[{>/]' ? s:syn_at(line('.'),col('.')-(char == '{')) : ''
-    if syn =~? 'xml\|jsx'
+    if match(s:stack,'xml\|jsx') + 1 && s:syn_at(line('.'),col('.')-1) =~? 'xml\|jsx'
       return char != '{'
     elseif char =~ '\k'
       return index(split('return const let import export yield default delete var await void typeof throw case new in instanceof')
             \ ,char) < (line('.') != l:n) || s:previous_token() == '.'
     elseif char == '>'
-      return getline('.')[col('.')-2] == '=' || syn =~? '^jsflow'
+      return getline('.')[col('.')-2] == '=' || s:syn_at(line('.'),col('.')) =~? '^jsflow'
     elseif char == ':'
       return getline('.')[col('.')-2] != ':' && s:label_col()
+    elseif char == '/'
+      return s:syn_at(line('.'),col('.')) =~? 'regex'
     endif
-    return syn =~? 'regex' || char !~ '[=~!<*,/?^%|&([]' &&
+    return char !~ '[=~!<*,?^%|&([]' &&
           \ (char !~ '[-+]' || l:n != line('.') && getline('.')[col('.')-2] == char)
   endif
 endfunction
@@ -264,7 +265,9 @@ function GetJavascriptIndent()
   " Get the current line.
   call cursor(v:lnum,1)
   let l:line = getline('.')
-  let syns = s:syn_at(v:lnum, 1)
+  " use synstack as it validates syn state and works in an empty line
+  let s:stack = synstack(v:lnum,1)
+  let syns = synIDattr(get(s:stack,-1),'name')
 
   " start with strings,comments,etc.
   if syns =~? s:syng_com
@@ -301,8 +304,8 @@ function GetJavascriptIndent()
     let [s:looksyn, s:free, top] = [v:lnum - 1, 1, (!indent(l:lnum) &&
           \ s:syn_at(l:lnum,1) !~? s:syng_str) * l:lnum]
     if idx + 1
-      call s:GetPair(['\[','(','{'][idx], '])}'[idx],'bW','s:skip_func()',2000,top)
-    elseif indent(v:lnum) && syns =~? 'block'
+      call s:GetPair(['\[','(','{'][idx],'])}'[idx],'bW','s:skip_func()',2000,top)
+    elseif getline(v:lnum) !~ '^\S' && syns =~? 'block'
       call s:GetPair('{','}','bW','s:skip_func()',2000,top)
     else
       call s:alternatePair(top)

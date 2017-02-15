@@ -700,7 +700,11 @@ function! s:Git(bang, args) abort
   let args = matchstr(a:args,'\v\C.{-}%($|\\@<!%(\\\\)*\|)@=')
   if exists(':terminal')
     let dir = s:repo().tree()
-    -tabedit %
+    if expand('%') != ''
+      -tabedit %
+    else
+      -tabnew
+    endif
     execute 'lcd' fnameescape(dir)
     execute 'terminal' git args
   else
@@ -2295,9 +2299,9 @@ function! s:Browse(bang,line1,count,...) abort
 
     if empty(remote)
       let remote = '.'
-      let raw = s:repo().git_chomp('config','remote.origin.url')
+      let raw = s:repo().git_chomp('remote','get-url','origin')
     else
-      let raw = s:repo().git_chomp('config','remote.'.remote.'.url')
+      let raw = s:repo().git_chomp('remote','get-url',remote)
     endif
     if raw ==# ''
       let raw = remote
