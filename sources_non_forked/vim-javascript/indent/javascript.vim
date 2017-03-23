@@ -64,7 +64,7 @@ let s:skip_expr = "synIDattr(synID(line('.'),col('.'),0),'name') =~? '".s:syng_s
 
 function s:parse_cino(f) abort
   return float2nr(eval(substitute(substitute(join(split(
-        \ matchstr(&cino,'.*'.a:f.'\zs[^,]*'), 's',1), '*'.s:W)
+        \ matchstr(&cino,'\C.*'.a:f.'\zs[^,]*'), 's',1), '*'.s:W)
         \ , '^-\=\zs\*','',''), '^-\=\zs\.','0.','')))
 endfunction
 
@@ -117,7 +117,7 @@ endfunction
 
 function s:previous_token()
   let l:pos = getpos('.')[1:2]
-  if search('\m\k\{1,}\zs\k\|\S','bW')
+  if search('\m\k\{1,}\|\S','ebW')
     if (getline('.')[col('.')-2:col('.')-1] == '*/' || line('.') != l:pos[0] &&
           \ getline('.') =~ '\%<'.col('.').'c\/\/') && s:syn_at(line('.'),col('.')) =~? s:syng_com
       while search('\m\S\ze\_s*\/[/*]','bW')
@@ -360,7 +360,7 @@ function GetJavascriptIndent()
     endif
   elseif idx < 0 && getline(b:js_cache[1])[b:js_cache[2]-1] == '(' && &cino =~ '('
     let pval = s:parse_cino('(')
-    return !pval ? (s:parse_cino('w') ? 0 : -(!!search('\m\S','W'.s:z,num))) + col('.') :
+    return !pval ? (s:parse_cino('w') ? 0 : -(!!search('\m\S','W'.s:z,num))) + virtcol('.') :
           \ max([indent('.') + pval + (s:GetPair('(',')','nbrmW',s:skip_expr,100,num) * s:W),0])
   endif
 
