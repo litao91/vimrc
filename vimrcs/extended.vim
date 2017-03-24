@@ -28,9 +28,20 @@ set guioptions-=l
 set guioptions-=L
 
 " Colorscheme
-set background=dark
-colorscheme peaksea
+" set background=dark
+" colorscheme peaksea
 " colorscheme base16-default-dark
+if has('patch-7.4.1778')
+    set guicolors
+endif
+if has('nvim')
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+if (has("termguicolors"))
+    set termguicolors
+endif
+
+colorscheme OceanicNext
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -121,7 +132,6 @@ func! DeleteTillSlash()
     else
         let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*", "\\1", "")
     endif
-
     if g:cmd == g:cmd_edited
         if has("win16") || has("win32")
             let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\\]\\).*\[\\\\\]", "\\1", "")

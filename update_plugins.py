@@ -60,6 +60,7 @@ tagbar https://github.com/majutsushi/tagbar
 indentLine https://github.com/Yggdroot/indentLine
 vim-scala https://github.com/derekwyatt/vim-scala
 vim-vue https://github.com/posva/vim-vue
+oceanic-next https://github.com/mhartington/oceanic-next
 """.strip()
 
 GITHUB_ZIP = '%s/archive/master.zip'
