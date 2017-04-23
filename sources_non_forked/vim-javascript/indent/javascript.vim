@@ -2,7 +2,7 @@
 " Language: Javascript
 " Maintainer: Chris Paul ( https://github.com/bounceme )
 " URL: https://github.com/pangloss/vim-javascript
-" Last Change: March 31, 2017
+" Last Change: April 21, 2017
 
 " Only load this indent file when no other was loaded.
 if exists('b:did_indent')
@@ -198,7 +198,7 @@ function s:PrevCodeLine(lnum)
     if getline(l:n) =~ '^\s*\/[/*]'
       if (stridx(getline(l:n),'`') > 0 || getline(l:n-1)[-1:] == '\') &&
             \ s:syn_at(l:n,1) =~? s:syng_str
-        return l:n
+        break
       endif
       let l:n = prevnonblank(l:n-1)
     elseif stridx(getline(l:n), '*/') + 1 && s:syn_at(l:n,1) =~? s:syng_com
@@ -254,11 +254,11 @@ function s:doWhile()
     let bal = 0
     while search('\m\C[{}]\|\<\%(do\|while\)\>','bW')
       if eval(s:skip_expr) | continue | endif
-      " switch (token())
-      exe get({'}': "if s:GetPair('{','}','bW',s:skip_expr,200) < 1 | return | endif",
+      " switch (looking_at())
+      exe {    '}': "if s:GetPair('{','}','bW',s:skip_expr,200) < 1 | return | endif",
             \  '{': "return",
-            \  'do': "let bal += s:save_pos('s:IsBlock',1)"}, s:token(),
-            \        "let bal -= s:save_pos('s:previous_token') != '.'")
+            \  'd': "let bal += s:save_pos('s:IsBlock',1)",
+            \  'w': "let bal -= s:save_pos('s:previous_token') != '.'" }[s:looking_at()]
       if bal > 0
         return 1
       endif
