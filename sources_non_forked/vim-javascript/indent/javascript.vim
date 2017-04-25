@@ -66,10 +66,12 @@ let s:syng_com = 'comment\|doc'
 " Expression used to check whether we should skip a match with searchpair().
 let s:skip_expr = "synIDattr(synID(line('.'),col('.'),0),'name') =~? '".s:syng_strcom."'"
 
-function s:parse_cino(f) abort
-  return float2nr(eval(substitute(substitute(join(split(
-        \ matchstr(&cino,'\C.*'.a:f.'\zs-\=\d*\%(\.\d\+\)\=s\=')
-        \ , 's',1), '*'.s:W), '^-\=\zs\*','',''), '^-\=\zs\.','0.','')))
+function s:parse_cino(f)
+  let pv = matchstr(&cino,'\C.*'.a:f.'\zs-\=\d*\%(\.\d\+\)\=s\=')
+  let factor = 1 . repeat(0,strlen(matchstr(pv,'\.\zs\d*')))
+  return eval(substitute(join(split(pv
+            \ , 's',1), '*'.s:W), '^-\=\zs\*\|\.','','g'))
+            \ / factor
 endfunction
 
 function s:skip_func()
@@ -145,15 +147,16 @@ function s:expr_col()
     return 1
   endif
   let bal = 0
-  while search('\m[{}?:;]','bW',s:scriptTag)
+  while bal < 1 && search('\m[{}?:;]','bW',s:scriptTag)
     if eval(s:skip_expr) | continue | endif
     " switch (looking_at())
     exe {   '}': "if s:GetPair('{','}','bW',s:skip_expr,200) < 1 | return | endif",
           \ ';': "return",
           \ '{': "return getpos('.')[1:2] != b:js_cache[1:] && !s:IsBlock()",
           \ ':': "let bal -= strpart(getline('.'),col('.')-2,3) !~ '::'",
-          \ '?': "let bal += 1 | if bal > 0 | return 1 | endif" }[s:looking_at()]
+          \ '?': "let bal += 1" }[s:looking_at()]
   endwhile
+  return max([bal,0])
 endfunction
 
 " configurable regexes that define continuation lines, not including (, {, or [.
@@ -252,17 +255,15 @@ function s:doWhile()
   if expand('<cword>') ==# 'while'
     call search('\m\<','cbW')
     let bal = 0
-    while search('\m\C[{}]\|\<\%(do\|while\)\>','bW')
+    while bal < 1 && search('\m\C[{}]\|\<\%(do\|while\)\>','bW')
       if eval(s:skip_expr) | continue | endif
       " switch (looking_at())
       exe {    '}': "if s:GetPair('{','}','bW',s:skip_expr,200) < 1 | return | endif",
             \  '{': "return",
             \  'd': "let bal += s:save_pos('s:IsBlock',1)",
             \  'w': "let bal -= s:save_pos('s:previous_token') != '.'" }[s:looking_at()]
-      if bal > 0
-        return 1
-      endif
     endwhile
+    return max([bal,0])
   endif
 endfunction
 
@@ -350,7 +351,7 @@ function GetJavascriptIndent()
   endif
 
   " the containing paren, bracket, or curly. Many hacks for performance
-  let s:scriptTag = &indentexpr =~? '^html' ? b:hi_indent.blocklnr : 0
+  let s:scriptTag = get(get(b:,'hi_indent',{}),'blocklnr')
   let idx = index([']',')','}'],l:line[0])
   if b:js_cache[0] >= l:lnum && b:js_cache[0] < v:lnum &&
         \ (b:js_cache[0] > l:lnum || s:Balanced(l:lnum))
