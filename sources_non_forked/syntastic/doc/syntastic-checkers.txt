@@ -23,6 +23,7 @@ SYNTAX CHECKERS BY LANGUAGE                          *syntastic-checkers-lang*
     C++......................................|syntastic-checkers-cpp|
     Cabal....................................|syntastic-checkers-cabal|
     Chef.....................................|syntastic-checkers-chef|
+    CMake....................................|syntastic-checkers-cmake|
     COBOL....................................|syntastic-checkers-cobol|
     Coco.....................................|syntastic-checkers-co|
     CoffeeScript.............................|syntastic-checkers-coffee|
@@ -531,12 +532,14 @@ The following checkers are available for C (filetype "c"):
     3. ClangCheck...............|syntastic-c-clang_check|
     4. Clang-Tidy...............|syntastic-c-clang_tidy|
     5. Cppcheck.................|syntastic-c-cppcheck|
-    6. GCC......................|syntastic-c-gcc|
-    7. make.....................|syntastic-c-make|
-    8. OClint...................|syntastic-c-oclint|
-    9. PC-Lint..................|syntastic-c-pc_lint|
-    10. Sparse..................|syntastic-c-sparse|
-    11. Splint..................|syntastic-c-splint|
+    6. cppclean.................|syntastic-c-cppclean|
+    7. Flawfinder...............|syntastic-c-flawfinder|
+    8. GCC......................|syntastic-c-gcc|
+    9. make.....................|syntastic-c-make|
+    10. OClint..................|syntastic-c-oclint|
+    11. PC-Lint.................|syntastic-c-pc_lint|
+    12. Sparse..................|syntastic-c-sparse|
+    13. Splint..................|syntastic-c-splint|
 
 ------------------------------------------------------------------------------
 1. AVR-GCC                                                *syntastic-c-avrgcc*
@@ -694,7 +697,57 @@ one option per line (cf. |syntastic-config-files|).
 See also: |syntastic-cpp-cppcheck|.
 
 ------------------------------------------------------------------------------
-6. GCC                                                       *syntastic-c-gcc*
+6. cppclean                                             *syntastic-c-cppclean*
+
+Name:        cppclean
+Maintainer:  LCD 47 <lcd047@gmail.com>
+
+"cppclean" attempts to find problems in C++ source that slow development in
+large code bases, for example various forms of unused code. See the project's
+page at GitHub for more information:
+
+    https://github.com/myint/cppclean
+
+Installation~
+
+Install it with "pip": >
+    pip install cppclean
+<
+Checker options~
+
+This checker is initialised using the "makeprgBuild()" function and thus it
+accepts the standard options described at |syntastic-config-makeprg|.
+
+See also: |syntastic-cpp-cppclean|.
+
+------------------------------------------------------------------------------
+7. Flawfinder                                         *syntastic-c-flawfinder*
+
+Name:        flawfinder
+Maintainer:  LCD 47 <lcd047@gmail.com>
+
+"Flawfinder" scans C/C++ source code for possible security weaknesses. See the
+project's page for more information:
+
+    https://www.dwheeler.com/flawfinder
+
+Checker options~
+
+This checker is initialised using the "makeprgBuild()" function and thus it
+accepts the standard options described at |syntastic-config-makeprg|.
+
+Additionally:
+
+                                            *'g:syntastic_c_flawfinder_thres'*
+Type: integer
+Default: 3
+Error threshold. Policy violations with a severity above this value are
+highlighted as errors, the others are considered warnings by syntastic.
+
+See also: |syntastic-cpp-flawfinder|.
+
+------------------------------------------------------------------------------
+8. GCC                                                       *syntastic-c-gcc*
 
 Name:        gcc
 Maintainer:  Gregor Uhlenheuer <kongo2002@gmail.com>
@@ -791,7 +844,7 @@ executable.
 See also: |syntastic-cpp-gcc|.
 
 ------------------------------------------------------------------------------
-7. make                                                     *syntastic-c-make*
+9. make                                                     *syntastic-c-make*
 
 Name:        make
 Maintainer:  Gregor Uhlenheuer <kongo2002@gmail.com>
@@ -802,7 +855,7 @@ This checker is initialised using the "makeprgBuild()" function and thus it
 accepts the standard options described at |syntastic-config-makeprg|.
 
 ------------------------------------------------------------------------------
-8. OClint                                                 *syntastic-c-oclint*
+10. OClint                                                *syntastic-c-oclint*
 
 Name:        oclint
 Maintainer:  "UnCO" Lin <undercooled@lavabit.com>
@@ -841,7 +894,7 @@ Config files pointed to by 'g:syntastic_oclint_config_file' are then ignored.
 See also: |syntastic-cpp-oclint|.
 
 ------------------------------------------------------------------------------
-9. PC-Lint                                               *syntastic-c-pc_lint*
+11. PC-Lint                                              *syntastic-c-pc_lint*
 
 Name:        pc_lint
 Maintainer:  Steve Bragg <steve@empresseffects.com>
@@ -868,7 +921,7 @@ current directory and in parent directories; first such file found is used.
 See also: |syntastic-cpp-pc_lint|.
 
 ------------------------------------------------------------------------------
-10. Sparse                                                *syntastic-c-sparse*
+12. Sparse                                                *syntastic-c-sparse*
 
 Name:        sparse
 Maintainer:  Daniel Walker <dwalker@fifo99.com>
@@ -900,7 +953,7 @@ your vimrc: >
 This allows "Sparse" to read "GCC"'s private include files.
 
 ------------------------------------------------------------------------------
-11. Splint                                                *syntastic-c-splint*
+13. Splint                                                *syntastic-c-splint*
 
 Name:        splint
 Maintainer:  LCD 47 <lcd047@gmail.com>
@@ -956,11 +1009,13 @@ The following checkers are available for C++ (filetype "cpp"):
     2. ClangCheck...............|syntastic-cpp-clang_check|
     3. Clang-Tidy...............|syntastic-cpp-clang_tidy|
     4. Cppcheck.................|syntastic-cpp-cppcheck|
-    5. Cpplint..................|syntastic-cpp-cpplint|
-    6. GCC......................|syntastic-cpp-gcc|
-    7. OClint...................|syntastic-cpp-oclint|
-    8. PC-Lint..................|syntastic-cpp-pc_lint|
-    9. Vera++...................|syntastic-cpp-verapp|
+    5. cppclean.................|syntastic-cpp-cppclean|
+    6. Cpplint..................|syntastic-cpp-cpplint|
+    7. Flawfinder...............|syntastic-cpp-flawfinder|
+    8. GCC......................|syntastic-cpp-gcc|
+    9. OClint...................|syntastic-cpp-oclint|
+    10. PC-Lint.................|syntastic-cpp-pc_lint|
+    11. Vera++..................|syntastic-cpp-verapp|
 
 ------------------------------------------------------------------------------
 1. AVR-GCC                                              *syntastic-cpp-avrgcc*
@@ -1104,7 +1159,31 @@ one option per line (cf. |syntastic-config-files|).
 See also: |syntastic-c-cppcheck|.
 
 ------------------------------------------------------------------------------
-5. Cpplint                                             *syntastic-cpp-cpplint*
+5. cppclean                                           *syntastic-cpp-cppclean*
+
+Name:        cppclean
+Maintainer:  LCD 47 <lcd047@gmail.com>
+
+"cppclean" attempts to find problems in C++ source that slow development in
+large code bases, for example various forms of unused code. See the project's
+page at GitHub for more information:
+
+    https://github.com/myint/cppclean
+
+Installation~
+
+Install it with "pip": >
+    pip install cppclean
+<
+Checker options~
+
+This checker is initialised using the "makeprgBuild()" function and thus it
+accepts the standard options described at |syntastic-config-makeprg|.
+
+See also: |syntastic-c-cppclean|.
+
+------------------------------------------------------------------------------
+6. Cpplint                                             *syntastic-cpp-cpplint*
 
 Name:        cpplint
 Maintainer:  LCD 47 <lcd047@gmail.com>
@@ -1140,7 +1219,33 @@ However, if your "cpplint" was installed with "pip", the script's name is
     let g:syntastic_cpp_cpplint_exec = "cpplint"
 <
 ------------------------------------------------------------------------------
-6. GCC                                                     *syntastic-cpp-gcc*
+7. Flawfinder                                       *syntastic-cpp-flawfinder*
+
+Name:        flawfinder
+Maintainer:  LCD 47 <lcd047@gmail.com>
+
+"Flawfinder" scans C/C++ source code for possible security weaknesses. See the
+project's page for more information:
+
+    https://www.dwheeler.com/flawfinder
+
+Checker options~
+
+This checker is initialised using the "makeprgBuild()" function and thus it
+accepts the standard options described at |syntastic-config-makeprg|.
+
+Additionally:
+
+                                          *'g:syntastic_cpp_flawfinder_thres'*
+Type: integer
+Default: 3
+Error threshold. Policy violations with a severity above this value are
+highlighted as errors, the others are considered warnings by syntastic.
+
+See also: |syntastic-c-flawfinder|.
+
+------------------------------------------------------------------------------
+8. GCC                                                     *syntastic-cpp-gcc*
 
 Name:        gcc
 Maintainer:  Gregor Uhlenheuer <kongo2002@gmail.com>
@@ -1237,7 +1342,7 @@ executable.
 See also: |syntastic-c-gcc|.
 
 ------------------------------------------------------------------------------
-7. OClint                                               *syntastic-cpp-oclint*
+9. OClint                                               *syntastic-cpp-oclint*
 
 Name:        oclint
 Maintainer:  "UnCO" Lin <undercooled@lavabit.com>
@@ -1277,7 +1382,7 @@ Config files pointed to by 'g:syntastic_oclint_config_file' are then ignored.
 See also: |syntastic-c-oclint|.
 
 ------------------------------------------------------------------------------
-8. PC-Lint                                             *syntastic-cpp-pc_lint*
+10. PC-Lint                                            *syntastic-cpp-pc_lint*
 
 Name:        pc_lint
 Maintainer:  Steve Bragg <steve@empresseffects.com>
@@ -1304,7 +1409,7 @@ current directory and in parent directories; first such file found is used.
 See also: |syntastic-c-pc_lint|.
 
 ------------------------------------------------------------------------------
-9. Vera++                                               *syntastic-cpp-verapp*
+11. Vera++                                              *syntastic-cpp-verapp*
 
 Name:        verapp
 Maintainer:  Lucas Verney <phyks@phyks.me>
@@ -1381,6 +1486,34 @@ You probably also need a plugin to set |filetype| for Chef files, such as
 "vim-chef":
 
     https://github.com/dougireton/vim-chef
+
+==============================================================================
+SYNTAX CHECKERS FOR CMAKE                           *syntastic-checkers-cmake*
+
+The following checkers are available for CMake (filetype "cmake"):
+
+    1. cmakelint................|syntastic-cmake-cmakelint|
+
+------------------------------------------------------------------------------
+1. cmakelint                                       *syntastic-cmake-cmakelint*
+
+Name:        cmakelint
+Maintainer:  LCD 47 <lcd047@gmail.com>
+
+"cmakelint" is a style checker for "CMake" files (https://cmake.org/).
+See the project's page at GitHub more information:
+
+    https://github.com/richq/cmake-lint
+
+Installation~
+
+Install it with "pip": >
+    pip install cmakelint
+<
+Checker options~
+
+This checker is initialised using the "makeprgBuild()" function and thus it
+accepts the standard options described at |syntastic-config-makeprg|.
 
 ==============================================================================
 SYNTAX CHECKERS FOR COBOL                           *syntastic-checkers-cobol*
