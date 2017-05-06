@@ -1,5 +1,10 @@
 ## unplanned
 
+FEATURES:
+
+* New `:GoKeyify` command that turns unkeyed struct literals into keyed struct literals. [gh-1258]
+* New snippet shortcut assigned to `ife` that expands to `if err := foo(); err != nil { ... }` [gh-1268]
+
 IMPROVEMENTS
 
 * :GoMetaLinter can now exclude linters with the new `g:go_metalinter_excludes` option [gh-1253]

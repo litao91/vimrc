@@ -2,7 +2,7 @@
 " Language: Javascript
 " Maintainer: Chris Paul ( https://github.com/bounceme )
 " URL: https://github.com/pangloss/vim-javascript
-" Last Change: May 2, 2017
+" Last Change: May 4, 2017
 
 " Only load this indent file when no other was loaded.
 if exists('b:did_indent')
@@ -60,11 +60,15 @@ else
 endif
 
 " Regex of syntax group names that are or delimit string or are comments.
-let s:syng_strcom = 'string\|comment\|regex\|special\|doc\|template\%(braces\)\@!'
-let s:syng_str = 'string\|template\|special'
+let b:syng_strcom = get(b:,'syng_strcom','string\|comment\|regex\|special\|doc\|template\%(braces\)\@!')
+let b:syng_str = get(b:,'syng_strcom','string\|template\|special')
+" template strings may want to be excluded when editing graphql:
+" au! Filetype javascript let b:syng_str = '^\%(.*template\)\@!.*string\|special'
+" au! Filetype javascript let b:syng_strcom = '^\%(.*template\)\@!.*string\|comment\|regex\|special\|doc'
+
 let s:syng_com = 'comment\|doc'
 " Expression used to check whether we should skip a match with searchpair().
-let s:skip_expr = "synIDattr(synID(line('.'),col('.'),0),'name') =~? '".s:syng_strcom."'"
+let s:skip_expr = "synIDattr(synID(line('.'),col('.'),0),'name') =~? b:syng_strcom"
 
 function s:parse_cino(f)
   let [cin, divider, n] = [strridx(&cino,a:f), 0, '']
@@ -92,40 +96,50 @@ function s:parse_cino(f)
 endfunction
 
 function s:skip_func()
-  if getline('.') =~ '\%<'.col('.').'c\/.\{-}\/\|\%>'.col('.').'c[''"]\|\\$'
-    return eval(s:skip_expr)
+  if s:topCol == 1 || line('.') < s:scriptTag
+    return {} " E728, used as limit condition for loops and searchpair()
+  endif
+  let s:topCol = col('.')
+  if getline('.') =~ '\%<'.s:topCol.'c\/.\{-}\/\|\%>'.s:topCol.'c[''"]\|\\$'
+    if eval(s:skip_expr)
+      let s:topCol = 0
+    endif
+    return !s:topCol
   elseif s:checkIn || search('\m`\|\${\|\*\/','nW'.s:z,s:looksyn)
     let s:checkIn = eval(s:skip_expr)
+    if s:checkIn
+      let s:topCol = 0
+    endif
   endif
   let s:looksyn = line('.')
   return s:checkIn
 endfunction
 
-function s:alternatePair(stop)
-  let [pos, pat, l:for] = [getpos('.')[1:2], '[][(){};]', 3]
-  while search('\m'.pat,'bW',a:stop)
+function s:alternatePair()
+  let [l:pos, pat, l:for] = [getpos('.'), '[][(){};]', 3]
+  while search('\m'.pat,'bW')
     if s:skip_func() | continue | endif
     let idx = stridx('])};',s:looking_at())
     if idx is 3
       if l:for is 1
-        return s:GetPair('{','}','bW','s:skip_func()',2000,a:stop) > 0 || call('cursor',pos)
+        return s:GetPair('{','}','bW','s:skip_func()',2000) > 0 || setpos('.',l:pos)
       endif
       let [pat, l:for] = ['[{}();]', l:for - 1]
     elseif idx + 1
-      if s:GetPair(['\[','(','{'][idx], '])}'[idx],'bW','s:skip_func()',2000,a:stop) < 1
+      if s:GetPair(['\[','(','{'][idx], '])}'[idx],'bW','s:skip_func()',2000) < 1
         break
       endif
     else
       return
     endif
   endwhile
-  call call('cursor',pos)
+  call setpos('.',l:pos)
 endfunction
 
 function s:save_pos(f,...)
-  let l:pos = getpos('.')[1:2]
+  let l:pos = getpos('.')
   let ret = call(a:f,a:000)
-  call call('cursor',l:pos)
+  call setpos('.',l:pos)
   return ret
 endfunction
 
@@ -142,9 +156,9 @@ function s:token()
 endfunction
 
 function s:previous_token()
-  let l:pos = getpos('.')[1:2]
+  let l:pos = getpos('.')
   if search('\m\k\{1,}\|\S','ebW')
-    if (strpart(getline('.'),col('.')-2,2) == '*/' || line('.') != l:pos[0] &&
+    if (strpart(getline('.'),col('.')-2,2) == '*/' || line('.') != l:pos[1] &&
           \ getline('.')[:col('.')-1] =~ '\/\/') && s:syn_at(line('.'),col('.')) =~? s:syng_com
       while search('\m\S\ze\_s*\/[/*]','bW')
         if s:syn_at(line('.'),col('.')) !~? s:syng_com
@@ -155,7 +169,7 @@ function s:previous_token()
       return s:token()
     endif
   endif
-  call call('cursor',l:pos)
+  call setpos('.',l:pos)
   return ''
 endfunction
 
@@ -213,11 +227,11 @@ endfunction
 
 " Find line above 'lnum' that isn't empty or in a comment
 function s:PrevCodeLine(lnum)
-  let [l:pos, l:n] = [getpos('.')[1:2], prevnonblank(a:lnum)]
+  let [l:pos, l:n] = [getpos('.'), prevnonblank(a:lnum)]
   while l:n
     if getline(l:n) =~ '^\s*\/[/*]'
       if (stridx(getline(l:n),'`') > 0 || getline(l:n-1)[-1:] == '\') &&
-            \ s:syn_at(l:n,1) =~? s:syng_str
+            \ s:syn_at(l:n,1) =~? b:syng_str
         break
       endif
       let l:n = prevnonblank(l:n-1)
@@ -229,7 +243,7 @@ function s:PrevCodeLine(lnum)
       break
     endif
   endwhile
-  call call('cursor',l:pos)
+  call setpos('.',l:pos)
   return l:n
 endfunction
 
@@ -239,7 +253,7 @@ function s:Balanced(lnum)
   let l:line = getline(a:lnum)
   let pos = match(l:line, '[][(){}]', 0)
   while pos != -1
-    if s:syn_at(a:lnum,pos + 1) !~? s:syng_strcom
+    if s:syn_at(a:lnum,pos + 1) !~? b:syng_strcom
       let l:open += match(' ' . l:line[pos],'[[({]')
       if l:open < 0
         return
@@ -348,7 +362,7 @@ function GetJavascriptIndent()
     elseif l:line !~ '^\s*\/[/*]'
       return -1
     endif
-  elseif syns =~? s:syng_str
+  elseif syns =~? b:syng_str
     if b:js_cache[0] == v:lnum - 1 && s:Balanced(v:lnum-1)
       let b:js_cache[0] = v:lnum
     endif
@@ -368,22 +382,19 @@ function GetJavascriptIndent()
   endif
 
   " the containing paren, bracket, or curly. Many hacks for performance
-  let s:scriptTag = get(get(b:,'hi_indent',{}),'blocklnr')
-  let idx = index([']',')','}'],l:line[0])
+  let [ s:scriptTag, idx ] = [ get(get(b:,'hi_indent',{}),'blocklnr'),
+        \ index([']',')','}'],l:line[0]) ]
   if b:js_cache[0] >= l:lnum && b:js_cache[0] < v:lnum &&
         \ (b:js_cache[0] > l:lnum || s:Balanced(l:lnum))
-    if b:js_cache[2]
-      call call('cursor',b:js_cache[1:])
-    endif
+    call call('cursor',b:js_cache[2] ? b:js_cache[1:] : [0,0])
   else
-    let [s:looksyn, s:checkIn, top] = [v:lnum - 1, 0, max([s:scriptTag,
-          \ (!indent(l:lnum) && s:syn_at(l:lnum,1) !~? s:syng_str) * l:lnum])]
+    let [s:looksyn, s:checkIn, s:topCol] = [v:lnum - 1, 0, 0]
     if idx + 1
-      call s:GetPair(['\[','(','{'][idx],'])}'[idx],'bW','s:skip_func()',2000,top)
+      call s:GetPair(['\[','(','{'][idx],'])}'[idx],'bW','s:skip_func()',2000)
     elseif getline(v:lnum) !~ '^\S' && syns =~? 'block'
-      call s:GetPair('{','}','bW','s:skip_func()',2000,top)
+      call s:GetPair('{','}','bW','s:skip_func()',2000)
     else
-      call s:alternatePair(top)
+      call s:alternatePair()
     endif
   endif
 
