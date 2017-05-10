@@ -10,7 +10,7 @@ if ! has("conceal") || exists("g:indentLine_loaded")
 endif
 let g:indentLine_loaded = 1
 
-let g:indentLine_newVersion = v:version > 704 || v:version == 704 && has("patch792")
+let g:indentLine_newVersion = get(g:,'indentLine_newVersion',v:version > 704 || v:version == 704 && has("patch792"))
 
 let g:indentLine_char = get(g:,'indentLine_char',(&encoding ==# "utf-8" && &term isnot# "linux" ? '¦' : '|'))
 let g:indentLine_first_char = get(g:,'indentLine_first_char',(&encoding ==# "utf-8" && &term isnot# "linux"  ? '¦' : '|'))
@@ -141,7 +141,10 @@ function! s:IndentLinesDisable()
     if g:indentLine_newVersion
         if exists("w:indentLine_indentLineId") && ! empty(w:indentLine_indentLineId)
             for id in w:indentLine_indentLineId
-                call matchdelete(id)
+                try
+                    call matchdelete(id)
+                catch /^Vim\%((\a\+)\)\=:E80[23]/
+                endtry
             endfor
             let w:indentLine_indentLineId = []
         endif
@@ -259,7 +262,10 @@ function! s:LeadingSpaceDisable()
     if g:indentLine_newVersion
         if exists("w:indentLine_leadingSpaceId") && ! empty(w:indentLine_leadingSpaceId)
             for id in w:indentLine_leadingSpaceId
-                call matchdelete(id)
+                try
+                    call matchdelete(id)
+                catch /^Vim\%((\a\+)\)\=:E80[23]/
+                endtry
             endfor
             let w:indentLine_leadingSpaceId = []
         endif
