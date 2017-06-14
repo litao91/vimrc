@@ -4,6 +4,8 @@ IMPROVEMENTS
 
 * Files created with `_test.go` extension have a new template with a ready to go test function. The template can be changed with the  `g:go_template_test_file` setting. [gh-1318]
 * Improve performance for highly used operations by caching `go env` calls [gh-1320]
+* `:GoCoverage` can accept arguments now. i.e: `:GoCoverage -run TestFoo` [gh-1326]
+* `:GoDecls` and `:GoDeclsDir` shows a warning if [ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim) is not installed
 
 BUG FIXES:
 
@@ -74,6 +76,9 @@ BACKWARDS INCOMPATIBILITIES:
 * `go_imports_bin` is removed to avoid confusion as it would lead to race
   conditions when set to `gofmt` along with the usage of `go_fmt_command`
   [gh-1212] [gh-1308]
+* commands such as `:GoTest` has been refactored for easy maintainability. If
+  you use any custom script that was using the function `go#cmd#Test`, it
+  should be renamed to `go#test#Test`
 
 ## 1.12 - (March 29, 2017)
 
