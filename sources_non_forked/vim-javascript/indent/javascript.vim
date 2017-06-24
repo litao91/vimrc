@@ -62,11 +62,13 @@ let s:skip_expr = "s:SynAt(line('.'),col('.')) =~? b:syng_strcom"
 " searchpair() wrapper
 if has('reltime')
   function s:GetPair(start,end,flags,skip,time,...)
-    return max([searchpair('\m'.a:start,'','\m'.a:end,a:flags,a:skip,max([prevnonblank(v:lnum) - 2000,0] + a:000),a:time),0])
+    return s:Nat(searchpair('\m'.(a:start == '[' ? '\[' : a:start),'','\m'.a:end,
+          \ a:flags,a:skip,max([prevnonblank(v:lnum) - 2000,0] + a:000),a:time))
   endfunction
 else
   function s:GetPair(start,end,flags,skip,...)
-    return max([searchpair('\m'.a:start,'','\m'.a:end,a:flags,a:skip,max([prevnonblank(v:lnum) - 1000,get(a:000,1)])),0])
+    return s:Nat(searchpair('\m'.(a:start == '[' ? '\[' : a:start),'','\m'.a:end,
+          \ a:flags,a:skip,max([prevnonblank(v:lnum) - 1000,get(a:000,1)])))
   endfunction
 endif
 
@@ -140,7 +142,7 @@ function s:AlternatePair()
         continue
       endif
     elseif tok =~ '[])}]'
-      if s:GetPair(escape(tr(tok,'])}','[({'),'['), tok,'bW','s:SkipFunc()',2000)
+      if s:GetPair(tr(tok,'])}','[({'), tok,'bW','s:SkipFunc()',2000)
         continue
       endif
     else
@@ -279,9 +281,9 @@ function s:Balanced(lnum)
         return
       endif
     endif
-    let pos = match(l:line, (l:open ?
-          \ '['.matchstr(['][','()','{}'],l:line[pos]).']' :
-          \ '[][(){}]'), pos + 1)
+    let pos = match(l:line, l:open ?
+          \ matchstr(['[][]','[()]','[{}]'],l:line[pos]) :
+          \ '[][(){}]', pos + 1)
   endwhile
   return !l:open
 endfunction
@@ -429,19 +431,13 @@ function GetJavascriptIndent()
   else
     call cursor(v:lnum,1)
     let [s:looksyn, s:check_in, s:top_col] = [v:lnum - 1, 0, 0]
-    try
-      if idx != -1
-        call s:GetPair(['\[','(','{'][idx],'])}'[idx],'bW','s:SkipFunc()',2000)
-      elseif getline(v:lnum) !~ '^\S' && syns =~? 'block'
-        call s:GetPair('{','}','bW','s:SkipFunc()',2000)
-      else
-        call s:AlternatePair()
-      endif
-    catch /E728/
-      " DEBUG: set debug=throw ; sentinel exception
-      call cursor(v:lnum,1)
-      echom v:throwpoint
-    endtry
+    if idx != -1
+      call s:GetPair('[({'[idx],'])}'[idx],'bW','s:SkipFunc()',2000)
+    elseif getline(v:lnum) !~ '^\S' && syns =~? 'block'
+      call s:GetPair('{','}','bW','s:SkipFunc()',2000)
+    else
+      call s:AlternatePair()
+    endif
   endif
 
   let b:js_cache = [v:lnum] + (line('.') == v:lnum ? [s:script_tag,0] : getpos('.')[1:2])
