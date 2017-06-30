@@ -1,5 +1,5 @@
 " vi: fdl=1
-let g:pymode_version = "0.9.0"
+let g:pymode_version = "0.9.2"
 
 com! PymodeVersion echomsg "Current python-mode version: " . g:pymode_version
 com! PymodeTroubleshooting call pymode#troubleshooting#test()
@@ -39,7 +39,7 @@ call pymode#default("g:pymode_folding", 1)
 " Maximum file length to check for nested class/def statements
 call pymode#default("g:pymode_folding_nest_limit", 1000)
 " Change for folding customization (by example enable fold for 'if', 'for')
-call pymode#default("g:pymode_folding_regex", '^\s*\%(class\|def\|async\s\+def\) \w\+')
+call pymode#default("g:pymode_folding_regex", '^\s*\%(class\|def\|async\s\+def\) .\+\(:\s\+\w\)\@!')
 
 " Enable/disable python motion operators
 call pymode#default("g:pymode_motion", 1)
