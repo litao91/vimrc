@@ -42,7 +42,6 @@ vim-multiple-cursors https://github.com/terryma/vim-multiple-cursors
 vim-fugitive https://github.com/tpope/vim-fugitive
 goyo.vim https://github.com/junegunn/goyo.vim
 vim-zenroom2 https://github.com/amix/vim-zenroom2
-syntastic https://github.com/scrooloose/syntastic
 vim-repeat https://github.com/tpope/vim-repeat
 vim-commentary https://github.com/tpope/vim-commentary
 vim-go https://github.com/fatih/vim-go
@@ -61,6 +60,7 @@ indentLine https://github.com/Yggdroot/indentLine
 vim-scala https://github.com/derekwyatt/vim-scala
 vim-vue https://github.com/posva/vim-vue
 oceanic-next https://github.com/mhartington/oceanic-next
+ale https://github.com/w0rp/ale
 """.strip()
 
 GITHUB_ZIP = '%s/archive/master.zip'
