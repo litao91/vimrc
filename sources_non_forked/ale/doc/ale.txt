@@ -172,7 +172,7 @@ The following languages and tools are supported.
 * FusionScript: 'fusion-lint'
 * Haml: 'hamllint'
 * Handlebars: 'ember-template-lint'
-* Haskell: 'ghc', 'ghc-mod', 'hlint', 'hdevtools'
+* Haskell: 'ghc', 'stack-ghc', 'stack-build', 'ghc-mod', 'stack-ghc-mod', 'hlint', 'hdevtools'
 * HTML: 'HTMLHint', 'proselint', 'tidy'
 * Java: 'javac'
 * JavaScript: 'eslint', 'jscs', 'jshint', 'flow', 'prettier', 'prettier-eslint', 'xo'
@@ -609,7 +609,7 @@ g:ale_pattern_options                                   *g:ale_pattern_options*
 
   let g:ale_pattern_options = {
   \   '\.foo\.js$': {
-  \       'ale_linters: {'javascript': ['eslint']},
+  \       'ale_linters': {'javascript': ['eslint']},
   \   },
   \}
 <
@@ -806,6 +806,20 @@ g:ale_type_map                                                 *g:ale_type_map*
   let g:ale_type_map = {'flake8', {'ES': 'E', 'WS': 'W'}}
 <
   Type maps can be set per-buffer with `b:ale_type_map`.
+
+
+g:ale_virtualenv_dir_names                         *g:ale_virtualenv_dir_names*
+b:ale_virtualenv_dir_names                         *b:ale_virtualenv_dir_names*
+
+  Type: |List|
+  Default: `['.env', 'env', 've-py3', 've', 'virtualenv']`
+
+  A list of directory names to be used when searching upwards from Python
+  files to discover virtulenv directories with.
+
+  For directory named `'foo'`, ALE will search for `'foo/bin/activate'`
+  (`foo\Scripts\activate\` on Windows) in all directories on and above the
+  directory containing the Python file to find virtualenv paths.
 
 
 g:ale_warn_about_trailing_whitespace     *g:ale_warn_about_trailing_whitespace*
@@ -1096,8 +1110,11 @@ ALEEnable                                                           *ALEEnable*
 ALEDisable                                                         *ALEDisable*
 
   Enable or disable ALE, including all of its autocmd events, loclist items,
-  quickfix items, signs, current jobs, etc. Calling this option will change
-  the |g:ale_enabled| variable.
+  quickfix items, signs, current jobs, etc. Executing any of those commands
+  will change the |g:ale_enabled| variable.
+
+  For convenience, a plug mapping `<Plug>(ale_toggle)` is defined for the
+  |ALEToggle| command.
 
 
 ALEDetail                                                           *ALEDetail*
