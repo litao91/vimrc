@@ -61,6 +61,7 @@ vim-scala https://github.com/derekwyatt/vim-scala
 vim-vue https://github.com/posva/vim-vue
 gruvbox https://github.com/morhetz/gruvbox
 ale https://github.com/w0rp/ale
+lightline-gruvbox https://github.com/shinchu/lightline-gruvbox.vim
 """.strip()
 
 GITHUB_ZIP = '%s/archive/master.zip'
