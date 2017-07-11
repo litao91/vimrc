@@ -41,9 +41,7 @@ if (has("termguicolors"))
     set termguicolors
 endif
 
-colorscheme OceanicNext
-
-
+colorscheme gruvbox
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fast editing and reloading of vimrc configs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

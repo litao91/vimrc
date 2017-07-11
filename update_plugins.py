@@ -59,7 +59,7 @@ tagbar https://github.com/majutsushi/tagbar
 indentLine https://github.com/Yggdroot/indentLine
 vim-scala https://github.com/derekwyatt/vim-scala
 vim-vue https://github.com/posva/vim-vue
-oceanic-next https://github.com/mhartington/oceanic-next
+gruvbox https://github.com/morhetz/gruvbox
 ale https://github.com/w0rp/ale
 """.strip()
 
