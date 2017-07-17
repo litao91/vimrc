@@ -33,6 +33,7 @@ CONTENTS                                                         *ale-contents*
       cmakelint...........................|ale-cmake-cmakelint|
     erlang................................|ale-erlang-options|
       erlc................................|ale-erlang-erlc|
+      syntaxerl...........................|ale-erlang-syntaxerl|
     fortran...............................|ale-fortran-options|
       gcc.................................|ale-fortran-gcc|
     fusionscript..........................|ale-fuse-options|
@@ -74,6 +75,7 @@ CONTENTS                                                         *ale-contents*
     php...................................|ale-php-options|
       phpcs...............................|ale-php-phpcs|
       phpmd...............................|ale-php-phpmd|
+      phpstan.............................|ale-php-phpstan|
     pug...................................|ale-pug-options|
       puglint.............................|ale-pug-puglint|
     python................................|ale-python-options|
@@ -93,6 +95,8 @@ CONTENTS                                                         *ale-contents*
       rustc...............................|ale-rust-rustc|
     sass..................................|ale-sass-options|
       stylelint...........................|ale-sass-stylelint|
+    scala.................................|ale-scala-options|
+      scalastyle..........................|ale-scala-scalastyle|
     scss..................................|ale-scss-options|
       stylelint...........................|ale-scss-stylelint|
     sh....................................|ale-sh-options|
@@ -193,7 +197,7 @@ The following languages and tools are supported.
 * Objective-C++: 'clang'
 * OCaml: 'merlin' (see |ale-linter-integration-ocaml-merlin|)
 * Perl: 'perl' (-c flag), 'perlcritic'
-* PHP: 'hack', 'php' (-l flag), 'phpcs', 'phpmd'
+* PHP: 'hack', 'php' (-l flag), 'phpcs', 'phpmd', 'phpstan'
 * Pod: 'proselint'
 * Pug: 'pug-lint'
 * Puppet: 'puppet', 'puppet-lint'
@@ -206,7 +210,7 @@ The following languages and tools are supported.
 * Ruby: 'reek', 'rubocop'
 * SASS: 'sasslint', 'stylelint'
 * SCSS: 'sasslint', 'scsslint', 'stylelint'
-* Scala: 'scalac'
+* Scala: 'scalac', 'scalastyle'
 * Slim: 'slim-lint'
 * SML: 'smlnj'
 * Stylus: 'stylelint'
@@ -1255,7 +1259,7 @@ ale#linter#Define(filetype, linter)                       *ale#linter#Define()*
 
                          The keys for each item in the List will be handled in
                          the following manner:
-
+                                                           *ale-loclist-format*
                          `text` - This error message is required.
                          `lnum` - The line number is required. Any strings
                            will be automatically converted to numbers by
@@ -1266,6 +1270,12 @@ ale#linter#Define(filetype, linter)                       *ale#linter#Define()*
                          `col` - The column number is optional and will
                            default to `0`. Any strings will be automatically
                            coverted to number using `str2nr()`.
+                         `end_col` - An optional end column number.
+                           This key can be set to specify the column problems
+                           end on, for improved highlighting.
+                         `end_lnum` - An optional end line number.
+                           This key can set along with `end_col` for
+                           highlighting multi-line problems.
                          `bufnr` - The buffer number should match the buffer
                            being checked, and this value will default to
                            the buffer being checked.
@@ -1476,8 +1486,10 @@ ALELint                                                       *ALELint-autocmd*
 
   For example, you can echo a message when linting is complete like so:
   >
-  autocmd User ALELint echom "ALE run!"
+  autocmd User ALELint unsilent echom 'ALE run!'
 <
+  The autocmd commands are run with |:silent|, so |:unsilent| is required for
+  echoing messges.
 
 ===============================================================================
 8. Special Thanks                                          *ale-special-thanks*
