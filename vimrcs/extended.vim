@@ -31,9 +31,6 @@ set guioptions-=L
 " set background=dark
 " colorscheme peaksea
 " colorscheme base16-default-dark
-if has('patch-7.4.1778')
-    set guicolors
-endif
 if has('nvim')
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif

@@ -31,6 +31,8 @@ CONTENTS                                                         *ale-contents*
       stylelint...........................|ale-css-stylelint|
     cmake.................................|ale-cmake-options|
       cmakelint...........................|ale-cmake-cmakelint|
+    dart..................................|ale-dart-options|
+      dartanalyzer........................|ale-dart-dartanalyzer|
     erlang................................|ale-erlang-options|
       erlc................................|ale-erlang-erlc|
       syntaxerl...........................|ale-erlang-syntaxerl|
@@ -121,6 +123,7 @@ CONTENTS                                                         *ale-contents*
     xml...................................|ale-xml-options|
       xmllint.............................|ale-xml-xmllint|
     yaml..................................|ale-yaml-options|
+      swaglint............................|ale-yaml-swaglint|
       yamllint............................|ale-yaml-yamllint|
   6. Commands/Keybinds....................|ale-commands|
   7. API..................................|ale-api|
@@ -171,6 +174,7 @@ The following languages and tools are supported.
 * CSS: 'csslint', 'stylelint'
 * Cython (pyrex filetype): 'cython'
 * D: 'dmd'
+* Dart: 'dartanalyzer'
 * Dockerfile: 'hadolint'
 * Elixir: 'credo', 'dogma'
 * Elm: 'elm-make'
@@ -224,7 +228,7 @@ The following languages and tools are supported.
 * Vim help: 'proselint'
 * XHTML: 'proselint'
 * XML: 'xmllint'
-* YAML: 'yamllint'
+* YAML: 'swaglint', 'yamllint'
 
 ===============================================================================
 3. Global Options                                                 *ale-options*
