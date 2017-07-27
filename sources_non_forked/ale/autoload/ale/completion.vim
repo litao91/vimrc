@@ -102,21 +102,15 @@ function! ale#completion#Show(response, completion_parser) abort
     " Remember the old omnifunc value, if there is one.
     " If we don't store an old one, we'll just never reset the option.
     " This will stop some random exceptions from appearing.
-    if !exists('b:ale_old_omnifunc') && !empty(&omnifunc)
-        let b:ale_old_omnifunc = &omnifunc
-    endif
-
-    " Remember the old completion options, if they are set.
-    if !exists('b:ale_old_completeopt') && !empty(&completeopt)
-        let b:ale_old_completeopt = &completeopt
+    if !exists('b:ale_old_omnifunc') && !empty(&l:omnifunc)
+        let b:ale_old_omnifunc = &l:omnifunc
     endif
 
     " Set the list in the buffer, temporarily replace omnifunc with our
     " function, and then start omni-completion.
     let b:ale_completion_response = a:response
     let b:ale_completion_parser = a:completion_parser
-    let &omnifunc = 'ale#completion#OmniFunc'
-    let &completeopt = 'menu,noinsert,noselect'
+    let &l:omnifunc = 'ale#completion#OmniFunc'
     call feedkeys("\<C-x>\<C-o>", 'n')
 endfunction
 
@@ -209,41 +203,29 @@ function! s:HandleTSServerLSPResponse(response) abort
     endif
 endfunction
 
-function! s:GetCompletionsForTSServer(linter) abort
+function! s:GetLSPCompletions(linter) abort
     let l:buffer = bufnr('')
-    let l:executable = ale#linter#GetExecutable(l:buffer, a:linter)
-    let l:command = ale#job#PrepareCommand(
-    \ ale#linter#GetCommand(l:buffer, a:linter),
-    \)
-    let l:id = ale#lsp#StartProgram(
-    \   l:executable,
-    \   l:command,
+    let l:lsp_details = ale#linter#StartLSP(
+    \   l:buffer,
+    \   a:linter,
     \   function('s:HandleTSServerLSPResponse'),
     \)
 
-    if !l:id
-        if g:ale_history_enabled
-            call ale#history#Add(l:buffer, 'failed', l:id, l:command)
-        endif
+    if empty(l:lsp_details)
+        return 0
     endif
 
-    if ale#lsp#OpenTSServerDocumentIfNeeded(l:id, l:buffer)
-        if g:ale_history_enabled
-            call ale#history#Add(l:buffer, 'started', l:id, l:command)
-        endif
-    endif
+    let l:id = l:lsp_details.connection_id
+    let l:command = l:lsp_details.command
+    let l:root = l:lsp_details.project_root
 
-    call ale#lsp#Send(l:id, ale#lsp#tsserver_message#Change(l:buffer))
-
-    let l:request_id = ale#lsp#Send(
-    \   l:id,
-    \   ale#lsp#tsserver_message#Completions(
-    \       l:buffer,
-    \       b:ale_completion_info.line,
-    \       b:ale_completion_info.column,
-    \       b:ale_completion_info.prefix,
-    \   ),
+    let l:message = ale#lsp#tsserver_message#Completions(
+    \   l:buffer,
+    \   b:ale_completion_info.line,
+    \   b:ale_completion_info.column,
+    \   b:ale_completion_info.prefix,
     \)
+    let l:request_id = ale#lsp#Send(l:id, l:message, l:root)
 
     if l:request_id
         let b:ale_completion_info.conn_id = l:id
@@ -274,7 +256,7 @@ function! ale#completion#GetCompletions() abort
 
     for l:linter in ale#linter#Get(&filetype)
         if l:linter.lsp ==# 'tsserver'
-            call s:GetCompletionsForTSServer(l:linter)
+            call s:GetLSPCompletions(l:linter)
         endif
     endfor
 endfunction
@@ -306,13 +288,8 @@ function! ale#completion#Done() abort
 
     " Reset settings when completion is done.
     if exists('b:ale_old_omnifunc')
-        let &omnifunc = b:ale_old_omnifunc
+        let &l:omnifunc = b:ale_old_omnifunc
         unlet b:ale_old_omnifunc
-    endif
-
-    if exists('b:ale_old_completeopt')
-        let &completeopt = b:ale_old_completeopt
-        unlet b:ale_old_completeopt
     endif
 endfunction
 
@@ -332,9 +309,11 @@ function! s:Setup(enabled) abort
 endfunction
 
 function! ale#completion#Enable() abort
+    let g:ale_completion_enabled = 1
     call s:Setup(1)
 endfunction
 
 function! ale#completion#Disable() abort
+    let g:ale_completion_enabled = 0
     call s:Setup(0)
 endfunction
