@@ -61,6 +61,8 @@ vim-vue https://github.com/posva/vim-vue
 gruvbox https://github.com/morhetz/gruvbox
 ale https://github.com/w0rp/ale
 lightline-gruvbox https://github.com/shinchu/lightline-gruvbox.vim
+vim-javacomplete2 https://github.com/artur-shaik/vim-javacomplete2
+denite.nvim https://github.com/Shougo/denite.nvim
 """.strip()
 
 GITHUB_ZIP = '%s/archive/master.zip'
