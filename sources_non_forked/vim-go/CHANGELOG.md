@@ -11,6 +11,8 @@ IMPROVEMENTS:
 * Add package-level comment folding [gh-1377]
 * Allow using :GoImpl on the type and struct parts too. Makes it a wee bit
   easier to use [gh-1386]
+* `:GoDef` sets the path of new buffers as relative to the current directory
+  when appropriate, instead of always using the full path [gh-1277].
 
 BUG FIXES:
 
@@ -30,8 +32,9 @@ type foo struct{
 * `:GoImpl` output would include extra newline, and error would include
   trailing newline from shell command: `vim-go: invalid receiver: "} *}"<00>`.
   Fixed with [gh-1386]
-
 * Run `:GoMetaLinter` against the package of the open file [gh-1414].
+* The `g:go_doc_command` and `g:go_doc_options` to configure the command for
+  `:GoDoc` were documented but never referenced [gh-1420].
 
 BACKWARDS INCOMPATIBILITIES:
 
