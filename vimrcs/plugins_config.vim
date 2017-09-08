@@ -173,6 +173,7 @@ let g:pymode_rope_goto_definition_bind = "<C-]>"
 " let g:pymode_rope_complete_on_dot = 1
 " let g:pymode_rope_completion_bind = '<C-;>'
 let g:pymode_rope_completion = 0
+let g:pymode_rope_lookup_project = 0
 let g:pymode_lint_checkers = ['pep8', 'pylint']
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
