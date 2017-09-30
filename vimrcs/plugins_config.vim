@@ -187,3 +187,6 @@ let g:tagbar_vertical = 30
 " """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ycm_python_binary_path = '/usr/bin/python3'
 let g:ycm_global_ycm_extra_conf = '~/.vim_runtime/.ycm_extra_conf.py'
+
+au BufRead,BufNewFile *.g set filetype=antlr3
+au BufRead,BufNewFile *.g4 set filetype=antlr4

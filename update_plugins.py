@@ -63,6 +63,7 @@ ale https://github.com/w0rp/ale
 lightline-gruvbox https://github.com/shinchu/lightline-gruvbox.vim
 vim-javacomplete2 https://github.com/artur-shaik/vim-javacomplete2
 denite.nvim https://github.com/Shougo/denite.nvim
+antlr.vim https://github.com/dylon/vim-antlr
 """.strip()
 
 GITHUB_ZIP = '%s/archive/master.zip'

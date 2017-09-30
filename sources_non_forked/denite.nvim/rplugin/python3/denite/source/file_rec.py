@@ -5,6 +5,7 @@
 # ============================================================================
 
 import argparse
+import shutil
 from .base import Base
 from denite.process import Process
 from os import path, pardir
@@ -31,8 +32,8 @@ class Source(Base):
 
         if self.vars['command']:
             if self.vars['command'][0] == 'scantree.py':
-                self.vars['command'] = \
-                        self.parse_command_for_scantree(self.vars['command'])
+                self.vars['command'] = self.parse_command_for_scantree(
+                    self.vars['command'])
         else:
             if not context['is_windows']:
                 self.vars['command'] = [
@@ -40,7 +41,8 @@ class Source(Base):
                     '-path', '*/.git/*', '-prune', '-o',
                     '-type', 'l', '-print', '-o', '-type', 'f', '-print']
             else:
-                self.vars['command'] = self.parse_command_for_scantree([])
+                self.vars['command'] = self.parse_command_for_scantree(
+                    ['scantree.py'])
 
         context['__proc'] = None
         directory = context['args'][0] if len(
@@ -113,7 +115,8 @@ class Source(Base):
         parser.add_argument('--ignore', type=str, default=None)
 
         # the first name on the list is 'scantree.py'
-        args = parser.parse_args(cmd[1:] if cmd[0] == 'scantree.py' else cmd)
+        args = parser.parse_args(
+            cmd[1:] if cmd and cmd[0] == 'scantree.py' else cmd)
         if args.ignore is None:
             ignore = self.vim.options['wildignore']
         else:
@@ -122,5 +125,13 @@ class Source(Base):
         current_folder, _ = path.split(__file__)
         scantree_py = normpath(join(current_folder, pardir, 'scantree.py'))
 
-        return ['python', scantree_py, '--ignore', ignore,
+        if shutil.which('python3') is not None:
+            python_exe = 'python3'
+        else:
+            python_exe = 'python'
+        if shutil.which(python_exe) is None:
+            raise FileNotFoundError("Coudn't find {} executable!".format(
+                                    python_exe))
+
+        return [python_exe, scantree_py, '--ignore', ignore,
                 '--path', ':directory']
