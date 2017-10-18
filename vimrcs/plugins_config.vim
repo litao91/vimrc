@@ -180,7 +180,7 @@ let g:pymode_lint_checkers = ['pep8', 'pylint']
 " => TagBar
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <silent> <leader>tt :TagbarToggle<CR>
-let g:tagbar_vertical = 30
+" let g:tagbar_vertical = 30
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => YouCompleteMe
