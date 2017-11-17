@@ -10,11 +10,6 @@ if exists('b:did_indent')
 endif
 let b:did_indent = 1
 
-" indent correctly if inside <script>
-" vim/vim@690afe1 for the switch from cindent
-" overridden with b:html_indent_script1
-call extend(g:,{'html_indent_script1': 'inc'},'keep')
-
 " Now, set up our indentation expression and keys that trigger it.
 setlocal indentexpr=GetJavascriptIndent()
 setlocal autoindent nolisp nosmartindent
@@ -33,6 +28,11 @@ endif
 
 let s:cpo_save = &cpo
 set cpo&vim
+
+" indent correctly if inside <script>
+" vim/vim@690afe1 for the switch from cindent
+" overridden with b:html_indent_script1
+call extend(g:,{'html_indent_script1': 'inc'},'keep')
 
 " Regex of syntax group names that are or delimit string or are comments.
 let s:bvars = {
@@ -110,9 +110,7 @@ endfunction
 function s:SkipFunc()
   if s:top_col == 1
     throw 'out of bounds'
-  endif
-  let s:top_col = 0
-  if s:check_in
+  elseif s:check_in
     if eval(s:skip_expr)
       return 1
     endif
@@ -456,10 +454,10 @@ function GetJavascriptIndent()
 
   " main return
   if l:line =~ '^[])}]\|^|}'
-    if l:line_raw[0] == ')' && getline(num)[b:js_cache[2]-1] == '('
+    if l:line_raw[0] == ')'
       if s:ParseCino('M')
         return indent(l:lnum)
-      elseif &cino =~# 'm' && !s:ParseCino('m')
+      elseif num && &cino =~# 'm' && !s:ParseCino('m')
         return virtcol('.') - 1
       endif
     endif
