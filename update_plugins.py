@@ -64,6 +64,7 @@ vim-javacomplete2 https://github.com/artur-shaik/vim-javacomplete2
 denite.nvim https://github.com/Shougo/denite.nvim
 antlr.vim https://github.com/dylon/vim-antlr
 tern_for_vim https://github.com/ternjs/tern_for_vim
+vim-jsx https://github.com/mxw/vim-jsx
 """.strip()
 
 GITHUB_ZIP = '%s/archive/master.zip'
