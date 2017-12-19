@@ -53,7 +53,6 @@ lightline.vim https://github.com/itchyny/lightline.vim
 python-mode https://github.com/klen/python-mode
 django-plug.vim https://github.com/tweekmonster/django-plus.vim.git
 vim-javascript https://github.com/pangloss/vim-javascript
-base16-vim https://github.com/chriskempson/base16-vim
 tagbar https://github.com/majutsushi/tagbar
 indentLine https://github.com/Yggdroot/indentLine
 vim-scala https://github.com/derekwyatt/vim-scala
@@ -64,6 +63,7 @@ lightline-gruvbox https://github.com/shinchu/lightline-gruvbox.vim
 vim-javacomplete2 https://github.com/artur-shaik/vim-javacomplete2
 denite.nvim https://github.com/Shougo/denite.nvim
 antlr.vim https://github.com/dylon/vim-antlr
+tern_for_vim https://github.com/ternjs/tern_for_vim
 """.strip()
 
 GITHUB_ZIP = '%s/archive/master.zip'
