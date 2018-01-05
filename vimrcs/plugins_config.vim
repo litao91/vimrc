@@ -190,3 +190,5 @@ let g:ycm_global_ycm_extra_conf = '~/.vim_runtime/.ycm_extra_conf.py'
 
 au BufRead,BufNewFile *.g set filetype=antlr3
 au BufRead,BufNewFile *.g4 set filetype=antlr4
+
+let g:jsx_ext_required = 0
