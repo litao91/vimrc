@@ -10,8 +10,8 @@ if !exists("g:go_metalinter_enabled")
   let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
 endif
 
-if !exists("g:go_metalinter_excludes")
-  let g:go_metalinter_excludes = []
+if !exists("g:go_metalinter_disabled")
+  let g:go_metalinter_disabled = []
 endif
 
 if !exists("g:go_golint_bin")
@@ -44,8 +44,8 @@ function! go#lint#Gometa(autosave, ...) abort
       let cmd += ["--enable=".linter]
     endfor
 
-    for exclude in g:go_metalinter_excludes
-      let cmd += ["--exclude=".exclude]
+    for linter in g:go_metalinter_disabled
+      let cmd += ["--disable=".linter]
     endfor
 
     " gometalinter has a --tests flag to tell its linters whether to run
@@ -59,8 +59,12 @@ function! go#lint#Gometa(autosave, ...) abort
     let cmd += split(g:go_metalinter_command, " ")
   endif
 
-  " Include only messages for the active buffer for autosave.
   if a:autosave
+    " redraw so that any messages that were displayed while writing the file
+    " will be cleared
+    redraw
+
+    " Include only messages for the active buffer for autosave.
     let cmd += [printf('--include=^%s:.*$', fnamemodify(expand('%:p'), ":."))]
   endif
 
@@ -95,7 +99,6 @@ function! go#lint#Gometa(autosave, ...) abort
 
   let l:listtype = go#list#Type("GoMetaLinter")
   if l:err == 0
-    redraw | echo
     call go#list#Clean(l:listtype)
     call go#list#Window(l:listtype)
     echon "vim-go: " | echohl Function | echon "[metalinter] PASS" | echohl None

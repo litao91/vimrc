@@ -30,6 +30,11 @@ BUG FIXES:
 * Make sure gometalinter is run on the given directories when arguments are
   given to :GoMetaLinter.
   [[GH-1640]](https://github.com/fatih/vim-go/pull/1640)
+* Do not run disabled linters with `gometalinter`.
+  [[GH-1648]](https://github.com/fatih/vim-go/pull/1648)
+* Do not prompt user to press enter after when gometalinter is called in
+  autosave mode
+  [[GH-1654]](https://github.com/fatih/vim-go/pull/1654)
 
 BACKWARDS INCOMPATIBILITIES:
 
@@ -47,6 +52,8 @@ BACKWARDS INCOMPATIBILITIES:
   * `go_highlight_function_calls`: This higlights now all all function and
     method calls.
   [[GH-1557]](https://github.com/fatih/vim-go/pull/1557)
+* Rename g`g:go_metalinter_excludes` to `g:go_metalinter_disabled`.
+  [[GH-1648]](https://github.com/fatih/vim-go/pull/1648)
 
 ## 1.16 - (December 29, 2017)
 

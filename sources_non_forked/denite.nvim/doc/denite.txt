@@ -1240,6 +1240,12 @@ OPTIONS							*denite-options*
 		Enable statusline.
 		Default: true
 
+						*denite-options-skiptime*
+-skiptime={time}
+		Specify the filtering skiptime when narrowing in huge
+		candidates(over 20000).
+		Default: 500
+
 						*denite-options-unique*
 -unique
 		Unique the candidates by word attribute.
@@ -1430,10 +1436,6 @@ file_rec	Gather files recursive and nominates all file names under the
 				wildignore plus the given patterns.
 				Note: The patterns are based on fnmatch python
 				module.
-
-		min_cache_files	the minimum number of files that
-				it saves the caches.
-				(default is 10000)
 
 						*denite-source-filetype*
 filetype	Gather filetypes and change the filetype of the current
@@ -1808,9 +1810,9 @@ syntax_name		(String)		(Optional)
 				*denite-source-attribute-max_candidates*
 max_candidates		(Number)		(Optional)
 		If the candidates are more than it, denite will ignore the
-		filtering in asynchronous mode.
+		filtering.
 
-		If you omit it, 10000 is used.
+		If you omit it, 1000 is used.
 
 					*denite-source-attribute-matchers*
 matchers	(List)				(Optional)
@@ -1856,6 +1858,11 @@ define_syntax
 highlight
 		(Function)			(Optional)
 		Apply the source specific syntax highlight.
+
+				*denite-source-attribute-is_public_context*
+is_public_context
+		(Bool)			(Optional)
+		If it is True, the source context can be accessed by action.
 
 					*denite-source-attribute-on_init*
 on_init		(Function)			(Optional)
@@ -2005,6 +2012,8 @@ action_{name} (Function) 			(Optional)
 		    for target in context['targets']:
 		      source_context = target['source']
 <
+		Note: The source must be
+		|denite-source-attribute-is_public_context|.
 		Note: The source context is "__" prefixed keys (source
 		specific keys) only.
 

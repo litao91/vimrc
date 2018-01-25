@@ -14,6 +14,7 @@ import denite.kind    # noqa
 import importlib.machinery
 import copy
 import re
+import time
 from collections import ChainMap
 from itertools import filterfalse
 
@@ -84,19 +85,29 @@ class Denite(object):
                 ctx['ignorecase'] = re.search(r'[A-Z]', ctx['input']) is None
             ctx['mode'] = context['mode']
             ctx['async_timeout'] = 0.03 if ctx['mode'] != 'insert' else 0.02
-            if ctx['prev_input'] != ctx['input'] and ctx['is_interactive']:
-                ctx['event'] = 'interactive'
-                ctx['all_candidates'] = self._gather_source_candidates(
-                    ctx, source)
+            if ctx['prev_input'] != ctx['input']:
+                ctx['prev_time'] = time.time()
+                if ctx['is_interactive']:
+                    ctx['event'] = 'interactive'
+                    ctx['all_candidates'] = self._gather_source_candidates(
+                        ctx, source)
             ctx['prev_input'] = ctx['input']
             entire = ctx['all_candidates']
             if ctx['is_async']:
                 ctx['event'] = 'async'
                 entire += self._gather_source_candidates(ctx, source)
+            if len(entire) > 20000 and (time.time() - ctx['prev_time'] <
+                                        int(context['skiptime']) / 1000.0):
+                ctx['is_skipped'] = True
+                yield self._get_source_status(
+                    ctx, source, entire, []), [], []
+                continue
             if not entire:
                 yield self._get_source_status(
                     ctx, source, entire, []), [], []
                 continue
+
+            ctx['is_skipped'] = False
             partial = []
             ctx['candidates'] = entire
             for i in range(0, len(entire), 1000):
@@ -107,14 +118,14 @@ class Denite(object):
                             if x in self._filters]
                 self.match_candidates(ctx, matchers)
                 partial += ctx['candidates']
-                if len(partial) >= 1000:
+                if len(partial) >= source.max_candidates:
                     break
             ctx['candidates'] = partial
             for f in [self._filters[x]
                       for x in source.sorters + source.converters
                       if x in self._filters]:
                 ctx['candidates'] = f.filter(ctx)
-            partial = ctx['candidates']
+            partial = ctx['candidates'][: source.max_candidates]
             for c in partial:
                 c['source_name'] = source.name
                 c['source_index'] = source.index
@@ -163,21 +174,18 @@ class Denite(object):
             source.context = copy.copy(context)
             source.context['args'] = args
             source.context['is_async'] = False
+            source.context['is_skipped'] = False
             source.context['is_interactive'] = False
             source.context['all_candidates'] = []
             source.context['candidates'] = []
+            source.context['prev_time'] = time.time()
             source.index = index
 
             # Set the source attributes.
-            source.matchers = get_custom_source(
-                self._custom, source.name,
-                'matchers', source.matchers)
-            source.sorters = get_custom_source(
-                self._custom, source.name,
-                'sorters', source.sorters)
-            source.converters = get_custom_source(
-                self._custom, source.name,
-                'converters', source.converters)
+            self._set_source_attribute(source, 'matchers')
+            self._set_source_attribute(source, 'sorters')
+            self._set_source_attribute(source, 'converters')
+            self._set_source_attribute(source, 'max_candidates')
             source.vars.update(
                 get_custom_source(self._custom, source.name,
                                   'vars', source.vars))
@@ -193,6 +201,11 @@ class Denite(object):
         for filter in [x for x in self._filters.values()
                        if x.vars and x.name in self._custom['filter']]:
             filter.vars.update(self._custom['filter'][filter.name])
+
+    def _set_source_attribute(self, source, attr):
+        source_attr = getattr(source, attr)
+        setattr(source, attr, get_custom_source(
+            self._custom, source.name, attr, source_attr))
 
     def on_close(self, context):
         for source in self._current_sources:
@@ -262,11 +275,12 @@ class Denite(object):
             return True
 
         for target in targets:
+            source = self._current_sources[target['source_index']]
             target['source_context'] = {
                 k: v for k, v in
-                self._current_sources[target['source_index']].context.items()
+                source.context.items()
                 if k.startswith('__')
-            }
+            } if source.is_public_context else {}
 
         context['targets'] = targets
         return action['func'](context) if action['func'] else self._vim.call(
@@ -363,4 +377,5 @@ class Denite(object):
 
     def is_async(self):
         return len([x for x in self._current_sources
-                    if x.context['is_async']]) > 0
+                    if x.context['is_async'] or x.context['is_skipped']
+                    ]) > 0
