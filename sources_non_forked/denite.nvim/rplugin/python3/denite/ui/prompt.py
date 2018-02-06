@@ -1,3 +1,4 @@
+from copy import copy
 from .action import DEFAULT_ACTION_RULES
 from datetime import timedelta, datetime
 from ..prompt.prompt import (
@@ -16,10 +17,6 @@ class DenitePrompt(Prompt):
         # Remove prompt:accept/prompt:cancel which would break denite
         self.action.unregister('prompt:accept', fail_silently=True)
         self.action.unregister('prompt:cancel', fail_silently=True)
-
-        self.harvest_interval = 0.01
-        self._previous_text = self.text
-        self._timeout = datetime.now()
 
     @property
     def text(self):
@@ -49,7 +46,9 @@ class DenitePrompt(Prompt):
         # NOTE:
         # 'inputsave' is not required to be called while denite call it
         # at denite#start
-        pass
+        self.harvest_interval = 0.03
+        self._previous_text = self.text
+        self._timeout = datetime.now()
 
     def on_term(self, status):
         # NOTE:
@@ -88,7 +87,14 @@ class DenitePrompt(Prompt):
     def on_keypress(self, keystroke):
         m = ACTION_KEYSTROKE_PATTERN.match(str(keystroke))
         if m:
-            return self.action.call(self, m.group('action'))
+            bufvars = self.denite._bufvars
+            bufvars['denite_context'] = self.context
+            prev_context = copy(self.context)
+            ret = self.action.call(self, m.group('action'))
+            if bufvars['denite_context'] != prev_context:
+                # Update context
+                self.context = bufvars['denite_context']
+            return ret
         elif self.denite.current_mode == 'insert':
             # Updating text from a keystroke is a feature of 'insert' mode
             self.update_text(str(keystroke))
