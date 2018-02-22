@@ -58,7 +58,7 @@ class Default(object):
             weakref.proxy(self)
         )
         self._guicursor = ''
-        self._prev_status = ''
+        self._prev_status = {}
         self._prev_curpos = []
         self._is_suspend = False
         self._save_window_options = {}
@@ -142,7 +142,7 @@ class Default(object):
         return
 
     def init_buffer(self):
-        self._prev_status = ''
+        self._prev_status = dict()
         self._displayed_texts = []
 
         if not self._is_suspend:
@@ -257,10 +257,11 @@ class Default(object):
 
     def init_syntax(self):
         self._vim.command('syntax case ignore')
+        self._vim.command('highlight clear')
         self._vim.command('highlight default link deniteMode ModeMsg')
-        self._vim.command('highlight default link deniteMatchedRange ' +
+        self._vim.command('highlight link deniteMatchedRange ' +
                           self._context['highlight_matched_range'])
-        self._vim.command('highlight default link deniteMatchedChar ' +
+        self._vim.command('highlight link deniteMatchedChar ' +
                           self._context['highlight_matched_char'])
         self._vim.command('highlight default link ' +
                           'deniteStatusLinePath Comment')
@@ -386,7 +387,7 @@ class Default(object):
             self._vim.command('silent! syntax clear deniteMatchedChar')
         if self._matched_pattern != '':
             self._vim.command(
-                'silent! syntax match deniteMatchedRange /%s/ contained' % (
+                'silent! syntax match deniteMatchedRange /\c%s/ contained' % (
                     regex_convert_py_vim(self._matched_pattern),
                 )
             )
@@ -405,23 +406,30 @@ class Default(object):
         self.move_cursor()
 
     def update_status(self):
+        raw_mode = self._current_mode.upper()
+        cursor_location = self._cursor + self._win_cursor
         max_len = len(str(self._candidates_len))
         linenr = ('{:'+str(max_len)+'}/{:'+str(max_len)+'}').format(
-            self._cursor + self._win_cursor,
+            cursor_location,
             self._candidates_len)
-        mode = '-- ' + self._current_mode.upper() + ' -- '
+        mode = '-- ' + raw_mode + ' -- '
         if self._context['error_messages']:
             mode = '[ERROR] ' + mode
         path = '[' + self._context['path'] + ']'
 
-        status = mode + self._statusline_sources + path + linenr
+        status = {
+            'mode': mode,
+            'sources': self._statusline_sources,
+            'path': path,
+            'linenr': linenr,
+            # Extra
+            'raw_mode': raw_mode,
+            'buffer_name': self._context['buffer_name'],
+            'line_cursor': cursor_location,
+            'line_total': self._candidates_len,
+        }
         if status != self._prev_status:
-            st_vars = {}
-            st_vars['mode'] = mode
-            st_vars['sources'] = self._statusline_sources
-            st_vars['path'] = path
-            st_vars['linenr'] = linenr
-            self._bufvars['denite_statusline'] = st_vars
+            self._bufvars['denite_statusline'] = status
             self._vim.command('redrawstatus')
             self._prev_status = status
 
@@ -676,7 +684,6 @@ class Default(object):
         if is_quit:
             self.quit()
 
-        prev_input = self._context['input']
         self._denite.do_action(self._context, action_name, candidates)
 
         if is_quit and not self._context['quit']:
@@ -689,11 +696,9 @@ class Default(object):
             # Disable quit flag
             is_quit = False
 
-        if not is_quit and action['is_redraw']:
-            self.init_cursor()
-            self.redraw()
-            if self._context['input'] != prev_input:
-                self._prompt.caret.locus = self._prompt.caret.tail
+        if not is_quit:
+            self._selected_candidates = []
+            self.redraw(action['is_redraw'])
 
         self._result = candidates
         return STATUS_ACCEPT if is_quit else None

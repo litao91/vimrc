@@ -162,7 +162,7 @@ Default mappings:
 
 ### Optional
 
-`g:JavaComplete_LibsPath` - path to additional jar files. This path appends with you libraries specified in `pom.xml`. Here you can add, for example, your glassfish libs directory or your project libs. It will be automatically append your JRE home path.
+`g:JavaComplete_LibsPath` - path to additional jar files. This path appends with your libraries specified in `pom.xml`. Here you can add, for example, your glassfish libs directory or your project libs. It will be automatically append your JRE home path.
 
 `g:JavaComplete_SourcesPath` - path of additional sources. Don't try to add all sources you have, this will slow down the parsing process. Instead, add your project sources and necessary library sources. If you have compiled classes add them to the previous config (`g:JavaComplete_LibsPath`) instead. By default the plugin will search the `src` directory and add it automatically.
 
@@ -185,6 +185,8 @@ Default mappings:
 `let g:JavaComplete_GradleExecutable = 'gradle'` - use your own path to gradle executable file.
 
 `let g:JavaComplete_ImportSortType = 'jarName'` - imports sorting type. Sorting can be by jar archives `jarName` or by package names `packageName`.
+
+`let g:JavaComplete_StaticImportsAtTop = 1` - imports sorting with static imports at the top. By default this is `0`.
 
 `let g:JavaComplete_ImportOrder = ['java.', 'javax.', 'com.', 'org.', 'net.']` - Specifies the order of import groups, when use `packageName` sorting type.  An import group is a list of individual import statements that all start with the same beginning of package name surrounded by blank lines above and below the group. A `*` indicates all packages not specified, for 'google style' import ordering, e.g. `let g:JavaComplete_ImportOrder = ['com.google.', *, 'java.', 'javax.']`
 
