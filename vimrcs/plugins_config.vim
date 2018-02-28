@@ -202,5 +202,7 @@ let g:jsx_ext_required = 0
 " => vim-easygrep
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:EasyGrepRecursive = 1
+let g:EasyGrepWindow = 1
+let g:EasyGrepFilesToExclude='*.git,*.swp,*~,*.class,*.zip,*.jar'
 
 
