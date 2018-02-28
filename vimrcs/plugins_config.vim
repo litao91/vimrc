@@ -46,7 +46,12 @@ map <leader>j :CtrlP<cr>
 map <c-f> :CtrlPBuffer<cr>
 
 let g:ctrlp_max_height = 20
-let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
+" let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee|^\.class'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll|jar|class)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
 
 
 """"""""""""""""""""""""""""""
