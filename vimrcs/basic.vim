@@ -189,6 +189,7 @@ set tabstop=4
 
 autocmd FileType javascript setlocal ts=2 sw=2 expandtab
 autocmd FileType lua setlocal ts=2 sw=2 expandtab
+autocmd FileType java setlocal ts=2 sw=2 expandtab
 
 " Linebreak on 500 characters
 set lbr
