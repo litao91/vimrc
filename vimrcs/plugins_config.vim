@@ -205,4 +205,7 @@ let g:EasyGrepRecursive = 1
 let g:EasyGrepWindow = 1
 let g:EasyGrepFilesToExclude='*.git,*.swp,*~,*.class,*.zip,*.jar'
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-grepper
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

@@ -65,7 +65,7 @@ denite.nvim https://github.com/Shougo/denite.nvim
 antlr.vim https://github.com/dylon/vim-antlr
 tern_for_vim https://github.com/ternjs/tern_for_vim
 vim-jsx https://github.com/mxw/vim-jsx
-vim-easygrep https://github.com/dkprice/vim-easygrep
+vim-grepper https://github.com/mhinz/vim-grepper
 """.strip()
 
 GITHUB_ZIP = '%s/archive/master.zip'
