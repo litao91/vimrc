@@ -2,10 +2,11 @@
 
 FEATURES:
 
-* **Debugger support!**. Add integrated support for the [`delve`](https://github.com/derekparker/delve)
-  debugger. Use `:GoInstallBinaries` to install `dlv`, and see `:help go-debug`
-  to get started.
-  [[GH-1390]](https://github.com/fatih/vim-go/pull/1390).
+* **Debugger support!** Add integrated support for the
+  [`delve`](https://github.com/derekparker/delve) debugger. Use
+  `:GoInstallBinaries` to install `dlv`, and see `:help go-debug` to get
+  started.
+  [[GH-1390]](https://github.com/fatih/vim-go/pull/1390)
 
 IMPROVEMENTS:
 
@@ -17,6 +18,10 @@ IMPROVEMENTS:
   [[GH-1652]](https://github.com/fatih/vim-go/pull/1652)
 * Redraw the screen before executing blocking calls to gocode.
   [[GH-1671]](https://github.com/fatih/vim-go/pull/1671)
+* Add `fe` -> `fmt.Errorf()` snippet for NeoSnippet and UltiSnippets.
+  [[GH-1677]](https://github.com/fatih/vim-go/pull/1677)
+* Use the async api when calling guru from neovim.
+  [[GH-1677]](https://github.com/fatih/vim-go/pull/1678)
 
 BUG FIXES:
 
@@ -56,6 +61,10 @@ BUG FIXES:
 * Show the file location of test errors when the message is empty or begins
   with a newline.
   [[GH-1664]](https://github.com/fatih/vim-go/pull/1664)
+* Fix minisnip on Windows.
+  [[GH-1698]](https://github.com/fatih/vim-go/pull/1698)
+* Keep alternate filename when loading an autocreate template.
+  [[GH-1675]](https://github.com/fatih/vim-go/pull/1675)
 
 
 BACKWARDS INCOMPATIBILITIES:

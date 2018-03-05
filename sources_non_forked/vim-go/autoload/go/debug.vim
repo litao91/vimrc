@@ -15,6 +15,7 @@ endif
 if !exists('s:state')
   let s:state = {
       \ 'rpcid': 1,
+      \ 'running': 0,
       \ 'breakpoint': {},
       \ 'currentThread': {},
       \ 'localVars': {},
@@ -224,6 +225,7 @@ function! s:clearState() abort
   let s:state['currentThread'] = {}
   let s:state['localVars'] = {}
   let s:state['functionArgs'] = {}
+  let s:state['message'] = []
   silent! sign unplace 9999
 endfunction
 
@@ -236,6 +238,7 @@ function! s:stop() abort
 endfunction
 
 function! go#debug#Stop() abort
+  " Remove signs.
   for k in keys(s:state['breakpoint'])
     let bt = s:state['breakpoint'][k]
     if bt.id >= 0
@@ -243,14 +246,17 @@ function! go#debug#Stop() abort
     endif
   endfor
 
-  for k in filter(map(split(execute('command GoDebug'), "\n")[1:], 'matchstr(v:val,"^\\s*\\zs\\S\\+")'), 'v:val!="GoDebugStart"')
+  " Remove all commands and add back the default commands.
+  for k in map(split(execute('command GoDebug'), "\n")[1:], 'matchstr(v:val, "^\\s*\\zs\\S\\+")')
     exe 'delcommand' k
   endfor
-  for k in map(split(execute('map <Plug>(go-debug-'), "\n")[1:], 'matchstr(v:val,"^n\\s\\+\\zs\\S\\+")')
+  command! -nargs=* -complete=customlist,go#package#Complete GoDebugStart call go#debug#Start(<f-args>)
+  command! -nargs=? GoDebugBreakpoint call go#debug#Breakpoint(<f-args>)
+
+  " Remove all mappings.
+  for k in map(split(execute('map <Plug>(go-debug-'), "\n")[1:], 'matchstr(v:val, "^n\\s\\+\\zs\\S\\+")')
     exe 'unmap' k
   endfor
-
-  command! -nargs=* -complete=customlist,go#package#Complete GoDebugStart call go#debug#Start(<f-args>)
 
   call s:stop()
 
@@ -746,22 +752,23 @@ function! s:stack_cb(ch, json) abort
   call s:update_variables()
 endfunction
 
-" Send a command change the cursor location to Delve.
+" Send a command to change the cursor location to Delve.
 "
 " a:name must be one of continue, next, step, or stepOut.
 function! go#debug#Stack(name) abort
-  let name = a:name
+  let l:name = a:name
 
   " Run continue if the program hasn't started yet.
-  if s:state['rpcid'] <= 2
-    let name = 'continue'
+  if s:state.running is 0
+    let s:state.running = 1
+    let l:name = 'continue'
   endif
 
   " Add a breakpoint to the main.Main if the user didn't define any.
   if len(s:state['breakpoint']) is 0
     try
       let res = s:call_jsonrpc('RPCServer.FindLocation', {'loc': 'main.main'})
-      let res = s:call_jsonrpc('RPCServer.CreateBreakpoint', {'Breakpoint':{'addr': res.result.Locations[0].pc}})
+      let res = s:call_jsonrpc('RPCServer.CreateBreakpoint', {'Breakpoint': {'addr': res.result.Locations[0].pc}})
       let bt = res.result.Breakpoint
       let s:state['breakpoint'][bt.id] = bt
     catch
@@ -770,11 +777,12 @@ function! go#debug#Stack(name) abort
   endif
 
   try
-    if name is# 'next' && get(s:, 'stack_name', '') is# 'next'
+    " TODO: document why this is needed.
+    if l:name is# 'next' && get(s:, 'stack_name', '') is# 'next'
       call s:call_jsonrpc('RPCServer.CancelNext')
     endif
-    let s:stack_name = name
-    call s:call_jsonrpc('RPCServer.Command', function('s:stack_cb'), {'name': name})
+    let s:stack_name = l:name
+    call s:call_jsonrpc('RPCServer.Command', function('s:stack_cb'), {'name': l:name})
   catch
     call go#util#EchoError(v:exception)
   endtry
@@ -790,6 +798,7 @@ function! go#debug#Restart() abort
     let l:breaks = s:state['breakpoint']
     let s:state = {
         \ 'rpcid': 1,
+        \ 'running': 0,
         \ 'breakpoint': {},
         \ 'currentThread': {},
         \ 'localVars': {},
@@ -816,8 +825,9 @@ endfunction
 
 " Toggle breakpoint.
 function! go#debug#Breakpoint(...) abort
-  let filename = fnamemodify(expand('%'), ':p:gs!\\!/!')
+  let l:filename = fnamemodify(expand('%'), ':p:gs!\\!/!')
 
+  " Get line number from argument.
   if len(a:000) > 0
     let linenr = str2nr(a:1)
     if linenr is 0
@@ -833,7 +843,7 @@ function! go#debug#Breakpoint(...) abort
     let found = v:none
     for k in keys(s:state.breakpoint)
       let bt = s:state.breakpoint[k]
-      if bt.file == filename && bt.line == linenr
+      if bt.file == l:filename && bt.line == linenr
         let found = bt
         break
       endif
@@ -849,14 +859,14 @@ function! go#debug#Breakpoint(...) abort
     " Add breakpoint.
     else
       if s:isActive()
-        let res = s:call_jsonrpc('RPCServer.CreateBreakpoint', {'Breakpoint':{'file': filename, 'line': linenr}})
+        let res = s:call_jsonrpc('RPCServer.CreateBreakpoint', {'Breakpoint': {'file': l:filename, 'line': linenr}})
         let bt = res.result.Breakpoint
         exe 'sign place '. bt.id .' line=' . bt.line . ' name=godebugbreakpoint file=' . bt.file
         let s:state['breakpoint'][bt.id] = bt
       else
         let id = len(s:state['breakpoint']) + 1
-        let s:state['breakpoint'][id] = {'id': id, 'file': filename, 'line': linenr}
-        exe 'sign place '. id .' line=' . linenr . ' name=godebugbreakpoint file=' . filename
+        let s:state['breakpoint'][id] = {'id': id, 'file': l:filename, 'line': linenr}
+        exe 'sign place '. id .' line=' . linenr . ' name=godebugbreakpoint file=' . l:filename
       endif
     endif
   catch
