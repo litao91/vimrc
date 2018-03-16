@@ -49,6 +49,7 @@ Plug 'https://github.com/dylon/vim-antlr'
 Plug 'https://github.com/ternjs/tern_for_vim'
 Plug 'https://github.com/mxw/vim-jsx'
 Plug 'https://github.com/mhinz/vim-grepper'
+Plug 'Valloric/YouCompleteMe'
 call plug#end()
 
 
