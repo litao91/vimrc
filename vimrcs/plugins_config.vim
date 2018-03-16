@@ -42,12 +42,12 @@ Plug 'https://github.com/morhetz/gruvbox'
 Plug 'https://github.com/w0rp/ale'
 Plug 'https://github.com/shinchu/lightline-gruvbox.vim'
 Plug 'https://github.com/artur-shaik/vim-javacomplete2', {'for': 'java'}
-Plug 'https://github.com/dylon/vim-antlr'
+Plug 'https://github.com/dylon/vim-antlr', {'for': ['antlr3', 'antlr4']}
 Plug 'https://github.com/ternjs/tern_for_vim', {'for': 'js'}
 Plug 'https://github.com/mxw/vim-jsx', {'for': ['js', 'jsx']}
 Plug 'https://github.com/mhinz/vim-grepper'
 Plug '~/.vim_runtime/sources_non_forked/YouCompleteMe'
-Plug 'tomasiser/vim-code-dark'
+Plug 'jacoborus/tender.vim'
 call plug#end()
 
 

@@ -42,7 +42,8 @@ endif
 " colorscheme gruvbox
 " let g:lightline = {}
 " let g:lightline.colorscheme = 'gruvbox'
-colorscheme codedark
+colorscheme tender
+let g:lightline = { 'colorscheme': 'tender' }
 " let g:lightline.colorscheme = 'codedark'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fast editing and reloading of vimrc configs
@@ -76,12 +77,15 @@ cno $c e <C-\>eCurrentFileDir("e")<cr>
 cno $q <C-\>eDeleteTillSlash()<cr>
 
 " Bash like keys for the command line
-cnoremap <C-A>		<Home>
-cnoremap <C-E>		<End>
-cnoremap <C-K>		<C-U>
+"cnoremap <C-A>		<Home>
+"cnoremap <C-E>		<End>
+"cnoremap <C-K>		<C-U>
+"
+"cnoremap <C-P> <Up>
+"cnoremap <C-N> <Down>
 
-cnoremap <C-P> <Up>
-cnoremap <C-N> <Down>
+" Map <Ctrl-[> to exit terminal mode
+tnoremap <C-[> <C-\><C-n>
 
 " Map ½ to something useful
 map ½ $
