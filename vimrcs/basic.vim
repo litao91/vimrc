@@ -153,6 +153,7 @@ set background=dark
 if has("gui_running")
     set guioptions-=T
     set guioptions-=e
+    set t_Co=256
     set guitablabel=%M\ %t
 endif
 set shell=/bin/bash
@@ -212,6 +213,10 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tread long lines as break lines (useful when moving around in them)
+map j gj
+map k gk
+
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
 map <space> /
 map <c-space> ?
