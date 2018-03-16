@@ -9,7 +9,7 @@
 " => Load pathogen paths
 """"""""""""""""""""""""""""""
 call pathogen#infect('~/.vim_runtime/sources_forked/{}')
-call pathogen#infect('~/.vim_runtime/sources_non_forked/{}')
+"call pathogen#infect('~/.vim_runtime/sources_non_forked/{}')
 call pathogen#helptags()
 
 
@@ -19,37 +19,36 @@ call pathogen#helptags()
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'junegunn/vim-easy-align'
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
-Plug 'https://github.com/scrooloose/nerdtree'
-Plug 'chr4/nginx.vim'
+Plug 'https://github.com/scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
+Plug 'chr4/nginx.vim', {'for': 'nginx'}
 Plug 'https://github.com/altercation/vim-colors-solarized'
-Plug 'https://github.com/groenewege/vim-less'
+Plug 'https://github.com/groenewege/vim-less', {'for': 'less'}
 Plug 'https://github.com/tpope/vim-surround'
 Plug 'https://github.com/terryma/vim-expand-region'
 Plug 'https://github.com/terryma/vim-multiple-cursors'
 Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/tpope/vim-commentary'
-Plug 'https://github.com/fatih/vim-go'
+Plug 'https://github.com/fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries'}
 Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'https://github.com/digitaltoad/vim-pug'
 Plug 'https://github.com/maxbrunsfeld/vim-yankstack'
 Plug 'https://github.com/itchyny/lightline.vim'
-Plug 'https://github.com/klen/python-mode'
+Plug 'https://github.com/klen/python-mode', {'for': 'python'}
 Plug 'https://github.com/tweekmonster/django-plus.vim.git'
-Plug 'https://github.com/pangloss/vim-javascript'
+Plug 'https://github.com/pangloss/vim-javascript', {'for': 'js'}
 Plug 'https://github.com/majutsushi/tagbar'
 Plug 'https://github.com/Yggdroot/indentLine'
-Plug 'https://github.com/derekwyatt/vim-scala'
-Plug 'https://github.com/posva/vim-vue'
+Plug 'https://github.com/derekwyatt/vim-scala', {'for': 'scala'}
+Plug 'https://github.com/posva/vim-vue', {'for': 'vue'}
 Plug 'https://github.com/morhetz/gruvbox'
 Plug 'https://github.com/w0rp/ale'
 Plug 'https://github.com/shinchu/lightline-gruvbox.vim'
-Plug 'https://github.com/artur-shaik/vim-javacomplete2'
-Plug 'https://github.com/Shougo/denite.nvim'
+Plug 'https://github.com/artur-shaik/vim-javacomplete2', {'for': 'java'}
 Plug 'https://github.com/dylon/vim-antlr'
-Plug 'https://github.com/ternjs/tern_for_vim'
-Plug 'https://github.com/mxw/vim-jsx'
+Plug 'https://github.com/ternjs/tern_for_vim', {'for': 'js'}
+Plug 'https://github.com/mxw/vim-jsx', {'for': ['js', 'jsx']}
 Plug 'https://github.com/mhinz/vim-grepper'
-Plug '~/.local/share/nvim/plugged/YouCompleteMe'
+Plug '~/.vim_runtime/sources_non_forked/YouCompleteMe'
 call plug#end()
 
 
