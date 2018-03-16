@@ -41,7 +41,6 @@ Plug 'https://github.com/posva/vim-vue', {'for': 'vue'}
 Plug 'https://github.com/morhetz/gruvbox'
 Plug 'https://github.com/w0rp/ale'
 Plug 'https://github.com/shinchu/lightline-gruvbox.vim'
-Plug 'https://github.com/artur-shaik/vim-javacomplete2', {'for': 'java'}
 Plug 'https://github.com/dylon/vim-antlr', {'for': ['antlr3', 'antlr4']}
 Plug 'https://github.com/ternjs/tern_for_vim', {'for': 'js'}
 Plug 'https://github.com/mxw/vim-jsx', {'for': ['js', 'jsx']}
@@ -234,6 +233,7 @@ let g:ycm_global_ycm_extra_conf = '~/.vim_runtime/.ycm_extra_conf.py'
 
 au BufRead,BufNewFile *.g set filetype=antlr3
 au BufRead,BufNewFile *.g4 set filetype=antlr4
+nnoremap <leader>] :YcmCompleter GoTo
 
 let g:jsx_ext_required = 0
 
