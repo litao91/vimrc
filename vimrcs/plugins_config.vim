@@ -9,7 +9,7 @@
 " => Load pathogen paths
 """"""""""""""""""""""""""""""
 call pathogen#infect('~/.vim_runtime/sources_forked/{}')
-" call pathogen#infect('~/.vim_runtime/sources_non_forked/{}')
+call pathogen#infect('~/.vim_runtime/sources_non_forked/{}')
 call pathogen#helptags()
 
 
@@ -20,7 +20,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'junegunn/vim-easy-align'
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 Plug 'https://github.com/scrooloose/nerdtree'
-Plug 'https://github.com/evanmiller/nginx-vim-syntax'
+Plug 'chr4/nginx.vim'
 Plug 'https://github.com/altercation/vim-colors-solarized'
 Plug 'https://github.com/groenewege/vim-less'
 Plug 'https://github.com/tpope/vim-surround'
