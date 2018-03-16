@@ -39,9 +39,11 @@ if (has("termguicolors"))
     set termguicolors
 endif
 
-colorscheme gruvbox
-let g:lightline = {}
-let g:lightline.colorscheme = 'gruvbox'
+" colorscheme gruvbox
+" let g:lightline = {}
+" let g:lightline.colorscheme = 'gruvbox'
+colorscheme codedark
+" let g:lightline.colorscheme = 'codedark'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fast editing and reloading of vimrc configs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

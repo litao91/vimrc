@@ -21,7 +21,6 @@ Plug 'junegunn/vim-easy-align'
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 Plug 'https://github.com/scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'chr4/nginx.vim', {'for': 'nginx'}
-Plug 'https://github.com/altercation/vim-colors-solarized'
 Plug 'https://github.com/groenewege/vim-less', {'for': 'less'}
 Plug 'https://github.com/tpope/vim-surround'
 Plug 'https://github.com/terryma/vim-expand-region'
@@ -31,7 +30,6 @@ Plug 'https://github.com/tpope/vim-commentary'
 Plug 'https://github.com/fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries'}
 Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'https://github.com/digitaltoad/vim-pug'
-Plug 'https://github.com/maxbrunsfeld/vim-yankstack'
 Plug 'https://github.com/itchyny/lightline.vim'
 Plug 'https://github.com/klen/python-mode', {'for': 'python'}
 Plug 'https://github.com/tweekmonster/django-plus.vim.git'
@@ -49,6 +47,7 @@ Plug 'https://github.com/ternjs/tern_for_vim', {'for': 'js'}
 Plug 'https://github.com/mxw/vim-jsx', {'for': ['js', 'jsx']}
 Plug 'https://github.com/mhinz/vim-grepper'
 Plug '~/.vim_runtime/sources_non_forked/YouCompleteMe'
+Plug 'tomasiser/vim-code-dark'
 call plug#end()
 
 
