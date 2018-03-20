@@ -18,33 +18,32 @@ call pathogen#helptags()
 """"""""""""""""""""""""""""""
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'junegunn/vim-easy-align'
-Plug 'https://github.com/ctrlpvim/ctrlp.vim'
-Plug 'https://github.com/scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'chr4/nginx.vim', {'for': 'nginx'}
-Plug 'https://github.com/groenewege/vim-less', {'for': 'less'}
-Plug 'https://github.com/tpope/vim-surround'
-Plug 'https://github.com/terryma/vim-expand-region'
-Plug 'https://github.com/terryma/vim-multiple-cursors'
-Plug 'https://github.com/tpope/vim-repeat'
-Plug 'https://github.com/tpope/vim-commentary'
-Plug 'https://github.com/fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries'}
-Plug 'https://github.com/airblade/vim-gitgutter'
-Plug 'https://github.com/digitaltoad/vim-pug'
-Plug 'https://github.com/itchyny/lightline.vim'
-Plug 'https://github.com/klen/python-mode', {'for': 'python'}
-Plug 'https://github.com/tweekmonster/django-plus.vim.git'
-Plug 'https://github.com/pangloss/vim-javascript', {'for': 'js'}
-Plug 'https://github.com/majutsushi/tagbar'
-Plug 'https://github.com/Yggdroot/indentLine'
-Plug 'https://github.com/derekwyatt/vim-scala', {'for': 'scala'}
-Plug 'https://github.com/posva/vim-vue', {'for': 'vue'}
-Plug 'https://github.com/morhetz/gruvbox'
-Plug 'https://github.com/w0rp/ale'
-Plug 'https://github.com/shinchu/lightline-gruvbox.vim'
-Plug 'https://github.com/dylon/vim-antlr', {'for': ['antlr3', 'antlr4']}
-Plug 'https://github.com/ternjs/tern_for_vim', {'for': 'js'}
-Plug 'https://github.com/mxw/vim-jsx', {'for': ['js', 'jsx']}
-Plug 'https://github.com/mhinz/vim-grepper'
+Plug 'groenewege/vim-less', {'for': 'less'}
+Plug 'tpope/vim-surround'
+Plug 'terryma/vim-expand-region'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-commentary'
+Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries'}
+Plug 'airblade/vim-gitgutter'
+Plug 'itchyny/lightline.vim'
+Plug 'klen/python-mode', {'for': 'python'}
+Plug 'tweekmonster/django-plus.vim', {'for': 'python'}
+Plug 'pangloss/vim-javascript', {'for': 'js'}
+Plug 'majutsushi/tagbar'
+Plug 'Yggdroot/indentLine'
+Plug 'derekwyatt/vim-scala', {'for': 'scala'}
+Plug 'posva/vim-vue', {'for': ['vue', 'js']}
+Plug 'morhetz/gruvbox'
+Plug 'w0rp/ale'
+Plug 'shinchu/lightline-gruvbox.vim'
+Plug 'dylon/vim-antlr', {'for': ['antlr3', 'antlr4']}
+Plug 'ternjs/tern_for_vim', {'for': 'js'}
+Plug 'mxw/vim-jsx', {'for': ['js', 'jsx']}
+Plug 'mhinz/vim-grepper'
 Plug '~/.vim_runtime/sources_non_forked/YouCompleteMe'
 Plug 'jacoborus/tender.vim'
 call plug#end()
