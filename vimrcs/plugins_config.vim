@@ -85,7 +85,7 @@ map <c-f> :CtrlPBuffer<cr>
 let g:ctrlp_max_height = 20
 " let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee|^\.class'
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'dir':  'tem_dir\|node_modules\|\v[\/]\.(git|hg|svn)$',
   \ 'file': '\v\.(exe|so|dll|jar|class)$',
   \ 'link': 'some_bad_symbolic_links',
   \ }
@@ -187,7 +187,7 @@ let g:go_fmt_command = "goimports"
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'python': ['pyflakes'],
-\   'go': ['go', 'golint', 'errcheck']
+\   'go': ['gofmt', 'golint', 'errcheck']
 \}
 
 
