@@ -258,6 +258,7 @@ let g:EasyGrepWindow = 1
 let g:EasyGrepFilesToExclude='*.git,*.swp,*~,*.class,*.zip,*.jar'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vim-grepper
+" => vim-markdown-composer
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:markdown_composer_open_browser = 0
 
