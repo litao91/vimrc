@@ -16,10 +16,23 @@ call pathogen#helptags()
 """"""""""""""""""""""""""""""
 " => Load pathogen paths
 """"""""""""""""""""""""""""""
+function! BuildComposer(info)
+  if a:info.status != 'unchanged' || a:info.force
+    if has('nvim')
+      !cargo build --release
+    else
+      !cargo build --release --no-default-features --features json-rpc
+    endif
+  endif
+endfunction
+
+
 call plug#begin('~/.local/share/nvim/plugged')
+Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 Plug 'junegunn/vim-easy-align'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
+Plug 'Xuyuanp/nerdtree-git-plugin', {'on': 'NERDTreeToggle'}
 Plug 'chr4/nginx.vim', {'for': 'nginx'}
 Plug 'groenewege/vim-less', {'for': 'less'}
 Plug 'tpope/vim-surround'
@@ -30,6 +43,7 @@ Plug 'tpope/vim-commentary'
 Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries'}
 Plug 'airblade/vim-gitgutter'
 Plug 'itchyny/lightline.vim'
+Plug 'maximbaz/lightline-ale'
 Plug 'klen/python-mode', {'for': 'python'}
 Plug 'tweekmonster/django-plus.vim', {'for': 'python'}
 Plug 'pangloss/vim-javascript', {'for': 'js'}
