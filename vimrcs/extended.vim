@@ -42,8 +42,10 @@ endif
 " colorscheme gruvbox
 " let g:lightline = {}
 " let g:lightline.colorscheme = 'gruvbox'
-colorscheme tender
-let g:lightline = { 'colorscheme': 'tender' }
+" colorscheme tender
+colorscheme space-vim-dark
+hi Comment cterm=italic
+" let g:lightline = { 'colorscheme': 'tender' }
 " let g:lightline.colorscheme = 'codedark'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fast editing and reloading of vimrc configs
