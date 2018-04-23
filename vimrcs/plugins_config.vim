@@ -61,6 +61,7 @@ Plug 'mhinz/vim-grepper'
 Plug '~/.vim_runtime/sources_non_forked/YouCompleteMe'
 Plug 'jacoborus/tender.vim'
 Plug 'liuchengxu/space-vim-dark'
+Plug 'litao91/mdtree'
 call plug#end()
 
 
@@ -137,6 +138,11 @@ let g:NERDTreeWinSize=35
 map <C-e> :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark
 map <leader>e :NERDTreeFind<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => MD Tree
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <C-m> :MDTreeToggle<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
