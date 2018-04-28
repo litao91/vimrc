@@ -43,7 +43,10 @@ endif
 " let g:lightline = {}
 " let g:lightline.colorscheme = 'gruvbox'
 " colorscheme tender
-colorscheme space-vim-dark
+colorscheme neodark
+let g:neodark#use_256color = 1
+let g:lightline.colorscheme = 'neodark'
+
 hi Comment cterm=italic
 " let g:lightline = { 'colorscheme': 'tender' }
 " let g:lightline.colorscheme = 'codedark'

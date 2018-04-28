@@ -62,6 +62,7 @@ Plug '~/.vim_runtime/sources_non_forked/YouCompleteMe'
 Plug 'jacoborus/tender.vim'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'litao91/mdtree'
+Plug 'KeitaNakamura/neodark.vim'
 call plug#end()
 
 
