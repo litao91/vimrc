@@ -270,5 +270,4 @@ let g:EasyGrepFilesToExclude='*.git,*.swp,*~,*.class,*.zip,*.jar'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:markdown_composer_open_browser = 0
 let g:markdown_composer_custom_css = ['file://' . $HOME . "/.vim_runtime/resources/mdstyles/sao.css"]
-echo g:markdown_composer_custom_css
 
