@@ -63,6 +63,7 @@ Plug 'jacoborus/tender.vim'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'litao91/mdtree'
 Plug 'KeitaNakamura/neodark.vim'
+Plug 'mzlogin/vim-markdown-toc'
 call plug#end()
 
 
