@@ -97,7 +97,7 @@ nmap <c-Y> <Plug>yankstack_substitute_newer_paste
 let g:ctrlp_working_path_mode = 0
 
 "let g:ctrlp_map = '<c-f>'
-map <c-m> :CtrlPMRUFiles<CR>
+map <leader>m :CtrlPMRUFiles<CR>
 map <c-f> :CtrlPBuffer<cr>
 
 let g:ctrlp_max_height = 20
@@ -255,7 +255,7 @@ let g:ycm_global_ycm_extra_conf = '~/.vim_runtime/.ycm_extra_conf.py'
 
 au BufRead,BufNewFile *.g set filetype=antlr3
 au BufRead,BufNewFile *.g4 set filetype=antlr4
-nnoremap <leader>] :YcmCompleter GoTo
+nnoremap <leader>] :YcmCompleter GoTo<cr>
 
 let g:jsx_ext_required = 0
 
