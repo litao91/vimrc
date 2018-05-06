@@ -80,7 +80,6 @@ map <leader>o :BufExplorer<cr>
 " => MRU plugin
 """"""""""""""""""""""""""""""
 let MRU_Max_Entries = 400
-map <leader>f :MRU<CR>
 
 
 """"""""""""""""""""""""""""""
@@ -96,7 +95,7 @@ nmap <c-Y> <Plug>yankstack_substitute_newer_paste
 let g:ctrlp_working_path_mode = 0
 
 "let g:ctrlp_map = '<c-f>'
-map <leader>j :CtrlP<cr>
+map <c-m> :CtrlPMRUFiles<CR>
 map <c-f> :CtrlPBuffer<cr>
 
 let g:ctrlp_max_height = 20
