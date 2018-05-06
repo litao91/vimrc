@@ -63,6 +63,8 @@ Plug 'jacoborus/tender.vim'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'litao91/mdtree'
 Plug 'KeitaNakamura/neodark.vim'
+Plug 'mzlogin/vim-markdown-toc'
+Plug 'gabrielelana/vim-markdown'
 call plug#end()
 
 
@@ -268,4 +270,5 @@ let g:EasyGrepFilesToExclude='*.git,*.swp,*~,*.class,*.zip,*.jar'
 " => vim-markdown-composer
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:markdown_composer_open_browser = 0
+let g:markdown_composer_custom_css = ['file://' . $HOME . "/.vim_runtime/resources/mdstyles/sao-x.css"]
 
