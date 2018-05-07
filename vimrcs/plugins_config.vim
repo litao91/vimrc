@@ -97,7 +97,7 @@ nmap <c-Y> <Plug>yankstack_substitute_newer_paste
 let g:ctrlp_working_path_mode = 0
 
 "let g:ctrlp_map = '<c-f>'
-map <leader>m :CtrlPMRUFiles<CR>
+map <leader>m :CtrlPMRUFiles<cr>
 map <c-f> :CtrlPBuffer<cr>
 
 let g:ctrlp_max_height = 20
