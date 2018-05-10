@@ -64,7 +64,7 @@ Plug 'liuchengxu/space-vim-dark'
 Plug 'litao91/mdtree'
 Plug 'KeitaNakamura/neodark.vim'
 Plug 'mzlogin/vim-markdown-toc'
-Plug 'gabrielelana/vim-markdown'
+Plug 'plasticboy/vim-markdown'
 call plug#end()
 
 
