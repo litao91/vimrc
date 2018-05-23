@@ -65,6 +65,7 @@ Plug 'litao91/mdtree'
 Plug 'KeitaNakamura/neodark.vim'
 Plug 'mzlogin/vim-markdown-toc'
 Plug 'plasticboy/vim-markdown'
+Plug 'diepm/vim-rest-console'
 call plug#end()
 
 
