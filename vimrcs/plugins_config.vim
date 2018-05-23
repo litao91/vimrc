@@ -276,3 +276,13 @@ let g:markdown_composer_custom_css = ['file://' . $HOME . "/.vim_runtime/resourc
 let g:vim_markdown_folding_disabled = 1
 set conceallevel=0
 let g:vim_markdown_math=1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-rest-console
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" let g:vrc_response_default_content_type = 'json'
+let g:vrc_curl_opts = {
+  \ '-L': '',
+  \ '-i': '',
+  \ '-k': '',
+\}
