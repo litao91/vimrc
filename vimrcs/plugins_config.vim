@@ -287,3 +287,14 @@ let g:vrc_curl_opts = {
   \ '-i': '',
   \ '-k': '',
 \}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => tagbar markdown support
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:tagbar_type_markdown = {
+        \ 'ctagstype' : 'markdown',
+        \ 'kinds' : [
+                \ 'h:headings',
+        \ ],
+    \ 'sort' : 0
+    \ }
