@@ -46,17 +46,17 @@ Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
 Plug 'klen/python-mode', {'for': 'python'}
 Plug 'tweekmonster/django-plus.vim', {'for': 'python'}
-Plug 'pangloss/vim-javascript', {'for': 'js'}
+Plug 'pangloss/vim-javascript', {'for': ['javascript.jsx', 'javascript']}
 Plug 'majutsushi/tagbar'
 Plug 'Yggdroot/indentLine'
 Plug 'derekwyatt/vim-scala', {'for': 'scala'}
-Plug 'posva/vim-vue', {'for': ['vue', 'js']}
+Plug 'posva/vim-vue', {'for': ['vue', 'javascript']}
 Plug 'morhetz/gruvbox'
 Plug 'w0rp/ale'
 Plug 'shinchu/lightline-gruvbox.vim'
 Plug 'dylon/vim-antlr', {'for': ['antlr3', 'antlr4']}
-Plug 'ternjs/tern_for_vim', {'for': 'js'}
-Plug 'mxw/vim-jsx', {'for': ['js', 'jsx']}
+Plug 'ternjs/tern_for_vim', {'for': ['javascript', 'javascript.jsx']}
+Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
 Plug 'mhinz/vim-grepper'
 Plug '~/.vim_runtime/sources_non_forked/YouCompleteMe'
 Plug 'jacoborus/tender.vim'
