@@ -55,7 +55,6 @@ Plug 'morhetz/gruvbox'
 Plug 'w0rp/ale'
 Plug 'shinchu/lightline-gruvbox.vim'
 Plug 'dylon/vim-antlr', {'for': ['antlr3', 'antlr4']}
-Plug 'ternjs/tern_for_vim', {'for': ['javascript', 'javascript.jsx']}
 Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
 Plug 'mhinz/vim-grepper'
 Plug '~/.vim_runtime/sources_non_forked/YouCompleteMe'
