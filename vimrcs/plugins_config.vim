@@ -54,7 +54,7 @@ Plug 'posva/vim-vue', {'for': ['vue', 'javascript']}
 Plug 'morhetz/gruvbox'
 Plug 'w0rp/ale'
 Plug 'shinchu/lightline-gruvbox.vim'
-Plug 'dylon/vim-antlr', {'for': ['antlr3', 'antlr4']}
+Plug 'dylon/vim-antlr'
 Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
 Plug 'mhinz/vim-grepper'
 Plug '~/.vim_runtime/sources_non_forked/YouCompleteMe'
@@ -66,6 +66,7 @@ Plug 'mzlogin/vim-markdown-toc'
 Plug 'plasticboy/vim-markdown'
 Plug 'diepm/vim-rest-console'
 Plug 'godlygeek/tabular'
+Plug 'udalov/kotlin-vim'
 call plug#end()
 
 
