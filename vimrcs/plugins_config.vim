@@ -68,6 +68,7 @@ Plug 'diepm/vim-rest-console'
 Plug 'godlygeek/tabular'
 Plug 'udalov/kotlin-vim'
 Plug 'wsdjeg/FlyGrep.vim'
+Plug 'Shougo/denite.nvim'
 call plug#end()
 
 
