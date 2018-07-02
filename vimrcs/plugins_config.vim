@@ -319,6 +319,17 @@ call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'nor
 call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
 
 
+
+" Change ignore_globs
+call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
+      \ [ '.git/', '.ropeproject/', '__pycache__/',
+      \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/', '*.pyc', '*.class', '*.jar', 'temp_dirs/'])
+
+call denite#custom#var('file/rec', 'command',
+            \ ['ag', '--follow', '--nocolor', '--nogroup', "--ignore={'*.pyc,.git,*.class,*zip,*.jar,temp_dirs}", '-g', ''])
+call denite#custom#var('grep', 'command', ['ag'])
+
 map <c-f> :Denite buffer<cr>
-map <c-p> :Denite file/rec<cr>
+map <c-p> :Denite file_rec<cr>
+map <c-g> :Denite file/rec/git <cr>
 
