@@ -354,5 +354,9 @@ call denite#custom#map('insert', '<C-v>', '<denite:do_action:vsplit>',
     \'noremap')
 call denite#custom#map('normal', '<C-v>', '<denite:do_action:vsplit>',
     \'noremap')
+call denite#custom#map('normal', '<C-t>', '<denite:do_action:tabopen>',
+    \'noremap')
+call denite#custom#map('insert', '<C-t>', '<denite:do_action:tabopen>',
+    \'noremap')
 call denite#custom#map('normal', 'dw', '<denite:delete_word_after_caret>',
     \'noremap')
