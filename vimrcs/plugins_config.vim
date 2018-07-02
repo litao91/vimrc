@@ -30,7 +30,7 @@ endfunction
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 Plug 'junegunn/vim-easy-align'
-Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'Xuyuanp/nerdtree-git-plugin', {'on': 'NERDTreeToggle'}
 Plug 'chr4/nginx.vim', {'for': 'nginx'}
@@ -317,4 +317,8 @@ call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap
 call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
 call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
 call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
+
+
+map <c-f> :Denite buffer<cr>
+map <c-p> :Denite file/rec<cr>
 
