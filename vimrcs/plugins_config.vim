@@ -68,8 +68,11 @@ Plug 'diepm/vim-rest-console'
 Plug 'godlygeek/tabular'
 Plug 'udalov/kotlin-vim'
 Plug 'wsdjeg/FlyGrep.vim'
-Plug 'Shougo/denite.nvim'
+Plug 'Shougo/denite.nvim', {'do': ':UpdateRemovePlugins'}
 Plug 'easymotion/vim-easymotion'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'sheerun/vim-polyglot'
+Plug 'Shougo/neomru.vim'
 call plug#end()
 
 
@@ -333,3 +336,23 @@ map <c-f> :Denite buffer<cr>
 map <c-p> :Denite file_rec<cr>
 map <c-g> :Denite file/rec/git <cr>
 
+augroup deniteresize
+autocmd!
+autocmd VimResized,VimEnter * call denite#custom#option('default',
+      \'winheight', winheight(0) / 2)
+augroup end
+
+call denite#custom#option('default', {
+    \ 'prompt': '❯'
+    \ })
+
+call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>',
+    \'noremap')
+call denite#custom#map('normal', '<Esc>', '<NOP>',
+    \'noremap')
+call denite#custom#map('insert', '<C-v>', '<denite:do_action:vsplit>',
+    \'noremap')
+call denite#custom#map('normal', '<C-v>', '<denite:do_action:vsplit>',
+    \'noremap')
+call denite#custom#map('normal', 'dw', '<denite:delete_word_after_caret>',
+    \'noremap')
