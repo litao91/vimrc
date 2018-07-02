@@ -69,6 +69,7 @@ Plug 'godlygeek/tabular'
 Plug 'udalov/kotlin-vim'
 Plug 'wsdjeg/FlyGrep.vim'
 Plug 'Shougo/denite.nvim'
+Plug 'easymotion/vim-easymotion'
 call plug#end()
 
 
@@ -271,7 +272,7 @@ let g:EasyGrepRecursive = 1
 let g:EasyGrepWindow = 1
 let g:EasyGrepFilesToExclude='*.git,*.swp,*~,*.class,*.zip,*.jar'
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-markdown-composer
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:markdown_composer_open_browser = 0
@@ -302,3 +303,9 @@ let g:tagbar_type_markdown = {
         \ ],
     \ 'sort' : 0
     \ }
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => FlyGrep
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <Space>s/ :FlyGrep<cr>
