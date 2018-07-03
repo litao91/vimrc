@@ -56,7 +56,7 @@ Plug 'w0rp/ale'
 Plug 'shinchu/lightline-gruvbox.vim'
 Plug 'dylon/vim-antlr'
 Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
-Plug 'mhinz/vim-grepper'
+" Plug 'mhinz/vim-grepper'
 Plug '~/.vim_runtime/sources_non_forked/YouCompleteMe'
 Plug 'jacoborus/tender.vim'
 Plug 'liuchengxu/space-vim-dark'
@@ -129,13 +129,6 @@ let g:user_zen_mode='a'
 """"""""""""""""""""""""""""""
 ino <c-j> <c-r>=snipMate#TriggerSnippet()<cr>
 snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
-
-
-""""""""""""""""""""""""""""""
-" => Vim grep
-""""""""""""""""""""""""""""""
-let Grep_Skip_Dirs = 'RCS CVS SCCS .svn generated'
-set grepprg=/bin/grep\ -nH
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -266,13 +259,6 @@ au BufRead,BufNewFile *.g4 set filetype=antlr4
 nnoremap <leader>] :YcmCompleter GoTo<cr>
 
 let g:jsx_ext_required = 0
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vim-easygrep
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:EasyGrepRecursive = 1
-let g:EasyGrepWindow = 1
-let g:EasyGrepFilesToExclude='*.git,*.swp,*~,*.class,*.zip,*.jar'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-markdown-composer
