@@ -67,7 +67,6 @@ Plug 'plasticboy/vim-markdown'
 Plug 'diepm/vim-rest-console'
 Plug 'godlygeek/tabular'
 Plug 'udalov/kotlin-vim'
-Plug 'wsdjeg/FlyGrep.vim'
 Plug 'Shougo/denite.nvim', {'do': ':UpdateRemovePlugins'}
 Plug 'easymotion/vim-easymotion'
 Plug 'ntpeters/vim-better-whitespace'
@@ -309,11 +308,6 @@ let g:tagbar_type_markdown = {
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => FlyGrep
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <Space>s/ :FlyGrep<cr>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Denite
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
@@ -323,33 +317,14 @@ call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'nor
 
 
 
-" Change ignore_globs
-call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
-      \ [ '.git/', '.ropeproject/', '__pycache__/',
-      \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/', '*.pyc', '*.class', '*.jar', 'temp_dirs/'])
-
-call denite#custom#var('file/rec', 'command',
-            \ ['ag', '--follow', '--nocolor', '--nogroup', "--ignore={'*.pyc,.git,*.class,*zip,*.jar,temp_dirs}", '-g', ''])
-call denite#custom#var('grep', 'command', ['ag'])
-
-map <c-f> :Denite buffer<cr>
-map <c-p> :Denite file_rec<cr>
-map <c-g> :Denite file/rec/git <cr>
-
-augroup deniteresize
-autocmd!
-autocmd VimResized,VimEnter * call denite#custom#option('default',
-      \'winheight', winheight(0) / 2)
-augroup end
-
 call denite#custom#option('default', {
     \ 'prompt': '❯'
     \ })
 
-call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>',
-    \'noremap')
-call denite#custom#map('normal', '<Esc>', '<NOP>',
-    \'noremap')
+" call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>',
+"     \'noremap')
+" call denite#custom#map('normal', '<Esc>', '<NOP>',
+"     \'noremap')
 call denite#custom#map('insert', '<C-v>', '<denite:do_action:vsplit>',
     \'noremap')
 call denite#custom#map('normal', '<C-v>', '<denite:do_action:vsplit>',
@@ -360,3 +335,34 @@ call denite#custom#map('insert', '<C-t>', '<denite:do_action:tabopen>',
     \'noremap')
 call denite#custom#map('normal', 'dw', '<denite:delete_word_after_caret>',
     \'noremap')
+
+" denite file search (c-p uses gitignore, c-o looks at everything)
+map <C-P> :DeniteProjectDir -buffer-name=git -direction=top file_rec/git<CR>
+map <C-g> :DeniteProjectDir -buffer-name=files -direction=top file_rec<CR>
+map <c-f> :Denite buffer<cr>
+
+" -u flag to unrestrict (see ag docs)
+" call denite#custom#var('file_rec', 'command',
+" \ ['ag', '--follow', '--nocolor', '--nogroup', '-u', '-g', ''])
+
+call denite#custom#var('file_rec', 'command',
+            \ ['ag', '--follow', '--nocolor', '--nogroup', "--ignore={'*.pyc,.git,*.class,*zip,*.jar,temp_dirs}", '-g', ''])
+
+call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+call denite#custom#var('file_rec/git', 'command',
+\ ['ag', '--follow', '--nocolor', '--nogroup', "--ignore={'*.pyc,.git,*.class,*zip,*.jar,temp_dirs}", '-g', ''])
+
+" denite content search
+map <leader>a :DeniteProjectDir -buffer-name=grep -default-action=quickfix grep:::!<CR>
+
+call denite#custom#source(
+\ 'grep', 'matchers', ['matcher_regexp'])
+
+" use ag for content search
+call denite#custom#var('grep', 'command', ['ag'])
+call denite#custom#var('grep', 'default_opts',
+    \ ['-i', '--vimgrep'])
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', [])
+call denite#custom#var('grep', 'separator', ['--'])
+call denite#custom#var('grep', 'final_opts', [])
