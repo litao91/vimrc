@@ -67,7 +67,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'diepm/vim-rest-console'
 Plug 'godlygeek/tabular'
 Plug 'udalov/kotlin-vim'
-Plug 'Shougo/denite.nvim', {'do': ':UpdateRemovePlugins'}
+Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
 Plug 'easymotion/vim-easymotion'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'sheerun/vim-polyglot'
