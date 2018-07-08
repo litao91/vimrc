@@ -85,11 +85,6 @@ let g:bufExplorerSortBy='name'
 map <leader>o :BufExplorer<cr>
 
 
-""""""""""""""""""""""""""""""
-" => MRU plugin
-""""""""""""""""""""""""""""""
-let MRU_Max_Entries = 400
-
 
 """"""""""""""""""""""""""""""
 " => YankStack
@@ -104,7 +99,6 @@ nmap <c-Y> <Plug>yankstack_substitute_newer_paste
 let g:ctrlp_working_path_mode = 0
 
 "let g:ctrlp_map = '<c-f>'
-map <leader>m :CtrlPMRUFiles<cr>
 map <c-f> :CtrlPBuffer<cr>
 
 let g:ctrlp_max_height = 20
@@ -326,6 +320,7 @@ call denite#custom#map('normal', 't', '<denite:do_action:tabswitch>',
 map <C-P> :DeniteProjectDir -buffer-name=git -direction=top file_rec/git<CR>
 map <C-g> :DeniteProjectDir -buffer-name=files -direction=top file_rec<CR>
 map <c-f> :Denite buffer<cr>
+map <leader>m :Denite file_mru<cr>
 
 " -u flag to unrestrict (see ag docs)
 " call denite#custom#var('file_rec', 'command',
