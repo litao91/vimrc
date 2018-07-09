@@ -44,7 +44,7 @@ Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries'}
 Plug 'airblade/vim-gitgutter'
 Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
-Plug 'klen/python-mode', {'for': 'python', 'branch': 'develop' }
+Plug 'klen/python-mode', {'branch': 'develop' }
 Plug 'tweekmonster/django-plus.vim', {'for': 'python'}
 Plug 'pangloss/vim-javascript', {'for': ['javascript.jsx', 'javascript']}
 Plug 'majutsushi/tagbar'
