@@ -72,6 +72,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'sheerun/vim-polyglot'
 Plug 'Shougo/neomru.vim'
+Plug 'dhruvasagar/vim-table-mode'
 call plug#end()
 
 
