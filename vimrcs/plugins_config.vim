@@ -70,7 +70,6 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'sheerun/vim-polyglot'
 Plug 'Shougo/neomru.vim'
 Plug 'dhruvasagar/vim-table-mode'
-Plug 'kana/vim-fakeclip'
 call plug#end()
 
 
