@@ -30,14 +30,12 @@ endfunction
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 Plug 'junegunn/vim-easy-align'
-"Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'Xuyuanp/nerdtree-git-plugin', {'on': 'NERDTreeToggle'}
 Plug 'chr4/nginx.vim', {'for': 'nginx'}
 Plug 'groenewege/vim-less', {'for': 'less'}
 Plug 'tpope/vim-surround'
 Plug 'terryma/vim-expand-region'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
 Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries'}
@@ -56,7 +54,6 @@ Plug 'w0rp/ale'
 Plug 'shinchu/lightline-gruvbox.vim'
 Plug 'dylon/vim-antlr'
 Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
-" Plug 'mhinz/vim-grepper'
 Plug '~/.vim_runtime/sources_non_forked/YouCompleteMe'
 Plug 'jacoborus/tender.vim'
 Plug 'liuchengxu/space-vim-dark'
@@ -95,24 +92,6 @@ nmap <c-Y> <Plug>yankstack_substitute_newer_paste
 
 
 """"""""""""""""""""""""""""""
-" => CTRL-P
-""""""""""""""""""""""""""""""
-let g:ctrlp_working_path_mode = 0
-
-"let g:ctrlp_map = '<c-f>'
-map <c-f> :CtrlPBuffer<cr>
-
-let g:ctrlp_max_height = 20
-let g:ctrlp_max_files = 100000
-" let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee|^\.class'
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  'tem_dir\|node_modules\|\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll|jar|class|out|q|diff)$',
-  \ 'link': 'some_bad_symbolic_links',
-  \ }
-
-
-""""""""""""""""""""""""""""""
 " => ZenCoding
 """"""""""""""""""""""""""""""
 " Enable all functions in all modes
@@ -140,13 +119,6 @@ map <leader>e :NERDTreeFind<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MD Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vim-multiple-cursors
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:multi_cursor_next_key='<C-s>'
-let g:multi_cursor_start_word_key = '<C-s>'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -287,6 +259,14 @@ let g:tagbar_type_markdown = {
     \ 'sort' : 0
     \ }
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => easy align
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Denite
