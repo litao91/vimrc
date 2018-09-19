@@ -69,7 +69,11 @@ Plug 'easymotion/vim-easymotion'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'sheerun/vim-polyglot'
 Plug 'Shougo/neomru.vim'
+Plug 'luochen1990/rainbow'
 call plug#end()
+
+
+let g:rainbow_active = 1
 
 
 """"""""""""""""""""""""""""""
