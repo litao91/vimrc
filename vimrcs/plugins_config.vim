@@ -118,6 +118,7 @@ let g:NERDTreeWinSize=35
 map <C-e> :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark
 map <leader>e :NERDTreeFind<cr>
+let g:NERDTreeUpdateOnWrite=0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MD Tree
