@@ -1,6 +1,5 @@
 import os
 import os.path
-import fnmatch
 import logging
 import ycm_core
 
