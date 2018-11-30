@@ -90,7 +90,7 @@ cno $q <C-\>eDeleteTillSlash()<cr>
 "cnoremap <C-N> <Down>
 
 " Map <Ctrl-[> to exit terminal mode
-tnoremap <C-[> <C-\><C-n>
+" tnoremap <C-[> <C-\><C-n>
 
 " Map ½ to something useful
 map ½ $
