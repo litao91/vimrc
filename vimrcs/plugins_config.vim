@@ -28,7 +28,7 @@ endfunction
 
 
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
+" Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'Xuyuanp/nerdtree-git-plugin', {'on': 'NERDTreeToggle'}
@@ -59,7 +59,7 @@ Plug 'jacoborus/tender.vim'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'litao91/mdtree'
 Plug 'KeitaNakamura/neodark.vim'
-Plug 'mzlogin/vim-markdown-toc'
+" Plug 'mzlogin/vim-markdown-toc'
 Plug 'plasticboy/vim-markdown'
 Plug 'diepm/vim-rest-console'
 Plug 'godlygeek/tabular'
