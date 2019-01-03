@@ -36,7 +36,7 @@ Plug 'chr4/nginx.vim', {'for': 'nginx'}
 Plug 'groenewege/vim-less', {'for': 'less'}
 Plug 'tpope/vim-surround'
 Plug 'terryma/vim-expand-region'
-Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries'}
+"Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries'}
 Plug 'airblade/vim-gitgutter'
 Plug 'itchyny/lightline.vim'
 Plug 'pangloss/vim-javascript', {'for': ['javascript.jsx', 'javascript']}
@@ -46,7 +46,7 @@ Plug 'derekwyatt/vim-scala', {'for': 'scala'}
 Plug 'posva/vim-vue', {'for': ['vue', 'javascript']}
 Plug 'dylon/vim-antlr'
 Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
-Plug '~/.vim_runtime/sources_non_forked/YouCompleteMe', {'for': ['c', 'cpp', 'go']}
+Plug '~/.vim_runtime/sources_non_forked/YouCompleteMe', {'for': ['c', 'cpp']}
 Plug 'jacoborus/tender.vim'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'litao91/mdtree'
@@ -315,7 +315,9 @@ call denite#custom#var('grep', 'pattern_opt', [])
 call denite#custom#var('grep', 'separator', ['--'])
 call denite#custom#var('grep', 'final_opts', [])
 
-" coc config
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => coc.nvim
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " if hidden not set, TextEdit might fail.
 set hidden
 
@@ -391,11 +393,11 @@ augroup mygroup
 augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-vmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+"vmap <leader>a  <Plug>(coc-codeaction-selected)
+"nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 " Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
+"nmap <leader>ac  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
 nmap <leader>qf  <Plug>(coc-fix-current)
 
