@@ -36,13 +36,11 @@ Plug 'chr4/nginx.vim', {'for': 'nginx'}
 Plug 'groenewege/vim-less', {'for': 'less'}
 Plug 'tpope/vim-surround'
 Plug 'terryma/vim-expand-region'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-commentary'
 Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries'}
 Plug 'airblade/vim-gitgutter'
 Plug 'itchyny/lightline.vim'
 " Plug 'python-mode/python-mode', {'branch': 'develop' }
-Plug 'tweekmonster/django-plus.vim', {'for': 'python'}
+" Plug 'tweekmonster/django-plus.vim', {'for': 'python'}
 Plug 'pangloss/vim-javascript', {'for': ['javascript.jsx', 'javascript']}
 Plug 'majutsushi/tagbar'
 Plug 'Yggdroot/indentLine'
