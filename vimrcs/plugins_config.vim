@@ -39,8 +39,6 @@ Plug 'terryma/vim-expand-region'
 Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries'}
 Plug 'airblade/vim-gitgutter'
 Plug 'itchyny/lightline.vim'
-" Plug 'python-mode/python-mode', {'branch': 'develop' }
-" Plug 'tweekmonster/django-plus.vim', {'for': 'python'}
 Plug 'pangloss/vim-javascript', {'for': ['javascript.jsx', 'javascript']}
 Plug 'majutsushi/tagbar'
 Plug 'Yggdroot/indentLine'
@@ -48,7 +46,7 @@ Plug 'derekwyatt/vim-scala', {'for': 'scala'}
 Plug 'posva/vim-vue', {'for': ['vue', 'javascript']}
 Plug 'dylon/vim-antlr'
 Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
-Plug '~/.vim_runtime/sources_non_forked/YouCompleteMe', {'for': ['c', 'cpp']}
+Plug '~/.vim_runtime/sources_non_forked/YouCompleteMe', {'for': ['c', 'cpp', 'go']}
 Plug 'jacoborus/tender.vim'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'litao91/mdtree'
@@ -56,7 +54,6 @@ Plug 'KeitaNakamura/neodark.vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'diepm/vim-rest-console'
 Plug 'godlygeek/tabular'
-" Plug 'udalov/kotlin-vim'
 Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
 Plug 'easymotion/vim-easymotion'
 Plug 'ntpeters/vim-better-whitespace'
