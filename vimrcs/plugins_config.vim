@@ -41,7 +41,7 @@ Plug 'tpope/vim-commentary'
 Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries'}
 Plug 'airblade/vim-gitgutter'
 Plug 'itchyny/lightline.vim'
-Plug 'maximbaz/lightline-ale'
+" Plug 'maximbaz/lightline-ale'
 Plug 'python-mode/python-mode', {'branch': 'develop' }
 Plug 'tweekmonster/django-plus.vim', {'for': 'python'}
 Plug 'pangloss/vim-javascript', {'for': ['javascript.jsx', 'javascript']}
@@ -50,7 +50,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'derekwyatt/vim-scala', {'for': 'scala'}
 Plug 'posva/vim-vue', {'for': ['vue', 'javascript']}
 Plug 'morhetz/gruvbox'
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 Plug 'shinchu/lightline-gruvbox.vim'
 Plug 'dylon/vim-antlr'
 Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
@@ -70,6 +70,8 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'sheerun/vim-polyglot'
 Plug 'Shougo/neomru.vim'
 Plug 'luochen1990/rainbow'
+
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': 'yarn install'}
 call plug#end()
 
 
