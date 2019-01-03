@@ -50,7 +50,7 @@ Plug 'derekwyatt/vim-scala', {'for': 'scala'}
 Plug 'posva/vim-vue', {'for': ['vue', 'javascript']}
 Plug 'dylon/vim-antlr'
 Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
-Plug '~/.vim_runtime/sources_non_forked/YouCompleteMe'
+Plug '~/.vim_runtime/sources_non_forked/YouCompleteMe', {'for': ['c', 'cpp']}
 Plug 'jacoborus/tender.vim'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'litao91/mdtree'
