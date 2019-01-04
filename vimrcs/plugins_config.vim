@@ -46,7 +46,7 @@ Plug 'derekwyatt/vim-scala', {'for': 'scala'}
 Plug 'posva/vim-vue', {'for': ['vue', 'javascript']}
 Plug 'dylon/vim-antlr'
 Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
-Plug '~/.vim_runtime/sources_non_forked/YouCompleteMe', {'for': ['c', 'cpp']}
+"Plug '~/.vim_runtime/sources_non_forked/YouCompleteMe', {'for': ['c', 'cpp']}
 Plug 'jacoborus/tender.vim'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'litao91/mdtree'
@@ -61,6 +61,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'Shougo/neomru.vim'
 Plug 'luochen1990/rainbow'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': 'yarn install'}
+Plug 'jeaye/color_coded'
 call plug#end()
 
 
