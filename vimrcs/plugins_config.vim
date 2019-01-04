@@ -61,7 +61,6 @@ Plug 'sheerun/vim-polyglot'
 Plug 'Shougo/neomru.vim'
 Plug 'luochen1990/rainbow'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': 'yarn install'}
-Plug 'jeaye/color_coded'
 call plug#end()
 
 
