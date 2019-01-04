@@ -61,14 +61,14 @@ Plug 'sheerun/vim-polyglot'
 Plug 'Shougo/neomru.vim'
 Plug 'luochen1990/rainbow'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': 'yarn install'}
-Plug 'arakashic/chromatica.nvim'
+"Plug 'arakashic/chromatica.nvim'
 call plug#end()
 
 
 
 let g:rainbow_active = 1
-let g:chromatica#enable_at_startup=1
-let g:chromatica#libclang_path=$HOME . '/.local/lib/libclang.so'
+"let g:chromatica#enable_at_startup=1
+"let g:chromatica#libclang_path=$HOME . '/.local/lib/libclang.so'
 
 """"""""""""""""""""""""""""""
 " => bufExplorer plugin
