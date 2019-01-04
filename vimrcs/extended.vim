@@ -28,10 +28,6 @@ set guioptions-=R
 set guioptions-=l
 set guioptions-=L
 
-" Colorscheme
-" set background=dark
-" colorscheme peaksea
-" colorscheme base16-default-dark
 if has('nvim')
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
@@ -39,13 +35,21 @@ if (has("termguicolors"))
     set termguicolors
 endif
 
+colorscheme falcon
+let g:falcon_background = 0
+let g:falcon_inactive = 1
+let g:falcon_lightline = 1
+let g:lightline.colorscheme = 'falcon'
+
 " colorscheme gruvbox
 " let g:lightline = {}
 " let g:lightline.colorscheme = 'gruvbox'
+
 " colorscheme tender
-colorscheme neodark
-let g:neodark#use_256color = 1
-let g:lightline.colorscheme = 'neodark'
+"colorscheme neodark
+"let g:neodark#use_256color = 1
+"let g:lightline.colorscheme = 'neodark'
+"colorscheme OceanicNext
 
 hi Comment cterm=italic
 " let g:lightline = { 'colorscheme': 'tender' }

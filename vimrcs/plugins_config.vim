@@ -61,6 +61,8 @@ Plug 'sheerun/vim-polyglot'
 Plug 'Shougo/neomru.vim'
 Plug 'luochen1990/rainbow'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': 'yarn install'}
+Plug 'mhartington/oceanic-next'
+Plug 'fenetikm/falcon'
 "Plug 'arakashic/chromatica.nvim'
 call plug#end()
 
