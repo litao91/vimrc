@@ -188,6 +188,8 @@ snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
     nnoremap <silent><buffer><expr> N defx#do_action('new_multiple_files')
     nnoremap <silent><buffer><expr> U defx#do_action('cd', ['..'])
     nnoremap <silent><buffer><expr> . defx#do_action('toggle_ignored_files')
+    nnoremap <silent><buffer><expr> T defx#do_action('drop', [':tabnew'])
+    nnoremap <silent><buffer><expr> V defx#do_action('drop', [':vsp'])
     " nnoremap <silent><buffer><expr> C defx#do_action('cd')
     nnoremap <silent><buffer><expr> <Space> defx#do_action('toggle_select')
     nnoremap <silent><buffer><expr> R defx#do_action('redraw')
