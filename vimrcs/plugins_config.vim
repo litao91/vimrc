@@ -26,45 +26,100 @@ function! BuildComposer(info)
   endif
 endfunction
 
+"dein Scripts-----------------------------
+if &compatible
+  set nocompatible               " Be iMproved
+endif
 
-call plug#begin('~/.local/share/nvim/plugged')
-" Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
-Plug 'junegunn/vim-easy-align'
-Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
-Plug 'Xuyuanp/nerdtree-git-plugin', {'on': 'NERDTreeToggle'}
-Plug 'chr4/nginx.vim', {'for': 'nginx'}
-Plug 'groenewege/vim-less', {'for': 'less'}
-Plug 'tpope/vim-surround'
-Plug 'terryma/vim-expand-region'
-"Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoInstallBinaries'}
-Plug 'airblade/vim-gitgutter'
-Plug 'itchyny/lightline.vim'
-Plug 'pangloss/vim-javascript', {'for': ['javascript.jsx', 'javascript']}
-Plug 'majutsushi/tagbar'
-Plug 'Yggdroot/indentLine'
-Plug 'derekwyatt/vim-scala', {'for': 'scala'}
-Plug 'posva/vim-vue', {'for': ['vue', 'javascript']}
-Plug 'dylon/vim-antlr'
-Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
-"Plug '~/.vim_runtime/sources_non_forked/YouCompleteMe', {'for': ['c', 'cpp']}
-Plug 'jacoborus/tender.vim'
-Plug 'liuchengxu/space-vim-dark'
-Plug 'litao91/mdtree'
-Plug 'KeitaNakamura/neodark.vim'
-Plug 'plasticboy/vim-markdown'
-Plug 'diepm/vim-rest-console'
-Plug 'godlygeek/tabular'
-Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
-Plug 'easymotion/vim-easymotion'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'sheerun/vim-polyglot'
-Plug 'Shougo/neomru.vim'
-Plug 'luochen1990/rainbow'
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': 'yarn install'}
-Plug 'mhartington/oceanic-next'
-Plug 'fenetikm/falcon'
-"Plug 'arakashic/chromatica.nvim'
-call plug#end()
+" Required:
+set runtimepath+=/home/litao.91/.local/share/nvim/plugged/repos/github.com/Shougo/dein.vim
+
+" Required:
+if dein#load_state('/home/litao.91/.local/share/nvim/plugged')
+  call dein#begin('/home/litao.91/.local/share/nvim/plugged')
+  call dein#add('/home/litao.91/.local/share/nvim/plugged/repos/github.com/Shougo/dein.vim')
+
+    call dein#add('junegunn/vim-easy-align')
+    call dein#add( 'Shougo/defx.nvim')
+    call dein#add( 'kristijanhusak/defx-git')
+    call dein#add( 'kristijanhusak/defx-icons')
+    call dein#add( 'chr4/nginx.vim', {'on_ft': 'nginx'})
+    call dein#add( 'groenewege/vim-less', {'on_ft': 'less'})
+    call dein#add('tpope/vim-surround')
+    call dein#add('terryma/vim-expand-region')
+    call dein#add('airblade/vim-gitgutter')
+    call dein#add( 'itchyny/lightline.vim')
+    call dein#add( 'pangloss/vim-javascript', {'on_ft': ['javascript.jsx', 'javascript']})
+    call dein#add( 'majutsushi/tagbar')
+    call dein#add( 'Yggdroot/indentLine')
+    call dein#add( 'derekwyatt/vim-scala', {'on_ft': 'scala'})
+    call dein#add( 'dylon/vim-antlr')
+    call dein#add( 'mxw/vim-jsx', {'on_ft': ['javascript', 'javascript.jsx']})
+    call dein#add( 'jacoborus/tender.vim')
+    call dein#add( 'liuchengxu/space-vim-dark')
+    call dein#add( 'litao91/mdtree')
+    call dein#add( 'KeitaNakamura/neodark.vim')
+    call dein#add( 'plasticboy/vim-markdown') 
+    call dein#add( 'diepm/vim-rest-console')
+    call dein#add( 'godlygeek/tabular')
+    call dein#add( 'Shougo/denite.nvim', {'build': ':UpdateRemotePlugins'})
+    call dein#add( 'easymotion/vim-easymotion')
+    call dein#add( 'ntpeters/vim-better-whitespace')
+    call dein#add( 'sheerun/vim-polyglot')
+    call dein#add( 'Shougo/neomru.vim')
+    call dein#add( 'luochen1990/rainbow')
+    call dein#add( 'neoclide/coc.nvim', {'rec': '*', 'build': 'yarn install'})
+    call dein#add( 'fenetikm/falcon')
+  call dein#end()
+  call dein#save_state()
+endif
+
+" Required:
+filetype plugin indent on
+syntax enable
+
+" If you want to install not installed plugins on startup.
+"if dein#check_install()
+"  call dein#install()
+"endif
+
+"call plug#begin('~/.local/share/nvim/plugged')
+"Plug 'junegunn/vim-easy-align'
+"Plug 'Shougo/defx.nvim'
+"Plug 'kristijanhusak/defx-git'
+"Plug 'kristijanhusak/defx-icons'
+"Plug 'Xuyuanp/nerdtree-git-plugin', {'on': 'NERDTreeToggle'}
+"Plug 'chr4/nginx.vim', {'for': 'nginx'}
+"Plug 'groenewege/vim-less', {'for': 'less'}
+"Plug 'tpope/vim-surround'
+"Plug 'terryma/vim-expand-region'
+"Plug 'airblade/vim-gitgutter'
+"Plug 'itchyny/lightline.vim'
+"Plug 'pangloss/vim-javascript', {'for': ['javascript.jsx', 'javascript']}
+"Plug 'majutsushi/tagbar'
+"Plug 'Yggdroot/indentLine'
+"Plug 'derekwyatt/vim-scala', {'for': 'scala'}
+"Plug 'posva/vim-vue', {'for': ['vue', 'javascript']}
+"Plug 'dylon/vim-antlr'
+"Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
+"Plug 'jacoborus/tender.vim'
+"Plug 'liuchengxu/space-vim-dark'
+"Plug 'litao91/mdtree'
+"Plug 'KeitaNakamura/neodark.vim'
+"Plug 'plasticboy/vim-markdown'
+"Plug 'diepm/vim-rest-console'
+"Plug 'godlygeek/tabular'
+"Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
+"Plug 'easymotion/vim-easymotion'
+"Plug 'ntpeters/vim-better-whitespace'
+"Plug 'sheerun/vim-polyglot'
+"Plug 'Shougo/neomru.vim'
+"Plug 'luochen1990/rainbow'
+"Plug 'neoclide/coc.nvim', {'tag': '*', 'do': 'yarn install'}
+"Plug 'mhartington/oceanic-next'
+"Plug 'fenetikm/falcon'
+""Plug 'arakashic/chromatica.nvim'
+"call plug#end()
 
 
 
@@ -107,14 +162,56 @@ snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerd Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:NERDTreeWinPos = "left"
-let NERDTreeShowHidden=0
-let NERDTreeIgnore = ['\.pyc$', '__pycache__']
-let g:NERDTreeWinSize=35
-map <C-e> :NERDTreeToggle<cr>
-map <leader>nb :NERDTreeFromBookmark
-map <leader>e :NERDTreeFind<cr>
-let g:NERDTreeUpdateOnWrite=0
+"let g:NERDTreeWinPos = "left"
+"let NERDTreeShowHidden=0
+"let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+"let g:NERDTreeWinSize=35
+"map <C-e> :NERDTreeToggle<cr>
+"map <leader>nb :NERDTreeFromBookmark
+"map <leader>e :NERDTreeFind<cr>
+"let g:NERDTreeUpdateOnWrite=0
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Defx
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  map <silent> <C-e> :Defx -columns=git:mark:icons:filename:type -split=vertical -winwidth=45 -direction=topleft -toggle `expand('%:p:h')` -search=`expand('%:p')`<cr>
+  autocmd FileType defx call s:defx_my_settings()
+  function! s:defx_my_settings() abort
+    IndentLinesDisable
+    setl nospell
+    setl signcolumn=no
+    call defx#do_action('toggle_ignored_files')    "defx-action-rename
+    nnoremap <silent><buffer><expr> <CR> defx#do_action('drop')
+    nnoremap <silent><buffer><expr> M defx#do_action('rename')
+    nnoremap <silent><buffer><expr> D defx#do_action('remove_trash')
+    nnoremap <silent><buffer><expr> P defx#do_action('new_directory')
+    nnoremap <silent><buffer><expr> N defx#do_action('new_multiple_files')
+    nnoremap <silent><buffer><expr> U defx#do_action('cd', ['..'])
+    nnoremap <silent><buffer><expr> . defx#do_action('toggle_ignored_files')
+    " nnoremap <silent><buffer><expr> C defx#do_action('cd')
+    nnoremap <silent><buffer><expr> <Space> defx#do_action('toggle_select')
+    nnoremap <silent><buffer><expr> R defx#do_action('redraw')
+    setl nonumber
+  endfunction
+  let g:defx_git#indicators = {
+    \ 'Modified'  : '✹',
+    \ 'Staged'    : '✚',
+    \ 'Untracked' : '✭',
+    \ 'Renamed'   : '➜',
+    \ 'Unmerged'  : '═',
+    \ 'Ignored'   : ' ',
+    \ 'Unknown'   : '?',
+    \ 'Deleted'   : '✖'
+    \ }
+
+  hi def link Defx_filename_directory NERDTreeDirSlash
+  hi def link Defx_git_Modified Special
+  hi def link Defx_git_Staged Function
+  hi def link Defx_git_Renamed Title
+  hi def link Defx_git_Unmerged Label
+  hi def link Defx_git_Untracked Tag
+  hi def link Defx_git_Ignored Comment
+  let g:defx_icons_parent_icon = ""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MD Tree
@@ -132,10 +229,6 @@ au FileType mako vmap Si S"i${ _(<esc>2f"a) }<esc>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => lightline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ }
-
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
@@ -156,20 +249,6 @@ let g:lightline = {
       \ 'separator': { 'left': ' ', 'right': ' ' },
       \ 'subseparator': { 'left': ' ', 'right': ' ' }
       \ }
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Vimroom
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:goyo_width=100
-let g:goyo_margin_top = 2
-let g:goyo_margin_bottom = 2
-nnoremap <silent> <leader>z :Goyo<cr>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Vim-go
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:go_fmt_command = "goimports"
 
 
 " Custom CoffeeScript SyntasticCheck
