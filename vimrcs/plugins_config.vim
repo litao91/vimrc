@@ -39,27 +39,24 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#begin('~/.local/share/nvim/plugged')
   call dein#add('~/.local/share/nvim/plugged/repos/github.com/Shougo/dein.vim')
   call dein#add('junegunn/vim-easy-align')
-  call dein#add('Shougo/defx.nvim', {'hook_post_update': ':UpdateRemotePlugins'})
+  call dein#add('Shougo/defx.nvim', {'hook_post_update': 'UpdateRemotePlugins', 'on_cmd': 'Defx'})
   call dein#add('kristijanhusak/defx-git')
   call dein#add('kristijanhusak/defx-icons')
   call dein#add('chr4/nginx.vim', {'on_ft': 'nginx'})
   call dein#add('groenewege/vim-less', {'on_ft': 'less'})
   call dein#add('tpope/vim-surround')
   call dein#add('terryma/vim-expand-region')
-  call dein#add('airblade/vim-gitgutter')
+  call dein#add('airblade/vim-gitgutter', {'on_cmd': ['GitGutterToggle'])
   call dein#add('itchyny/lightline.vim')
   call dein#add('pangloss/vim-javascript', {'on_ft': ['javascript.jsx', 'javascript']})
-  call dein#add('majutsushi/tagbar')
+  call dein#add('majutsushi/tagbar', {'on_cmd': ['TagbarToggle']})
   call dein#add('Yggdroot/indentLine')
   call dein#add('derekwyatt/vim-scala', {'on_ft': 'scala'})
-  call dein#add('dylon/vim-antlr')
+  call dein#add('dylon/vim-antlr', {'on_ft': ['antlr3', 'antlr4']})
   call dein#add('mxw/vim-jsx', {'on_ft': ['javascript', 'javascript.jsx']})
-  call dein#add('jacoborus/tender.vim')
-  call dein#add('liuchengxu/space-vim-dark')
-  call dein#add('litao91/mdtree')
-  call dein#add('KeitaNakamura/neodark.vim')
+  call dein#add('litao91/mdtree', {'on_cmd': ['MDTreeToggle'])
   call dein#add('plasticboy/vim-markdown', {'on_ft': ['markdown', 'md']})
-  call dein#add('diepm/vim-rest-console')
+  call dein#add('diepm/vim-rest-console', {'on_ft': ['rest'])
   call dein#add('godlygeek/tabular')
   call dein#add('Shougo/denite.nvim', {'hook_post_update': ':UpdateRemotePlugins'})
   call dein#add('easymotion/vim-easymotion')
@@ -68,7 +65,8 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('Shougo/neomru.vim')
   call dein#add('luochen1990/rainbow')
   call dein#add('neoclide/coc.nvim', {'rec': '*', 'build': 'yarn install'})
-  call dein#add('fenetikm/falcon')
+  "call dein#add('fenetikm/falcon')
+  call dein#add('joshdick/onedark.vim')
   call dein#end()
   call dein#save_state()
 endif
@@ -76,50 +74,6 @@ endif
 " Required:
 filetype plugin indent on
 syntax enable
-
-" If you want to install not installed plugins on startup.
-"if dein#check_install()
-"  call dein#install()
-"endif
-
-"call plug#begin('~/.local/share/nvim/plugged')
-"Plug 'junegunn/vim-easy-align'
-"Plug 'Shougo/defx.nvim'
-"Plug 'kristijanhusak/defx-git'
-"Plug 'kristijanhusak/defx-icons'
-"Plug 'Xuyuanp/nerdtree-git-plugin', {'on': 'NERDTreeToggle'}
-"Plug 'chr4/nginx.vim', {'for': 'nginx'}
-"Plug 'groenewege/vim-less', {'for': 'less'}
-"Plug 'tpope/vim-surround'
-"Plug 'terryma/vim-expand-region'
-"Plug 'airblade/vim-gitgutter'
-"Plug 'itchyny/lightline.vim'
-"Plug 'pangloss/vim-javascript', {'for': ['javascript.jsx', 'javascript']}
-"Plug 'majutsushi/tagbar'
-"Plug 'Yggdroot/indentLine'
-"Plug 'derekwyatt/vim-scala', {'for': 'scala'}
-"Plug 'posva/vim-vue', {'for': ['vue', 'javascript']}
-"Plug 'dylon/vim-antlr'
-"Plug 'mxw/vim-jsx', {'for': ['javascript', 'javascript.jsx']}
-"Plug 'jacoborus/tender.vim'
-"Plug 'liuchengxu/space-vim-dark'
-"Plug 'litao91/mdtree'
-"Plug 'KeitaNakamura/neodark.vim'
-"Plug 'plasticboy/vim-markdown'
-"Plug 'diepm/vim-rest-console'
-"Plug 'godlygeek/tabular'
-"Plug 'Shougo/denite.nvim', {'do': ':UpdateRemotePlugins'}
-"Plug 'easymotion/vim-easymotion'
-"Plug 'ntpeters/vim-better-whitespace'
-"Plug 'sheerun/vim-polyglot'
-"Plug 'Shougo/neomru.vim'
-"Plug 'luochen1990/rainbow'
-"Plug 'neoclide/coc.nvim', {'tag': '*', 'do': 'yarn install'}
-"Plug 'mhartington/oceanic-next'
-"Plug 'fenetikm/falcon'
-""Plug 'arakashic/chromatica.nvim'
-"call plug#end()
-
 
 
 let g:rainbow_active = 1

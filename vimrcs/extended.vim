@@ -35,25 +35,26 @@ if (has("termguicolors"))
     set termguicolors
 endif
 
-colorscheme falcon
-let g:falcon_background = 0
-let g:falcon_inactive = 1
-let g:falcon_lightline = 1
-let g:lightline.colorscheme = 'falcon'
+"colorscheme falcon
+"let g:falcon_background = 0
+"let g:falcon_inactive = 1
+"let g:falcon_lightline = 1
+"let g:lightline.colorscheme = 'falcon'
 
 " colorscheme gruvbox
 " let g:lightline = {}
 " let g:lightline.colorscheme = 'gruvbox'
 
-" colorscheme tender
-"colorscheme neodark
-"let g:neodark#use_256color = 1
-"let g:lightline.colorscheme = 'neodark'
-"colorscheme OceanicNext
+colorscheme neodark
+let g:neodark#use_256color = 1
+let g:lightline.colorscheme = 'neodark'
 
+"let g:onedark_termcolors=256
+"colorscheme onedark
+"let g:lightline = {
+"  \ 'colorscheme': 'onedark',
+"  \ }
 hi Comment cterm=italic
-" let g:lightline = { 'colorscheme': 'tender' }
-" let g:lightline.colorscheme = 'codedark'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fast editing and reloading of vimrc configs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
