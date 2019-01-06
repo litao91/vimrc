@@ -289,8 +289,8 @@ call denite#custom#map('normal', 't', '<denite:do_action:tabswitch>',
     \'noremap')
 
 " denite file search (c-p uses gitignore, c-o looks at everything)
-map <C-P> :DeniteProjectDir -buffer-name=git -direction=top file_rec/git<CR>
-map <C-g> :DeniteProjectDir -buffer-name=files -direction=top file_rec<CR>
+map <C-P> :DeniteProjectDir -buffer-name=git file_rec/git<CR>
+map <C-g> :DeniteProjectDir -buffer-name=files file_rec<CR>
 map <c-f> :Denite buffer<cr>
 map <leader>m :Denite file_mru<cr>
 
