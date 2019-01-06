@@ -32,12 +32,12 @@ if &compatible
 endif
 
 " Required:
-set runtimepath+=/home/litao.91/.local/share/nvim/plugged/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.local/share/nvim/plugged/repos/github.com/Shougo/dein.vim
 
 " Required:
-if dein#load_state('/home/litao.91/.local/share/nvim/plugged')
-  call dein#begin('/home/litao.91/.local/share/nvim/plugged')
-  call dein#add('/home/litao.91/.local/share/nvim/plugged/repos/github.com/Shougo/dein.vim')
+if dein#load_state('~/.local/share/nvim/plugged')
+  call dein#begin('~/.local/share/nvim/plugged')
+  call dein#add('~/.local/share/nvim/plugged/repos/github.com/Shougo/dein.vim')
 
     call dein#add('junegunn/vim-easy-align')
     call dein#add( 'Shougo/defx.nvim')
