@@ -41,7 +41,6 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('junegunn/vim-easy-align')
   call dein#add('Shougo/defx.nvim', {'hook_post_update': 'UpdateRemotePlugins', 'on_cmd': 'Defx'})
   call dein#add('kristijanhusak/defx-git')
-  call dein#add('kristijanhusak/defx-icons')
   call dein#add('chr4/nginx.vim', {'on_ft': 'nginx'})
   call dein#add('groenewege/vim-less', {'on_ft': 'less'})
   call dein#add('tpope/vim-surround')
@@ -127,7 +126,7 @@ snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Defx
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  map <silent> <C-e> :Defx -columns=git:mark:icons:filename:type -split=vertical -winwidth=45 -direction=topleft -toggle `expand('%:p:h')` -search=`expand('%:p')`<cr>
+  map <silent> <C-e> :Defx -columns=git:mark:filename:type -split=vertical -winwidth=45 -direction=topleft -toggle `expand('%:p:h')` -search=`expand('%:p')`<cr>
   autocmd FileType defx call s:defx_my_settings()
   function! s:defx_my_settings() abort
     IndentLinesDisable
