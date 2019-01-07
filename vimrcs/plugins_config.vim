@@ -1,31 +1,3 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Important:
-"       This requries that you install https://github.com/amix/vimrc !
-"
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-""""""""""""""""""""""""""""""
-" => Load pathogen paths
-""""""""""""""""""""""""""""""
-call pathogen#infect('~/.vim_runtime/sources_forked/{}')
-"call pathogen#infect('~/.vim_runtime/sources_non_forked/{}')
-call pathogen#helptags()
-
-
-""""""""""""""""""""""""""""""
-" => Load pathogen paths
-""""""""""""""""""""""""""""""
-function! BuildComposer(info)
-  if a:info.status != 'unchanged' || a:info.force
-    if has('nvim')
-      !cargo build --release
-    else
-      !cargo build --release --no-default-features --features json-rpc
-    endif
-  endif
-endfunction
-
 "dein Scripts-----------------------------
 if &compatible
   set nocompatible               " Be iMproved
@@ -47,25 +19,28 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('terryma/vim-expand-region')
   call dein#add('airblade/vim-gitgutter', {'on_cmd': ['GitGutterToggle']})
   call dein#add('itchyny/lightline.vim')
-  call dein#add('pangloss/vim-javascript', {'on_ft': ['javascript.jsx', 'javascript']})
   call dein#add('majutsushi/tagbar', {'on_cmd': ['TagbarToggle']})
   call dein#add('Yggdroot/indentLine')
   call dein#add('derekwyatt/vim-scala', {'on_ft': 'scala'})
   call dein#add('dylon/vim-antlr', {'on_ft': ['antlr3', 'antlr4']})
-  call dein#add('mxw/vim-jsx', {'on_ft': ['javascript', 'javascript.jsx']})
   call dein#add('litao91/mdtree', {'on_cmd': ['MDTreeToggle']})
   call dein#add('plasticboy/vim-markdown', {'on_ft': ['markdown', 'md']})
   call dein#add('diepm/vim-rest-console', {'on_ft': ['rest']})
   call dein#add('godlygeek/tabular')
+  " denite {{{
   call dein#add('Shougo/denite.nvim', {'hook_post_update': 'UpdateRemotePlugins'})
+  call dein#add('Shougo/neomru.vim')
+  " }}}
   call dein#add('easymotion/vim-easymotion')
   call dein#add('ntpeters/vim-better-whitespace')
   call dein#add('sheerun/vim-polyglot')
-  call dein#add('Shougo/neomru.vim')
   call dein#add('luochen1990/rainbow')
   call dein#add('neoclide/coc.nvim', {'rec': '*', 'build': 'yarn install'})
-  "call dein#add('fenetikm/falcon')
   call dein#add('KeitaNakamura/neodark.vim')
+  " javascript {{{
+  call dein#add('othree/yajs.vim', {'on_ft': ['javascript.jsx', 'javascript']})
+  call dein#add('mxw/vim-jsx', {'on_ft': ['javascript', 'javascript.jsx']})
+  " }}}
   call dein#end()
   call dein#save_state()
 endif
@@ -75,7 +50,17 @@ filetype plugin indent on
 syntax enable
 
 
+command! PlugClean call map(dein#check_clean(), "delete(v:val, 'rf')")
+command! PlugUpdate call dein#update()
+
+""""""""""""""""""""""""""""""
+" => Rainbow
+""""""""""""""""""""""""""""""
 let g:rainbow_active = 1
+
+""""""""""""""""""""""""""""""
+" => chromatica
+""""""""""""""""""""""""""""""
 "let g:chromatica#enable_at_startup=1
 "let g:chromatica#libclang_path=$HOME . '/.local/lib/libclang.so'
 
