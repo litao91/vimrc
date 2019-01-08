@@ -9,7 +9,10 @@ set runtimepath+=~/.local/share/nvim/plugged/repos/github.com/Shougo/dein.vim
 " Required:
 if dein#load_state('~/.local/share/nvim/plugged')
   call dein#begin('~/.local/share/nvim/plugged')
+  " dein {{{
   call dein#add('~/.local/share/nvim/plugged/repos/github.com/Shougo/dein.vim')
+  call dein#add('wsdjeg/dein-ui.vim')
+  " }}}
   call dein#add('junegunn/vim-easy-align')
   call dein#add('Shougo/defx.nvim', {'hook_post_update': 'UpdateRemotePlugins', 'on_cmd': 'Defx'})
   call dein#add('kristijanhusak/defx-git')
@@ -51,7 +54,7 @@ syntax enable
 
 
 command! PlugClean call map(dein#check_clean(), "delete(v:val, 'rf')")
-command! PlugUpdate call dein#update()
+"command! PlugUpdate call dein#update()
 
 """"""""""""""""""""""""""""""
 " => Rainbow
