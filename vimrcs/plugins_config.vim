@@ -39,7 +39,11 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('sheerun/vim-polyglot')
   call dein#add('luochen1990/rainbow')
   call dein#add('neoclide/coc.nvim', {'rec': '*', 'build': 'yarn install'})
+  " theme {{{
   call dein#add('KeitaNakamura/neodark.vim')
+  call dein#add('ayu-theme/ayu-vim')
+  call dein#add('drewtempelmeyer/palenight.vim')
+  "}}}
   " javascript {{{
   call dein#add('othree/yajs.vim', {'on_ft': ['javascript.jsx', 'javascript']})
   call dein#add('mxw/vim-jsx', {'on_ft': ['javascript', 'javascript.jsx']})

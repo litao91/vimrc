@@ -45,9 +45,13 @@ endif
 " let g:lightline = {}
 " let g:lightline.colorscheme = 'gruvbox'
 
-colorscheme neodark
-let g:neodark#use_256color = 1
-let g:lightline.colorscheme = 'neodark'
+"colorscheme neodark
+"let g:neodark#use_256color = 1
+"let g:lightline.colorscheme = 'neodark'
+
+set background=dark
+colorscheme palenight
+let g:lightline.colorscheme = 'palenight'
 
 "let g:onedark_termcolors=256
 "colorscheme onedark
