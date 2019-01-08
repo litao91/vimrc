@@ -28,9 +28,6 @@ set guioptions-=R
 set guioptions-=l
 set guioptions-=L
 
-if has('nvim')
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
 if (has("termguicolors"))
     set termguicolors
 endif
@@ -49,9 +46,15 @@ endif
 "let g:neodark#use_256color = 1
 "let g:lightline.colorscheme = 'neodark'
 
-set background=dark
-colorscheme palenight
-let g:lightline.colorscheme = 'palenight'
+"set background=light
+"colorscheme palenight
+"let g:lightline.colorscheme = 'palenight'
+
+"
+"let ayucolor="light"  " for light version of theme
+let ayucolor="mirage" " for mirage version of theme
+"let ayucolor="dark"   " for dark version of theme
+colorscheme ayu
 
 "let g:onedark_termcolors=256
 "colorscheme onedark
