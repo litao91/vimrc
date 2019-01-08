@@ -46,22 +46,22 @@ endif
 "let g:neodark#use_256color = 1
 "let g:lightline.colorscheme = 'neodark'
 
-"set background=light
-"colorscheme palenight
-"let g:lightline.colorscheme = 'palenight'
+set background=light
+colorscheme palenight
+let g:lightline.colorscheme = 'palenight'
 
 "
 "let ayucolor="light"  " for light version of theme
-let ayucolor="mirage" " for mirage version of theme
+"let ayucolor="mirage" " for mirage version of theme
 "let ayucolor="dark"   " for dark version of theme
-colorscheme ayu
+"colorscheme ayu
 
 "let g:onedark_termcolors=256
 "colorscheme onedark
 "let g:lightline = {
 "  \ 'colorscheme': 'onedark',
 "  \ }
-hi Comment cterm=italic
+"hi Comment cterm=italic
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fast editing and reloading of vimrc configs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
