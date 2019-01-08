@@ -40,9 +40,10 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('luochen1990/rainbow')
   call dein#add('neoclide/coc.nvim', {'rec': '*', 'build': 'yarn install'})
   " theme {{{
-  call dein#add('KeitaNakamura/neodark.vim')
   call dein#add('ayu-theme/ayu-vim')
   call dein#add('drewtempelmeyer/palenight.vim')
+  call dein#add('mhartington/oceanic-next')
+  call dein#add('joshdick/onedark.vim')
   "}}}
   " javascript {{{
   call dein#add('othree/yajs.vim', {'on_ft': ['javascript.jsx', 'javascript']})
