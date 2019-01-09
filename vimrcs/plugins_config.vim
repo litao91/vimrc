@@ -33,6 +33,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   " denite {{{
   call dein#add('Shougo/denite.nvim', {'hook_post_update': 'UpdateRemotePlugins'})
   call dein#add('Shougo/neomru.vim')
+  call dein#add('chemzqm/denite-git')
   " }}}
   call dein#add('easymotion/vim-easymotion')
   call dein#add('ntpeters/vim-better-whitespace')
