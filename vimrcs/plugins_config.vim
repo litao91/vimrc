@@ -27,7 +27,10 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('derekwyatt/vim-scala', {'on_ft': 'scala'})
   call dein#add('dylon/vim-antlr', {'on_ft': ['antlr3', 'antlr4']})
   call dein#add('litao91/mdtree', {'on_cmd': ['MDTreeToggle']})
+  " markdown {{{{
   call dein#add('plasticboy/vim-markdown', {'on_ft': ['markdown', 'md']})
+  call dein#add('nelstrom/vim-markdown-folding', {'on_ft': 'markdown'})
+  "}}}
   call dein#add('diepm/vim-rest-console', {'on_ft': ['rest']})
   call dein#add('godlygeek/tabular')
   " denite {{{
@@ -50,6 +53,11 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('othree/yajs.vim', {'on_ft': ['javascript.jsx', 'javascript']})
   call dein#add('mxw/vim-jsx', {'on_ft': ['javascript', 'javascript.jsx']})
   " }}}
+  "
+   if dein#check_install()
+    call dein#install()
+    let pluginsExist=1
+  endif
   call dein#end()
   call dein#save_state()
 endif
