@@ -54,7 +54,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('mxw/vim-jsx', {'on_ft': ['javascript', 'javascript.jsx']})
   " }}}
   "
-   if dein#check_install()
+  if dein#check_install()
     call dein#install()
     let pluginsExist=1
   endif
