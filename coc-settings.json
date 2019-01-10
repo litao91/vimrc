@@ -1,5 +1,6 @@
 {
   "coc.preferences.diagnostic.warningSign": "--",
+  "coc.preferences.jumpCommand": "vsp",
   "languageserver": {
     "bash": {
       "command": "bash-language-server",
