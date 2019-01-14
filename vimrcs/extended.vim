@@ -61,9 +61,6 @@ endif
 
 let g:onedark_termcolors=256
 colorscheme onedark
-let g:lightline = {
-  \ 'colorscheme': 'onedark',
-  \ }
 hi Comment cterm=italic
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fast editing and reloading of vimrc configs
