@@ -195,6 +195,7 @@ autocmd FileType javascript.jsx setlocal ts=2 sw=2 expandtab
 autocmd FileType lua setlocal ts=2 sw=2 expandtab
 autocmd FileType java setlocal ts=2 sw=2 expandtab
 autocmd FileType xml setlocal ts=2 sw=2 expandtab
+au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
 
 " Linebreak on 500 characters
 set lbr
