@@ -260,7 +260,7 @@ let g:jsx_ext_required = 0
 " => vim-markdown-composer
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:markdown_composer_open_browser = 0
-let g:markdown_composer_custom_css = ['file://' . $HOME . "/.vim_runtime/resources/mdstyles/sao-x.css"]
+let g:markdown_composer_custom_css = ['file://' . $HOME . '/.vim_runtime/resources/mdstyles/sao-x.css']
 let g:markdown_composer_autostart = 0
 
 let g:vim_markdown_folding_disabled = 1
@@ -280,13 +280,21 @@ let g:vrc_curl_opts = {
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => tagbar markdown support
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Add support for markdown files in tagbar.
 let g:tagbar_type_markdown = {
-        \ 'ctagstype' : 'markdown',
-        \ 'kinds' : [
-                \ 'h:headings',
-        \ ],
-    \ 'sort' : 0
-    \ }
+    \ 'ctagstype': 'markdown',
+    \ 'ctagsbin' : $HOME . '/.vim_runtime/bin/markdown2ctags.py',
+    \ 'ctagsargs' : '-f - --sort=yes --sro=»',
+    \ 'kinds' : [
+        \ 's:sections',
+        \ 'i:images'
+    \ ],
+    \ 'sro' : '»',
+    \ 'kind2scope' : {
+        \ 's' : 'section',
+    \ },
+    \ 'sort': 0,
+\ }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => easy align
@@ -449,21 +457,20 @@ command! -nargs=0 Format :call CocAction('format')
 
 " Use `:Fold` for fold current buffer
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-
-
-" Shortcuts for denite interface
-" Show extension list
-nnoremap <silent> <space>e  :<C-u>Denite coc-extension<cr>
-" Show symbols of current buffer
-nnoremap <silent> <space>o  :<C-u>Denite coc-symbols<cr>
-" Search symbols of current workspace
-nnoremap <silent> <space>t  :<C-u>Denite coc-workspace<cr>
-" Show diagnostics of current workspace
-nnoremap <silent> <space>a  :<C-u>Denite coc-diagnostic<cr>
-" Show available commands
-nnoremap <silent> <space>c  :<C-u>Denite coc-command<cr>
-" Show available services
-nnoremap <silent> <space>s  :<C-u>Denite coc-service<cr>
-" Show links of current buffer
-nnoremap <silent> <space>l  :<C-u>Denite coc-link<cr>
+" Using CocList
+" Show all diagnostics
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
