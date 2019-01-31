@@ -260,7 +260,7 @@ let g:jsx_ext_required = 0
 " => vim-markdown-composer
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:markdown_composer_open_browser = 0
-let g:markdown_composer_custom_css = ['file://' . $HOME . '/.vim_runtime/resources/mdstyles/sao-x.css']
+let g:markdown_composer_custom_css = ['file://' . $HOME . "/.vim_runtime/resources/mdstyles/sao-x.css"]
 let g:markdown_composer_autostart = 0
 
 let g:vim_markdown_folding_disabled = 1
@@ -280,21 +280,13 @@ let g:vrc_curl_opts = {
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => tagbar markdown support
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Add support for markdown files in tagbar.
 let g:tagbar_type_markdown = {
-    \ 'ctagstype': 'markdown',
-    \ 'ctagsbin' : $HOME . '/.vim_runtime/bin/markdown2ctags.py',
-    \ 'ctagsargs' : '-f - --sort=yes --sro=»',
-    \ 'kinds' : [
-        \ 's:sections',
-        \ 'i:images'
-    \ ],
-    \ 'sro' : '»',
-    \ 'kind2scope' : {
-        \ 's' : 'section',
-    \ },
-    \ 'sort': 0,
-\ }
+        \ 'ctagstype' : 'markdown',
+        \ 'kinds' : [
+                \ 'h:headings',
+        \ ],
+    \ 'sort' : 0
+    \ }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => easy align

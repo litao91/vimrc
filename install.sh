@@ -11,3 +11,7 @@ if [ ! -f $HOME/.local/github.com/repos/github.com/Shougo/dein.vim ]; then
     curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > /tmp/installer.sh
     bash /tmp/installer.sh ~/.local/share/nvim/plugged
 fi
+
+if [ ! -f $HOME/.ctags ]; then
+    ln -s $DIR/md-ctags ~/.ctags
+fi
