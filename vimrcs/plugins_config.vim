@@ -14,7 +14,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('wsdjeg/dein-ui.vim')
   " }}}
   call dein#add('junegunn/vim-easy-align')
-  call dein#add('Shougo/defx.nvim', {'hook_post_update': 'UpdateRemotePlugins', 'on_cmd': 'Defx'})
+  call dein#add('Shougo/defx.nvim', {'on_cmd': 'Defx'})
   call dein#add('kristijanhusak/defx-git')
   call dein#add('chr4/nginx.vim', {'on_ft': 'nginx'})
   call dein#add('groenewege/vim-less', {'on_ft': 'less'})
@@ -34,7 +34,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('diepm/vim-rest-console', {'on_ft': ['rest']})
   call dein#add('godlygeek/tabular')
   " denite {{{
-  call dein#add('Shougo/denite.nvim', {'hook_post_update': 'UpdateRemotePlugins'})
+  call dein#add('Shougo/denite.nvim')
   call dein#add('Shougo/neomru.vim')
   call dein#add('chemzqm/denite-git')
   " }}}
@@ -112,21 +112,8 @@ let g:user_zen_mode='a'
 ino <c-j> <c-r>=snipMate#TriggerSnippet()<cr>
 snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Nerd Tree
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"let g:NERDTreeWinPos = "left"
-"let NERDTreeShowHidden=0
-"let NERDTreeIgnore = ['\.pyc$', '__pycache__']
-"let g:NERDTreeWinSize=35
-"map <C-e> :NERDTreeToggle<cr>
-"map <leader>nb :NERDTreeFromBookmark
-"map <leader>e :NERDTreeFind<cr>
-"let g:NERDTreeUpdateOnWrite=0
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Defx
+" => Defx -- faster than nerdtree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   map <silent> <C-e> :Defx -columns=git:mark:filename:type -split=vertical -winwidth=45 -direction=topleft -toggle `expand('%:p:h')` -search=`expand('%:p')`<cr>
   autocmd FileType defx call s:defx_my_settings()
