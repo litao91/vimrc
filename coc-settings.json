@@ -1,4 +1,5 @@
 {
+  "coc.preferences.diagnostic.warningSign": "--",
   "coc.preferences.jumpCommand": "vsplit",
   "pyls.plugins.yapf.enabled": true,
   "pyls.plugins.mccabe.enabled": false,
