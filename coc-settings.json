@@ -1,6 +1,5 @@
 {
-  "coc.preferences.diagnostic.warningSign": "--",
-  "coc.preferences.jumpCommand": "vsp",
+  "coc.preferences.jumpCommand": "vsplit",
   "pyls.plugins.yapf.enabled": true,
   "pyls.plugins.mccabe.enabled": false,
   "pyls.plugins.pydocstyle.enabled": false,
@@ -8,6 +7,7 @@
   "pyls.plugins.pycodestyle.enabled": false,
   "pyls.plugins.rope_completion.enabled": false,
   "pyls.plugins.jedi_completion.enabled": true,
+  "yaml.format.enable": true,
   "languageserver": {
     "bash": {
       "command": "bash-language-server",
