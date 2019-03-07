@@ -29,7 +29,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('litao91/mdtree', {'on_cmd': ['MDTreeToggle']})
   " markdown {{{{
   call dein#add('plasticboy/vim-markdown', {'on_ft': ['markdown', 'md']})
-  " call dein#add('nelstrom/vim-markdown-folding', {'on_ft': 'markdown'})
+  call dein#add('nelstrom/vim-markdown-folding', {'on_ft': 'markdown'})
   "}}}
   call dein#add('diepm/vim-rest-console', {'on_ft': ['rest']})
   call dein#add('godlygeek/tabular')
@@ -245,7 +245,7 @@ let g:jsx_ext_required = 0
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Markdown
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:vim_markdown_folding_disabled = 0
+let g:vim_markdown_folding_disabled = 1
 
 " do not use conceal feature, the implementation is not so good
 let g:vim_markdown_conceal = 0
