@@ -121,6 +121,8 @@ snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
     setl nospell
     setl signcolumn=no
     call defx#do_action('toggle_ignored_files')    "defx-action-rename
+
+    nnoremap <silent><buffer><expr> h defx#do_action('call', 'DefxSmartH')
     nnoremap <silent><buffer><expr> l
                 \ defx#is_directory() ?
                 \ defx#do_action('open_tree') . 'j' : defx#do_action('open')
@@ -140,6 +142,27 @@ snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
     nnoremap <silent><buffer><expr> R defx#do_action('redraw')
     setl nonumber
   endfunction
+
+    function! DefxSmartH(_)
+      " candidate is opend tree?
+      if defx#is_opened_tree()
+        return defx#call_action('close_tree')
+      endif
+
+      " parent is root?
+      let s:candidate = defx#get_candidate()
+      let s:parent = fnamemodify(s:candidate['action__path'], s:candidate['is_directory'] ? ':p:h:h' : ':p:h')
+      let sep = s:SYS.isWindows ? '\\' :  '/'
+      if s:trim_right(s:parent, sep) == s:trim_right(b:defx.paths[0], sep)
+        return defx#call_action('cd', ['..'])
+      endif
+
+      " move to parent.
+      call defx#call_action('search', s:parent)
+
+      " if you want close_tree immediately, enable below line.
+      call defx#call_action('close_tree')
+    endfunction
   let g:defx_git#indicators = {
     \ 'Modified'  : '✹',
     \ 'Staged'    : '✚',
