@@ -319,20 +319,15 @@ call denite#custom#map('normal', 't', '<denite:do_action:tabswitch>',
     \'noremap')
 
 " denite file search (c-p uses gitignore, c-o looks at everything)
-map <C-P> :DeniteProjectDir -buffer-name=git file_rec/git<CR>
-map <C-g> :DeniteProjectDir -buffer-name=files file_rec<CR>
+map <C-P> :DeniteProjectDir -buffer-name=git file/rec<CR>
+map <C-g> :DeniteProjectDir -buffer-name=files file/rec<CR>
 map <c-f> :Denite buffer<cr>
 map <leader>m :Denite file_mru<cr>
 
 " -u flag to unrestrict (see ag docs)
 " call denite#custom#var('file_rec', 'command',
 " \ ['ag', '--follow', '--nocolor', '--nogroup', '-u', '-g', ''])
-
-call denite#custom#var('file_rec', 'command',
-            \ ['ag', '--follow', '--nocolor', '--nogroup', "--ignore={'*.pyc,.git,*.class,*zip,*.jar,temp_dirs}", '-g', ''])
-
-call denite#custom#alias('source', 'file_rec/git', 'file_rec')
-call denite#custom#var('file_rec/git', 'command',
+call denite#custom#var('file/rec', 'command',
 \ ['ag', '--follow', '--nocolor', '--nogroup', "--ignore={'*.pyc,.git,*.class,*zip,*.jar,temp_dirs}", '-g', ''])
 
 " denite content search
