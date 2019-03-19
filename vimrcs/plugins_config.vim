@@ -114,14 +114,19 @@ snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Defx -- faster than nerdtree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  map <silent> <C-e> :Defx -columns=git:mark:filename:type -split=vertical -winwidth=45 -direction=topleft -toggle `expand('%:p:h')` -search=`expand('%:p')`<cr>
+  map <silent> <C-e> :Defx -columns=git:mark:filename:type -split=vertical -winwidth=30 -direction=topleft -toggle -resume `expand('%:p:h')` -search=`expand('%:p')`<cr>
   autocmd FileType defx call s:defx_my_settings()
   function! s:defx_my_settings() abort
     IndentLinesDisable
     setl nospell
     setl signcolumn=no
     call defx#do_action('toggle_ignored_files')    "defx-action-rename
-    nnoremap <silent><buffer><expr> <CR> defx#do_action('drop')
+    nnoremap <silent><buffer><expr> l
+                \ defx#is_directory() ?
+                \ defx#do_action('open_tree') . 'j' : defx#do_action('open')
+    nnoremap <silent><buffer><expr> <Cr>
+                \ defx#is_directory() ?
+                \ defx#do_action('open_directory') : defx#do_action('drop')
     nnoremap <silent><buffer><expr> M defx#do_action('rename')
     nnoremap <silent><buffer><expr> D defx#do_action('remove_trash')
     nnoremap <silent><buffer><expr> P defx#do_action('new_directory')
