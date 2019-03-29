@@ -27,6 +27,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('derekwyatt/vim-scala', {'on_ft': 'scala'})
   call dein#add('dylon/vim-antlr', {'on_ft': ['antlr3', 'antlr4']})
   call dein#add('litao91/mdtree', {'on_cmd': ['MDTreeToggle']})
+  call dein#add('numirias/semshi')
   " markdown {{{{
   call dein#add('plasticboy/vim-markdown', {'on_ft': ['markdown', 'md']})
   call dein#add('nelstrom/vim-markdown-folding', {'on_ft': 'markdown'})
@@ -47,7 +48,6 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('drewtempelmeyer/palenight.vim')
   call dein#add('mhartington/oceanic-next')
   call dein#add('joshdick/onedark.vim')
-  call dein#add('numirias/semshi')
   "}}}
   " javascript {{{
   call dein#add('othree/yajs.vim', {'on_ft': ['javascript.jsx', 'javascript']})
@@ -74,6 +74,13 @@ command! PlugClean call map(dein#check_clean(), "delete(v:val, 'rf')")
 " => Rainbow
 """"""""""""""""""""""""""""""
 let g:rainbow_active = 1
+
+""""""""""""""""""""""""""""""
+" => semshi
+""""""""""""""""""""""""""""""
+
+let g:semsh#mark_selected_nodes = 0
+let g:semshi#error_sign = v:false
 
 """"""""""""""""""""""""""""""
 " => chromatica
