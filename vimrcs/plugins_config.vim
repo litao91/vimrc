@@ -11,7 +11,6 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#begin('~/.local/share/nvim/plugged')
   " dein {{{
   call dein#add('~/.local/share/nvim/plugged/repos/github.com/Shougo/dein.vim')
-  call dein#add('wsdjeg/dein-ui.vim')
   " }}}
   call dein#add('junegunn/vim-easy-align')
   call dein#add('Shougo/defx.nvim', {'on_cmd': 'Defx'})
