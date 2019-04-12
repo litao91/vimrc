@@ -123,34 +123,90 @@ snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
 " => Defx -- faster than nerdtree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let s:SYS = SpaceVim#api#import('system')
-  map <silent> <C-e> :Defx -columns=git:mark:filename:type -split=vertical -winwidth=30 -direction=topleft -toggle -resume `expand('%:p:h')` -search=`expand('%:p')`<cr>
-  autocmd FileType defx call s:defx_my_settings()
-  function! s:defx_my_settings() abort
-    IndentLinesDisable
-    setl nospell
-    setl signcolumn=no
-    call defx#do_action('toggle_ignored_files')    "defx-action-rename
+map <silent> <C-e> :Defx -columns=git:mark:filename:type -split=vertical -winwidth=30 -direction=topleft -toggle -resume `expand('%:p:h')` -search=`expand('%:p')`<cr>
+autocmd FileType defx call s:defx_init()
+function! s:defx_init()
+  setl nonumber
+  setl norelativenumber
+  setl listchars=
+  setl nofoldenable
+  setl foldmethod=manual
 
-    nnoremap <silent><buffer><expr> h defx#do_action('call', 'DefxSmartH')
-    nnoremap <silent><buffer><expr> l defx#do_action('call', 'DefxSmartL')
-    nnoremap <silent><buffer><expr> o defx#do_action('call', 'DefxSmartL')
-    nnoremap <silent><buffer><expr> <Cr>
-                \ defx#is_directory() ?
-                \ defx#do_action('open_directory') : defx#do_action('drop')
-    nnoremap <silent><buffer><expr> M defx#do_action('rename')
-    nnoremap <silent><buffer><expr> D defx#do_action('remove_trash')
-    nnoremap <silent><buffer><expr> P defx#do_action('new_directory')
-    nnoremap <silent><buffer><expr> N defx#do_action('new_multiple_files')
-    nnoremap <silent><buffer><expr> U defx#do_action('cd', ['..'])
-    nnoremap <silent><buffer><expr> . defx#do_action('toggle_ignored_files')
-    nnoremap <silent><buffer><expr> T defx#do_action('drop', [':tabnew'])
-    nnoremap <silent><buffer><expr> V defx#do_action('drop', [':vsp'])
-    " nnoremap <silent><buffer><expr> C defx#do_action('cd')
-    nnoremap <silent><buffer><expr> <Space> defx#do_action('toggle_select')
-    nnoremap <silent><buffer><expr> R defx#do_action('redraw')
-    setl nonumber
-  endfunction
+  silent! nunmap <buffer> <Space>
+  silent! nunmap <buffer> <C-l>
+  silent! nunmap <buffer> <C-j>
+  silent! nunmap <buffer> E
+  silent! nunmap <buffer> gr
+  silent! nunmap <buffer> gf
+  silent! nunmap <buffer> -
+  silent! nunmap <buffer> s
 
+  " nnoremap <silent><buffer><expr> st  vimfiler#do_action('tabswitch')
+  " nnoremap <silent><buffer> yY  :<C-u>call <SID>copy_to_system_clipboard()<CR>
+  nnoremap <silent><buffer><expr> '
+        \ defx#do_action('toggle_select') . 'j'
+  " TODO: we need an action to clear all selections
+  nnoremap <silent><buffer><expr> V
+        \ defx#do_action('toggle_select_all')
+  " nmap <buffer> v       <Plug>(vimfiler_quick_look)
+  " nmap <buffer> p       <Plug>(vimfiler_preview_file)
+  " nmap <buffer> i       <Plug>(vimfiler_switch_to_history_directory)
+
+  " Define mappings
+  nnoremap <silent><buffer><expr> gx
+        \ defx#do_action('execute_system')
+  nnoremap <silent><buffer><expr> c
+        \ defx#do_action('copy')
+  nnoremap <silent><buffer><expr> q
+        \ defx#do_action('quit')
+  nnoremap <silent><buffer><expr> m
+        \ defx#do_action('move')
+  nnoremap <silent><buffer><expr> P
+        \ defx#do_action('paste')
+  nnoremap <silent><buffer><expr> h defx#do_action('call', 'DefxSmartH')
+  nnoremap <silent><buffer><expr> U defx#do_action('call', 'DefxSmartH')
+  nnoremap <silent><buffer><expr> <Left> defx#do_action('call', 'DefxSmartH')
+  nnoremap <silent><buffer><expr> l defx#do_action('call', 'DefxSmartL')
+  nnoremap <silent><buffer><expr> <Right> defx#do_action('call', 'DefxSmartL')
+  nnoremap <silent><buffer><expr> o defx#do_action('call', 'DefxSmartL')
+  nnoremap <silent><buffer><expr> <Cr>
+        \ defx#is_directory() ?
+        \ defx#do_action('open_directory') : defx#do_action('drop')
+  nnoremap <silent><buffer><expr> <2-LeftMouse>
+        \ defx#is_directory() ?
+        \ defx#do_action('open_tree') : defx#do_action('drop')
+  nnoremap <silent><buffer><expr> sg
+        \ defx#do_action('drop', 'vsplit')
+  nnoremap <silent><buffer><expr> sv
+        \ defx#do_action('drop', 'split')
+  nnoremap <silent><buffer><expr> st
+        \ defx#do_action('drop', 'tabedit')
+  nnoremap <silent><buffer><expr> p
+        \ defx#do_action('open', 'pedit')
+  nnoremap <silent><buffer><expr> N
+        \ defx#do_action('new_file')
+  nnoremap <silent><buffer><expr> d
+        \ defx#do_action('remove')
+  nnoremap <silent><buffer><expr> r
+        \ defx#do_action('rename')
+  nnoremap <silent><buffer><expr> yy defx#do_action('call', 'DefxYarkPath')
+  nnoremap <silent><buffer><expr> .
+        \ defx#do_action('toggle_ignored_files')
+  nnoremap <silent><buffer><expr> ~
+        \ defx#do_action('cd')
+  nnoremap <silent><buffer><expr> j
+        \ line('.') == line('$') ? 'gg' : 'j'
+  nnoremap <silent><buffer><expr> k
+        \ line('.') == 1 ? 'G' : 'k'
+  nnoremap <silent><buffer><expr> <C-r>
+        \ defx#do_action('redraw')
+  nnoremap <silent><buffer><expr> <C-g>
+        \ defx#do_action('print')
+  nnoremap <silent><buffer> <Home> :call cursor(2, 1)<cr>
+  nnoremap <silent><buffer> <End>  :call cursor(line('$'), 1)<cr>
+  nnoremap <silent><buffer><expr> <C-Home>
+        \ defx#do_action('cd', SpaceVim#plugins#projectmanager#current_root())
+endf
 " in this function we should vim-choosewin if possible
 function! DefxSmartL(_)
   if defx#is_directory()
@@ -213,25 +269,31 @@ function! s:trim_right(str, trim)
   return substitute(a:str, printf('%s$', a:trim), '', 'g')
 endfunction
 
-  let g:defx_git#indicators = {
-    \ 'Modified'  : '✹',
-    \ 'Staged'    : '✚',
-    \ 'Untracked' : '✭',
-    \ 'Renamed'   : '➜',
-    \ 'Unmerged'  : '═',
-    \ 'Ignored'   : ' ',
-    \ 'Unknown'   : '?',
-    \ 'Deleted'   : '✖'
-    \ }
+function! DefxYarkPath(_) abort
+  let candidate = defx#get_candidate()
+  let @+ = candidate['action__path']
+  echo 'yarked: ' . @+
+endfunction
 
-  hi def link Defx_filename_directory NERDTreeDirSlash
-  hi def link Defx_git_Modified Special
-  hi def link Defx_git_Staged Function
-  hi def link Defx_git_Renamed Title
-  hi def link Defx_git_Unmerged Label
-  hi def link Defx_git_Untracked Tag
-  hi def link Defx_git_Ignored Comment
-  let g:defx_icons_parent_icon = ""
+let g:defx_git#indicators = {
+  \ 'Modified'  : '✹',
+  \ 'Staged'    : '✚',
+  \ 'Untracked' : '✭',
+  \ 'Renamed'   : '➜',
+  \ 'Unmerged'  : '═',
+  \ 'Ignored'   : ' ',
+  \ 'Unknown'   : '?',
+  \ 'Deleted'   : '✖'
+  \ }
+
+hi def link Defx_filename_directory NERDTreeDirSlash
+hi def link Defx_git_Modified Special
+hi def link Defx_git_Staged Function
+hi def link Defx_git_Renamed Title
+hi def link Defx_git_Unmerged Label
+hi def link Defx_git_Untracked Tag
+hi def link Defx_git_Ignored Comment
+let g:defx_icons_parent_icon = ""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MD Tree
