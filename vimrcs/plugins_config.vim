@@ -199,7 +199,7 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> P
         \ defx#do_action('paste')
   nnoremap <silent><buffer><expr> h defx#do_action('call', 'DefxSmartH')
-  nnoremap <silent><buffer><expr> U defx#do_action('call', 'DefxSmartH')
+  nnoremap <silent><buffer><expr> U defx#do_action('cd', ['..'])
   nnoremap <silent><buffer><expr> <Left> defx#do_action('call', 'DefxSmartH')
   nnoremap <silent><buffer><expr> l defx#do_action('call', 'DefxSmartL')
   nnoremap <silent><buffer><expr> <Right> defx#do_action('call', 'DefxSmartL')
