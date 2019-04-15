@@ -143,7 +143,23 @@ call defx#custom#column('filename', {
       \ 'directory_icon': '',
       \ 'opened_icon': '',
       \ })
-autocmd FileType defx call s:defx_init()
+
+let g:_spacevim_autoclose_defx = 1
+augroup vfinit
+  au!
+  autocmd FileType defx call s:defx_init()
+  " auto close last defx windows
+  autocmd BufEnter * nested if
+        \ (!has('vim_starting') && winnr('$') == 1  && g:_spacevim_autoclose_defx
+        \ && &filetype ==# 'defx') |
+        \ call s:close_last_vimfiler_windows() | endif
+augroup END
+
+" in this function, we should check if shell terminal still exists,
+" then close the terminal job before close vimfiler
+function! s:close_last_vimfiler_windows() abort
+  q
+endfunction
 function! s:defx_init()
   setl nonumber
   setl norelativenumber
