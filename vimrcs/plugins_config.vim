@@ -13,7 +13,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('~/.local/share/nvim/plugged/repos/github.com/Shougo/dein.vim')
   " }}}
   call dein#add('junegunn/vim-easy-align')
-  call dein#add('Shougo/defx.nvim', {'on_cmd': 'Defx'})
+  call dein#add('Shougo/defx.nvim')
   call dein#add('kristijanhusak/defx-git')
   call dein#add('chr4/nginx.vim', {'on_ft': 'nginx'})
   call dein#add('groenewege/vim-less', {'on_ft': 'less'})
@@ -122,7 +122,27 @@ snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
 " => Defx -- faster than nerdtree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let s:SYS = SpaceVim#api#import('system')
-map <silent> <C-e> :Defx -columns=git:mark:filename:type -split=vertical -winwidth=30 -direction=topleft -toggle -resume `expand('%:p:h')` -search=`expand('%:p')`<cr>
+map <silent> <C-e> :Defx <cr>
+
+call defx#custom#option('_', {
+      \ 'winwidth': 30,
+      \ 'split': 'vertical',
+      \ 'direction': 'leftabove',
+      \ 'show_ignored_files': 0,
+      \ 'buffer_name': '',
+      \ 'toggle': 1,
+      \ 'resume': 1
+      \ })
+
+call defx#custom#column('mark', {
+      \ 'readonly_icon': '',
+      \ 'selected_icon': '',
+      \ })
+
+call defx#custom#column('filename', {
+      \ 'directory_icon': '',
+      \ 'opened_icon': '',
+      \ })
 autocmd FileType defx call s:defx_init()
 function! s:defx_init()
   setl nonumber
