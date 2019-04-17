@@ -144,13 +144,13 @@ call defx#custom#column('filename', {
       \ 'opened_icon': '',
       \ })
 
-let g:_spacevim_autoclose_defx = 1
+let g:_autoclose_defx = 1
 augroup vfinit
   au!
   autocmd FileType defx call s:defx_init()
   " auto close last defx windows
   autocmd BufEnter * nested if
-        \ (!has('vim_starting') && winnr('$') == 1  && g:_spacevim_autoclose_defx
+        \ (winnr('$') == 1  && g:_autoclose_defx
         \ && &filetype ==# 'defx') |
         \ call s:close_last_vimfiler_windows() | endif
 augroup END
@@ -198,10 +198,10 @@ function! s:defx_init()
         \ defx#do_action('move')
   nnoremap <silent><buffer><expr> P
         \ defx#do_action('paste')
-  nnoremap <silent><buffer><expr> h defx#do_action('call', 'DefxSmartH')
+  nnoremap <silent><buffer><expr> H defx#do_action('call', 'DefxSmartH')
   nnoremap <silent><buffer><expr> U defx#do_action('cd', ['..'])
   nnoremap <silent><buffer><expr> <Left> defx#do_action('call', 'DefxSmartH')
-  nnoremap <silent><buffer><expr> l defx#do_action('call', 'DefxSmartL')
+  nnoremap <silent><buffer><expr> L defx#do_action('call', 'DefxSmartL')
   nnoremap <silent><buffer><expr> <Right> defx#do_action('call', 'DefxSmartL')
   nnoremap <silent><buffer><expr> o defx#do_action('call', 'DefxSmartL')
   nnoremap <silent><buffer><expr> <Cr>

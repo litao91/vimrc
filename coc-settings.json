@@ -2,6 +2,8 @@
   "coc.preferences.diagnostic.warningSign": "--",
   "coc.preferences.jumpCommand": "vsplit",
   "suggest.detailField": "preview",
+  "java.import.maven.enabled": true,
+  "java.import.gradle.enabled": true,
   "yaml.format.enable": true,
   "languageserver": {
     "bash": {
