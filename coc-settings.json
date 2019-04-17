@@ -1,6 +1,7 @@
 {
   "coc.preferences.diagnostic.warningSign": "--",
   "coc.preferences.jumpCommand": "vsplit",
+  "suggest.detailField": "preview",
   "yaml.format.enable": true,
   "languageserver": {
     "bash": {
