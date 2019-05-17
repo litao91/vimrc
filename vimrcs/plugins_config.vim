@@ -31,7 +31,9 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('plasticboy/vim-markdown', {'on_ft': ['markdown', 'md']})
   call dein#add('nelstrom/vim-markdown-folding', {'on_ft': 'markdown'})
   "}}}
-  call dein#add('diepm/vim-rest-console', {'on_ft': ['rest']})
+  " call dein#add('diepm/vim-rest-console')
+  call dein#add('baverman/vial')
+  call dein#add('baverman/vial-http')
   call dein#add('godlygeek/tabular')
   " denite {{{
   call dein#add('Shougo/denite.nvim')
