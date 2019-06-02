@@ -490,7 +490,8 @@ endfunction
 let s:menus = {}
 let s:menus.vim = {'description': 'vim runtime.'}
 let s:menus.vim.command_candidates = [
-      \ ['upgrade: dein:deps', 'call dein#update()']
+      \ ['upgrade: dein:deps', 'call dein#update()'],
+      \ ['dein clean', 'call map(dein#check_clean(), "delete(v:val, ''rf'')")']
       \ ]
 call denite#custom#var('menu', 'menus', s:menus)
 
