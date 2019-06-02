@@ -32,8 +32,9 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('nelstrom/vim-markdown-folding', {'on_ft': 'markdown'})
   "}}}
   " call dein#add('diepm/vim-rest-console')
-  call dein#add('baverman/vial')
-  call dein#add('baverman/vial-http')
+  " call dein#add('baverman/vial')
+  " call dein#add('baverman/vial-http')
+  call dein#add('sharat87/roast.vim')
   call dein#add('godlygeek/tabular')
   " denite {{{
   call dein#add('Shougo/denite.nvim')
@@ -178,8 +179,6 @@ function! s:defx_init()
   silent! nunmap <buffer> -
   silent! nunmap <buffer> s
 
-  " nnoremap <silent><buffer><expr> st  vimfiler#do_action('tabswitch')
-  " nnoremap <silent><buffer> yY  :<C-u>call <SID>copy_to_system_clipboard()<CR>
   nnoremap <silent><buffer><expr> '
         \ defx#do_action('toggle_select') . 'j'
   " TODO: we need an action to clear all selections
@@ -469,31 +468,42 @@ nmap ga <Plug>(EasyAlign)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Denite
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
-call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
-call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
-call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
+" Define mappings
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+  \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr>v       denite#do_map('do_action', 'vsplitswitch')
+  nnoremap <silent><buffer><expr>s       denite#do_map('do_action', 'splitswitch')
+  nnoremap <silent><buffer><expr>t       denite#do_map('do_action', 'tabswitch')
+  nnoremap <silent><buffer><expr> d
+  \ denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><expr> p
+  \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> q
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> i
+  \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> <Space>
+  \ denite#do_map('toggle_select').'j'
+endfunction
+let s:menus = {}
+let s:menus.vim = {'description': 'vim runtime.'}
+let s:menus.vim.command_candidates = [
+      \ ['upgrade: dein:deps', 'call dein#update()']
+      \ ]
+call denite#custom#var('menu', 'menus', s:menus)
+
+" call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
+" call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
+" call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
+" call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
 
 
 
 call denite#custom#option('default', {
     \ 'prompt': '❯'
     \ })
-
-" call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>',
-"     \'noremap')
-" call denite#custom#map('normal', '<Esc>', '<NOP>',
-"     \'noremap')
-call denite#custom#map('insert', '<C-v>', '<denite:do_action:vsplit>',
-    \'noremap')
-call denite#custom#map('normal', '<C-v>', '<denite:do_action:vsplit>',
-    \'noremap')
-call denite#custom#map('insert', '<C-t>', '<denite:do_action:tabswitch>',
-    \'noremap')
-call denite#custom#map('normal', 'dw', '<denite:delete_word_after_caret>',
-    \'noremap')
-call denite#custom#map('normal', 't', '<denite:do_action:tabswitch>',
-    \'noremap')
 
 " denite file search (c-p uses gitignore, c-o looks at everything)
 map <C-P> :DeniteProjectDir -buffer-name=git file/rec<CR>
@@ -507,8 +517,6 @@ map <leader>m :Denite file_mru<cr>
 call denite#custom#var('file/rec', 'command',
 \ ['ag', '--follow', '--nocolor', '--nogroup', "--ignore={'*.pyc,.git,*.class,*zip,*.jar,temp_dirs}", '-g', ''])
 
-" denite content search
-map <leader>a :DeniteProjectDir -buffer-name=grep -default-action=quickfix grep:::!<CR>
 
 call denite#custom#source(
 \ 'grep', 'matchers', ['matcher_regexp'])
@@ -521,6 +529,9 @@ call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#var('grep', 'pattern_opt', [])
 call denite#custom#var('grep', 'separator', ['--'])
 call denite#custom#var('grep', 'final_opts', [])
+
+" denite content search
+map <leader>a :DeniteProjectDir -buffer-name=grep -default-action=quickfix grep:::!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => coc.nvim
