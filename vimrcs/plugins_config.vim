@@ -502,8 +502,7 @@ call denite#custom#option('default', {
     \ })
 
 " denite file search (c-p uses gitignore, c-o looks at everything)
-map <C-P> :DeniteProjectDir -buffer-name=git file/rec<CR>
-map <C-g> :DeniteProjectDir -buffer-name=files file/rec<CR>
+map <C-P> :DeniteProjectDir file/rec<CR>
 map <c-f> :Denite buffer<cr>
 map <leader>m :Denite file_mru<cr>
 
@@ -511,7 +510,7 @@ map <leader>m :Denite file_mru<cr>
 " call denite#custom#var('file_rec', 'command',
 " \ ['ag', '--follow', '--nocolor', '--nogroup', '-u', '-g', ''])
 call denite#custom#var('file/rec', 'command',
-\ ['ag', '--follow', '--nocolor', '--nogroup', "--ignore={'*.pyc,.git,*.class,*zip,*.jar,temp_dirs}", '-g', ''])
+\ ['ag', '--follow', '--nocolor', '--nogroup', "--ignore={*.pyc,.git,*.class,*zip,*.jar,temp_dirs}", '-g', ''])
 
 
 call denite#custom#source(
@@ -520,14 +519,14 @@ call denite#custom#source(
 " use ag for content search
 call denite#custom#var('grep', 'command', ['ag'])
 call denite#custom#var('grep', 'default_opts',
-    \ ['-i', '--vimgrep'])
+    \ ['-i', '--vimgrep', "--ignore={*.pyc,.git,*.class,*zip,*.jar,temp_dirs}"])
 call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#var('grep', 'pattern_opt', [])
 call denite#custom#var('grep', 'separator', ['--'])
 call denite#custom#var('grep', 'final_opts', [])
 
 " denite content search
-map <leader>a :DeniteProjectDir -buffer-name=grep -default-action=quickfix grep:::!<CR>
+map <leader>a :DeniteProjectDir grep:::!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => coc.nvim
