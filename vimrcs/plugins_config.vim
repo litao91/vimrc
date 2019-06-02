@@ -468,6 +468,31 @@ nmap ga <Plug>(EasyAlign)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Denite
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:wildignore
+      \ = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg,
+      \*.ttf,*.TTF,*.png,*/target/*,
+      \.git,.svn,.hg,.DS_Store,*.svg,
+      \*.pyc,.git,*.class,*zip,*.jar,temp_dirs'
+
+fu! Generate_ignore(ignore,tool, ...) abort
+  let ignore = []
+  if a:tool ==# 'ag'
+    for ig in split(a:ignore,',')
+      call add(ignore, '--ignore')
+      call add(ignore, "'" . ig . "'")
+    endfor
+  elseif a:tool ==# 'rg'
+    for ig in split(a:ignore,',')
+      call add(ignore, '-g')
+      if get(a:000, 0, 0) == 1
+        call add(ignore, "'!" . ig . "'")
+      else
+        call add(ignore, '!' . ig)
+      endif
+    endfor
+  endif
+  return ignore
+endf
 " Define mappings
 autocmd FileType denite call s:denite_my_settings()
 function! s:denite_my_settings() abort
@@ -475,7 +500,8 @@ function! s:denite_my_settings() abort
   \ denite#do_map('do_action')
   nnoremap <silent><buffer><expr>v       denite#do_map('do_action', 'vsplitswitch')
   nnoremap <silent><buffer><expr>s       denite#do_map('do_action', 'splitswitch')
-  nnoremap <silent><buffer><expr>t       denite#do_map('do_action', 'tabswitch')
+  "nnoremap <silent><buffer><expr>t       denite#do_map('do_action', 'tabswitch')
+  nnoremap <silent><buffer><expr>t       denite#do_map('do_action', 'tabopen')
   nnoremap <silent><buffer><expr> d
   \ denite#do_map('do_action', 'delete')
   nnoremap <silent><buffer><expr> p
@@ -509,8 +535,18 @@ map <leader>m :Denite file_mru<cr>
 " -u flag to unrestrict (see ag docs)
 " call denite#custom#var('file_rec', 'command',
 " \ ['ag', '--follow', '--nocolor', '--nogroup', '-u', '-g', ''])
+" call denite#custom#var('file/rec', 'command',
+" \ ['ag', '--follow', '--nocolor', '--nogroup', "--ignore={*.pyc,.git,*.class,*zip,*.jar,temp_dirs}", '-g', ''])
+
 call denite#custom#var('file/rec', 'command',
-\ ['ag', '--follow', '--nocolor', '--nogroup', "--ignore={*.pyc,.git,*.class,*zip,*.jar,temp_dirs}", '-g', ''])
+      \ ['ag' , '--nocolor', '--nogroup', '-g', '']
+      \ + Generate_ignore(g:wildignore, 'ag')
+      \ )
+
+
+call denite#custom#alias('source', 'file/rec/git', 'file/rec')
+call denite#custom#var('file/rec/git', 'command',
+      \ ['git', 'ls-files', '-co', '--exclude-standard'])
 
 
 call denite#custom#source(
@@ -518,15 +554,16 @@ call denite#custom#source(
 
 " use ag for content search
 call denite#custom#var('grep', 'command', ['ag'])
-call denite#custom#var('grep', 'default_opts',
-    \ ['-i', '--vimgrep', "--ignore={*.pyc,.git,*.class,*zip,*.jar,temp_dirs}"])
 call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#var('grep', 'pattern_opt', [])
 call denite#custom#var('grep', 'separator', ['--'])
 call denite#custom#var('grep', 'final_opts', [])
+call denite#custom#var('grep', 'default_opts',
+      \ [ '--vimgrep', '--smart-case' ])
 
 " denite content search
-map <leader>a :DeniteProjectDir grep:::!<CR>
+" map <leader>a :DeniteProjectDir -default-action=quickfix grep:::!<CR>
+map <leader>a :DeniteProjectDir -default-action=quickfix grep:::!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => coc.nvim
