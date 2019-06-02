@@ -560,7 +560,7 @@ call denite#custom#var('grep', 'default_opts',
 
 " denite content search
 " map <leader>a :DeniteProjectDir -default-action=quickfix grep:::!<CR>
-map <leader>a :DeniteProjectDir -default-action=quickfix grep:::!<CR>
+map <leader>a :DeniteProjectDir grep:::!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => coc.nvim
