@@ -482,6 +482,8 @@ function! s:denite_my_settings() abort
   \ denite#do_map('do_action', 'preview')
   nnoremap <silent><buffer><expr> q
   \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> ESC
+  \ denite#do_map('quit')
   nnoremap <silent><buffer><expr> i
   \ denite#do_map('open_filter_buffer')
   nnoremap <silent><buffer><expr> <Space>
@@ -494,13 +496,6 @@ let s:menus.vim.command_candidates = [
       \ ['dein clean', 'call map(dein#check_clean(), "delete(v:val, ''rf'')")']
       \ ]
 call denite#custom#var('menu', 'menus', s:menus)
-
-" call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
-" call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
-" call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
-" call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
-
-
 
 call denite#custom#option('default', {
     \ 'prompt': '❯'
