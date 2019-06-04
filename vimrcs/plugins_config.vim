@@ -521,11 +521,12 @@ let s:menus.vim.command_candidates = [
 call denite#custom#var('menu', 'menus', s:menus)
 
 call denite#custom#option('default', {
-    \ 'prompt': '❯'
+    \ 'prompt': '❯',
+    \ 'split': 'floating'
     \ })
 
 " denite file search (c-p uses gitignore, c-o looks at everything)
-map <C-P> :DeniteProjectDir file/rec<CR>
+map <C-P> :DeniteProjectDir file/rec <CR>
 map <c-f> :Denite buffer<cr>
 map <leader>m :Denite file_mru<cr>
 
