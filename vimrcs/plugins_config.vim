@@ -6,6 +6,8 @@ endif
 " Required:
 set runtimepath+=~/.local/share/nvim/plugged/repos/github.com/Shougo/dein.vim
 
+let g:dein#install_process_timeout = 1200
+
 " Required:
 if dein#load_state('~/.local/share/nvim/plugged')
   call dein#begin('~/.local/share/nvim/plugged')
