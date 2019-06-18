@@ -83,36 +83,6 @@ let g:rainbow_active = 1
 let g:semsh#mark_selected_nodes = 0
 let g:semshi#error_sign = v:false
 
-""""""""""""""""""""""""""""""
-" => chromatica
-""""""""""""""""""""""""""""""
-"let g:chromatica#enable_at_startup=1
-"let g:chromatica#libclang_path=$HOME . '/.local/lib/libclang.so'
-
-""""""""""""""""""""""""""""""
-" => bufExplorer plugin
-""""""""""""""""""""""""""""""
-let g:bufExplorerDefaultHelp=0
-let g:bufExplorerShowRelativePath=1
-let g:bufExplorerFindActive=1
-let g:bufExplorerSortBy='name'
-map <leader>o :BufExplorer<cr>
-
-
-
-""""""""""""""""""""""""""""""
-" => YankStack
-""""""""""""""""""""""""""""""
-nmap <c-y> <Plug>yankstack_substitute_older_paste
-nmap <c-Y> <Plug>yankstack_substitute_newer_paste
-
-
-""""""""""""""""""""""""""""""
-" => ZenCoding
-""""""""""""""""""""""""""""""
-" Enable all functions in all modes
-let g:user_zen_mode='a'
-
 
 """"""""""""""""""""""""""""""
 " => snipMate (beside <TAB> support <CTRL-j>)
@@ -404,18 +374,6 @@ let g:pymode_lint_checkers = ['pep8', 'pylint']
 nnoremap <silent> <leader>tt :TagbarToggle<CR>
 " let g:tagbar_vertical = 30
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => YouCompleteMe
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" let g:ycm_python_binary_path = '/usr/bin/python3'
-let g:ycm_global_ycm_extra_conf = '~/.vim_runtime/.ycm_extra_conf.py'
-let g:ycm_filetype_whitelist = {'c': 1, 'cpp':1}
-
-au BufRead,BufNewFile *.g set filetype=antlr3
-au BufRead,BufNewFile *.g4 set filetype=antlr4
-nnoremap <leader>] :YcmCompleter GoTo<cr>
-
-let g:jsx_ext_required = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Markdown
