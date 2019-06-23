@@ -1,53 +1,64 @@
 {
-    "diagnostic.warningSign": "--",
-    "coc.preferences.jumpCommand": "vsplit",
-    "suggest.detailField": "preview",
-    "java.import.maven.enabled": true,
-    "java.import.gradle.enabled": true,
-    "java.format.settings.url": "https://raw.githubusercontent.com/alibaba/p3c/master/p3c-formatter/eclipse-codestyle.xml",
-    "yaml.format.enable": true,
-    "languageserver": {
-        "bash": {
-            "command": "bash-language-server",
-            "args": [
-                "start"
-            ],
-            "filetypes": [
-                "sh"
-            ],
-            "ignoredRootPaths": [
-                "~"
-            ]
-        },
-        "golang": {
-            "command": "go-langserver",
-            "filetypes": [
-                "go"
-            ],
-            "initializationOptions": {
-                "gocodeCompletionEnabled": true,
-                "diagnosticsEnabled": true,
-                "lintTool": "golint"
-            }
-        },
-        "ccls": {
-            "command": "ccls",
-            "filetypes": [
-                "c",
-                "cpp",
-                "objc",
-                "objcpp"
-            ],
-            "rootPatterns": [
-                ".ccls",
-                "compile_commands.json",
-                ".vim/",
-                ".git/",
-                ".hg/"
-            ],
-            "initializationOptions": {
-                "cacheDirectory": "/tmp/ccls"
-            }
-        }
-    }
+	"diagnostic.warningSign": "--",
+	"coc.preferences.jumpCommand": "vsplit",
+	"suggest.detailField": "preview",
+	"java.import.maven.enabled": true,
+	"java.import.gradle.enabled": true,
+	"java.format.settings.url": "https://raw.githubusercontent.com/alibaba/p3c/master/p3c-formatter/eclipse-codestyle.xml",
+	"yaml.format.enable": true,
+	"languageserver": {
+		"bash": {
+			"command": "bash-language-server",
+			"args": [
+				"start"
+			],
+			"filetypes": [
+				"sh"
+			],
+			"ignoredRootPaths": [
+				"~"
+			]
+		},
+		"golang": {
+			"command": "gopls",
+			"args": [],
+			"rootPatterns": [
+				"go.mod",
+				".vim/",
+				".git/",
+				".hg/"
+			],
+			"filetypes": [
+				"go"
+			]
+		},
+		"efm": {
+			"command": "efm-langserver",
+			"args": [],
+			"filetypes": [
+				"vim",
+				"eruby",
+				"markdown"
+			]
+		},
+		"ccls": {
+			"command": "ccls",
+			"filetypes": [
+				"c",
+				"cpp",
+				"objc",
+				"objcpp"
+			],
+			"rootPatterns": [
+				".ccls",
+				"compile_commands.json",
+				".vim/",
+				".git/",
+				".hg/"
+			],
+			"initializationOptions": {
+				"cacheDirectory": "/tmp/ccls"
+			}
+		}
+	}
 }
