@@ -32,15 +32,6 @@
 				"go"
 			]
 		},
-		"efm": {
-			"command": "efm-langserver",
-			"args": [],
-			"filetypes": [
-				"vim",
-				"eruby",
-				"markdown"
-			]
-		},
 		"ccls": {
 			"command": "ccls",
 			"filetypes": [
