@@ -559,7 +559,7 @@ function! s:check_back_space() abort
 endfunction
 
 " Use <c-space> to trigger completion.
-inoremap <silent><c-o> coc#refresh()
+inoremap <silent><expr>  <c-o> coc#refresh()
 
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
