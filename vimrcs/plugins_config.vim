@@ -559,7 +559,7 @@ function! s:check_back_space() abort
 endfunction
 
 " Use <c-space> to trigger completion.
-inoremap <silent><c-o> <leader>p coc#refresh()
+inoremap <silent><c-o> coc#refresh()
 
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
@@ -575,7 +575,6 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
