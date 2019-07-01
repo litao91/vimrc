@@ -43,7 +43,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('easymotion/vim-easymotion')
   call dein#add('ntpeters/vim-better-whitespace')
   call dein#add('sheerun/vim-polyglot')
-  call dein#add('neoclide/coc.nvim', {'build': 'yarn install'})
+  call dein#add('neoclide/coc.nvim', {'build': 'yarn install --frozen-lockfile'})
   " theme {{{
   call dein#add('ayu-theme/ayu-vim')
   call dein#add('drewtempelmeyer/palenight.vim')
