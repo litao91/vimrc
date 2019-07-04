@@ -84,12 +84,6 @@ let g:semsh#mark_selected_nodes = 0
 let g:semshi#error_sign = v:false
 
 
-""""""""""""""""""""""""""""""
-" => snipMate (beside <TAB> support <CTRL-j>)
-""""""""""""""""""""""""""""""
-ino <c-j> <c-r>=snipMate#TriggerSnippet()<cr>
-snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Defx -- faster than nerdtree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -597,7 +591,7 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Use <tab> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-nmap <silent> <TAB> <Plug>(coc-range-select)
+" nmap <silent> <TAB> <Plug>(coc-range-select)
 xmap <silent> <TAB> <Plug>(coc-range-select)
 xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
 
