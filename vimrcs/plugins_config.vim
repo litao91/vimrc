@@ -643,3 +643,7 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" Search files
+nnoremap <silent> <space>f  :<C-u>CocList files<CR>
+" Grep
+nnoremap <silent> <space>g  :<C-u>CocList grep<CR>
