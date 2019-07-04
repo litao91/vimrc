@@ -21,7 +21,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('groenewege/vim-less', {'on_ft': 'less'})
   call dein#add('tpope/vim-surround')
   call dein#add('terryma/vim-expand-region')
-  call dein#add('airblade/vim-gitgutter', {'on_cmd': ['GitGutterToggle']})
+  " call dein#add('airblade/vim-gitgutter', {'on_cmd': ['GitGutterToggle']})
   call dein#add('itchyny/lightline.vim')
   call dein#add('majutsushi/tagbar', {'on_cmd': ['TagbarToggle']})
   call dein#add('Yggdroot/indentLine')
@@ -350,23 +350,6 @@ function! FilenameForLightline()
 endfunction
 
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Git gutter (Git diff)
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:gitgutter_enabled=0
-nnoremap <silent> <leader>d :GitGutterToggle<cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Pymode
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Override go-to.definition key shortcut to Ctrl-]
-let g:pymode_rope_goto_definition_bind = "<C-]>"
-" let g:pymode_rope_complete_on_dot = 1
-" let g:pymode_rope_completion_bind = '<C-;>'
-let g:pymode_rope_completion = 0
-let g:pymode_rope_lookup_project = 0
-let g:pymode_lint_checkers = ['pep8', 'pylint']
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => TagBar
