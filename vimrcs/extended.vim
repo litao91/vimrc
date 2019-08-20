@@ -55,13 +55,13 @@ endif
 
 
 "let ayucolor="light"  " for light version of theme
-"let ayucolor="mirage" " for mirage version of theme
+let ayucolor="mirage" " for mirage version of theme
 "let ayucolor="dark"   " for dark version of theme
-"colorscheme ayu
+colorscheme ayu
 
-let g:onedark_termcolors=256
-colorscheme onedark
-hi Comment cterm=italic
+" let g:onedark_termcolors=256
+" colorscheme onedark
+" hi Comment cterm=italic
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fast editing and reloading of vimrc configs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
