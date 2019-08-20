@@ -58,6 +58,7 @@ endif
 let ayucolor="mirage" " for mirage version of theme
 "let ayucolor="dark"   " for dark version of theme
 colorscheme ayu
+let g:lightline.colorscheme = 'ayu'
 
 " let g:onedark_termcolors=256
 " colorscheme onedark
