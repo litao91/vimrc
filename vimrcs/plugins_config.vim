@@ -314,7 +314,7 @@ au FileType mako vmap Si S"i${ _(<esc>2f"a) }<esc>
 let g:lightline = {
       \ 'active': {
       \   'left': [ ['mode', 'paste'],
-      \             ['readonly', 'filename', 'modified'], ['cocstatus'] ],
+      \             ['readonly', 'filename', 'modified'], ['cocstatus', 'currentfunction', 'readonly', 'modified'] ],
       \   'right': [ [ 'lineinfo' ],
       \              [ 'percent' ],
       \              [ 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
@@ -325,7 +325,8 @@ let g:lightline = {
       \ },
       \ 'component_function': {
       \   'cocstatus': 'coc#status',
-      \   'filename': 'FilenameForLightline'
+      \   'filename': 'FilenameForLightline',
+      \   'currentfunction': 'CocCurrentFunction'
       \ },
       \ 'component_visible_condition': {
       \   'readonly': '(&filetype!="help"&& &readonly)',
