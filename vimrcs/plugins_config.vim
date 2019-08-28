@@ -314,6 +314,15 @@ au FileType mako vmap Si S"i${ _(<esc>2f"a) }<esc>
 function! CocCurrentFunction()
     return get(b:, 'coc_current_function', '')
 endfunction
+
+" Show full path of filename
+function! FilenameForLightline()
+  return &filetype ==# 'vimfiler' ? vimfiler#get_status_string() :
+        \ &filetype ==# 'unite' ? unite#get_status_string() :
+        \ &filetype ==# 'vimshell' ? vimshell#get_status_string() :
+        \ expand('%') !=# '' ? expand('%') : '[No Name]'
+endfunction
+
 let g:lightline = {
       \ 'active': {
       \   'left': [ ['mode', 'paste'],
@@ -338,15 +347,6 @@ let g:lightline = {
       \ 'separator': { 'left': ' ', 'right': ' ' },
       \ 'subseparator': { 'left': ' ', 'right': ' ' }
       \ }
-
-" Show full path of filename
-function! FilenameForLightline()
-  return &filetype ==# 'vimfiler' ? vimfiler#get_status_string() :
-        \ &filetype ==# 'unite' ? unite#get_status_string() :
-        \ &filetype ==# 'vimshell' ? vimshell#get_status_string() :
-        \ expand('%') !=# '' ? expand('%') : '[No Name]'
-endfunction
-
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -609,19 +609,6 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " use `:OR` for organize import of current buffer
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-" Add diagnostic info for https://github.com/itchyny/lightline.vim
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'cocstatus': 'coc#status'
-      \ },
-      \ }
-
 
 
 " Using CocList
