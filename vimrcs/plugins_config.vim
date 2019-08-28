@@ -311,10 +311,13 @@ au FileType mako vmap Si S"i${ _(<esc>2f"a) }<esc>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => lightline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! CocCurrentFunction()
+    return get(b:, 'coc_current_function', '')
+endfunction
 let g:lightline = {
       \ 'active': {
       \   'left': [ ['mode', 'paste'],
-      \             ['readonly', 'filename', 'modified'], ['cocstatus', 'currentfunction', 'readonly', 'modified'] ],
+      \             ['readonly', 'filename', 'modified'], ['cocstatus', 'currentfunction']],
       \   'right': [ [ 'lineinfo' ],
       \              [ 'percent' ],
       \              [ 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
