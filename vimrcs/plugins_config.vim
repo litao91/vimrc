@@ -44,6 +44,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('ntpeters/vim-better-whitespace')
   call dein#add('sheerun/vim-polyglot')
   call dein#add('neoclide/coc.nvim', {'build': 'yarn install --frozen-lockfile'})
+  call dein#add('liuchengxu/vista.vim')
   call dein#add('jackguo380/vim-lsp-cxx-highlight')
   " theme {{{
   call dein#add('ayu-theme/ayu-vim')
@@ -311,8 +312,13 @@ au FileType mako vmap Si S"i${ _(<esc>2f"a) }<esc>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => lightline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:vista_default_executive = 'coc'
 function! CocCurrentFunction()
     return get(b:, 'coc_current_function', '')
+endfunction
+
+function! NearestMethodOrFunction() abort
+  return get(b:, 'vista_nearest_method_or_function', '')
 endfunction
 
 " Show full path of filename
@@ -332,13 +338,14 @@ let g:lightline = {
       \              [ 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
       \ },
       \ 'component': {
+      \   'lineinfo': '%3l:%-2c',
       \   'readonly': '%{&filetype=="help"?"":&readonly?"🔒":""}',
       \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}'
       \ },
       \ 'component_function': {
       \   'cocstatus': 'coc#status',
       \   'filename': 'FilenameForLightline',
-      \   'currentfunction': 'CocCurrentFunction'
+      \   'currentfunction': 'NearestMethodOrFunction'
       \ },
       \ 'component_visible_condition': {
       \   'readonly': '(&filetype!="help"&& &readonly)',
