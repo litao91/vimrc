@@ -316,6 +316,12 @@ function! NearestMethodOrFunction() abort
   return get(b:, 'vista_nearest_method_or_function', '')
 endfunction
 
+function! LightlineGitBlame() abort
+  let blame = get(b:, 'coc_git_blame', '')
+  " return blame
+  return winwidth(0) > 120 ? blame : ''
+endfunction
+
 " Show full path of filename
 function! FilenameForLightline()
   return &filetype ==# 'vimfiler' ? vimfiler#get_status_string() :
@@ -330,7 +336,7 @@ let g:lightline = {
       \             ['readonly', 'filename', 'modified'], ['cocstatus', 'currentfunction']],
       \   'right': [ [ 'lineinfo' ],
       \              [ 'percent' ],
-      \              [ 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
+      \              [ 'fileformat', 'fileencoding', 'filetype', 'charvaluehex'], ['blame'] ]
       \ },
       \ 'component': {
       \   'lineinfo': '%3l:%-2c',
@@ -340,7 +346,8 @@ let g:lightline = {
       \ 'component_function': {
       \   'cocstatus': 'coc#status',
       \   'filename': 'FilenameForLightline',
-      \   'currentfunction': 'NearestMethodOrFunction'
+      \   'currentfunction': 'NearestMethodOrFunction',
+      \   'blame': 'LightlineGitBlame'
       \ },
       \ 'component_visible_condition': {
       \   'readonly': '(&filetype!="help"&& &readonly)',

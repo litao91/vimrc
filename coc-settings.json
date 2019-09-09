@@ -8,6 +8,7 @@
     "java.jdt.ls.vmargs": "-javaagent:/home/litao.91/.vim_runtime/bin/lombok-edge.jar -Xbootclasspath/a:/home/litao.91/.vim_runtime/bin/lombok-edge.jar",
     "java.format.settings.url": "https://raw.githubusercontent.com/alibaba/p3c/master/p3c-formatter/eclipse-codestyle.xml",
     "yaml.format.enable": true,
+    "git.addGlameToBufferVar": true,
     "languageserver": {
         "bash": {
             "command": "bash-language-server",
