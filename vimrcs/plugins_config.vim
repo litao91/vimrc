@@ -472,7 +472,15 @@ call denite#custom#var('menu', 'menus', s:menus)
 
 call denite#custom#option('default', {
     \ 'prompt': '❯',
-    \ 'split': 'floating'
+    \ 'split': 'floating',
+    \ 'winheight' : 15,
+    \ 'mode' : 'insert',
+    \ 'start_filter' : 1,
+    \ 'quit' : 1,
+    \ 'highlight_matched_char' : 'MoreMsg',
+    \ 'highlight_matched_range' : 'MoreMsg',
+    \ 'direction': 'rightbelow',
+    \ 'statusline' : has('patch-7.4.1154') ? v:false : 0,
     \ })
 
 " denite file search (c-p uses gitignore, c-o looks at everything)
@@ -480,17 +488,65 @@ map <C-P> :DeniteProjectDir file/rec <CR>
 map <c-f> :Denite buffer<cr>
 map <leader>m :Denite file_mru<cr>
 
-" -u flag to unrestrict (see ag docs)
-" call denite#custom#var('file_rec', 'command',
-" \ ['ag', '--follow', '--nocolor', '--nogroup', '-u', '-g', ''])
-" call denite#custom#var('file/rec', 'command',
-" \ ['ag', '--follow', '--nocolor', '--nogroup', "--ignore={*.pyc,.git,*.class,*zip,*.jar,temp_dirs}", '-g', ''])
 
-call denite#custom#var('file/rec', 'command',
-      \ ['ag' , '--nocolor', '--nogroup', '-g', '']
-      \ + Generate_ignore(g:wildignore, 'ag')
-      \ )
+call denite#custom#var(
+      \ 'buffer',
+      \ 'date_format', '%m-%d-%Y %H:%M:%S')
 
+if executable('rg')
+  " For ripgrep
+  " Note: It is slower than ag
+  call denite#custom#var('file/rec', 'command',
+        \ ['rg', '--hidden', '--files', '--glob', '!.git', '--glob', '']
+        \ + Generate_ignore(g:wildignore, 'rg')
+        \ )
+elseif executable('ag')
+  " Change file/rec command.
+  call denite#custom#var('file/rec', 'command',
+        \ ['ag' , '--nocolor', '--nogroup', '-g', '']
+        \ + Generate_ignore(g:wildignore, 'ag')
+        \ )
+endif
+
+" FIND and GREP COMMANDS
+if executable('rg')
+  " Ripgrep command on grep source
+  call denite#custom#var('grep', 'command', ['rg'])
+  call denite#custom#var('grep', 'default_opts',
+        \ ['--vimgrep', '--no-heading'])
+  call denite#custom#var('grep', 'recursive_opts', [])
+  call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+  call denite#custom#var('grep', 'separator', ['--'])
+  call denite#custom#var('grep', 'final_opts', [])
+
+elseif  executable('pt')
+  " Pt command on grep source
+  call denite#custom#var('grep', 'command', ['pt'])
+  call denite#custom#var('grep', 'default_opts',
+        \ ['--nogroup', '--nocolor', '--smart-case'])
+  call denite#custom#var('grep', 'recursive_opts', [])
+  call denite#custom#var('grep', 'pattern_opt', [])
+  call denite#custom#var('grep', 'separator', ['--'])
+  call denite#custom#var('grep', 'final_opts', [])
+elseif executable('ag')
+  call denite#custom#var('grep', 'command', ['ag'])
+  call denite#custom#var('grep', 'recursive_opts', [])
+  call denite#custom#var('grep', 'pattern_opt', [])
+  call denite#custom#var('grep', 'separator', ['--'])
+  call denite#custom#var('grep', 'final_opts', [])
+  call denite#custom#var('grep', 'default_opts',
+        \ [ '--vimgrep', '--smart-case' ])
+elseif executable('ack')
+  " Ack command
+  call denite#custom#var('grep', 'command', ['ack'])
+  call denite#custom#var('grep', 'recursive_opts', [])
+  call denite#custom#var('grep', 'pattern_opt', ['--match'])
+  call denite#custom#var('grep', 'separator', ['--'])
+  call denite#custom#var('grep', 'final_opts', [])
+  call denite#custom#var('grep', 'default_opts',
+        \ ['--ackrc', $HOME.'/.config/ackrc', '-H',
+        \ '--nopager', '--nocolor', '--nogroup', '--column'])
+endif
 
 call denite#custom#alias('source', 'file/rec/git', 'file/rec')
 call denite#custom#var('file/rec/git', 'command',
@@ -501,13 +557,13 @@ call denite#custom#source(
 \ 'grep', 'matchers', ['matcher_regexp'])
 
 " use ag for content search
-call denite#custom#var('grep', 'command', ['ag'])
-call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'pattern_opt', [])
-call denite#custom#var('grep', 'separator', ['--'])
-call denite#custom#var('grep', 'final_opts', [])
-call denite#custom#var('grep', 'default_opts',
-      \ [ '--vimgrep', '--smart-case' ])
+" call denite#custom#var('grep', 'command', ['ag'])
+" call denite#custom#var('grep', 'recursive_opts', [])
+" call denite#custom#var('grep', 'pattern_opt', [])
+" call denite#custom#var('grep', 'separator', ['--'])
+" call denite#custom#var('grep', 'final_opts', [])
+" call denite#custom#var('grep', 'default_opts',
+"       \ [ '--vimgrep', '--smart-case' ])
 
 " denite content search
 " map <leader>a :DeniteProjectDir -default-action=quickfix grep:::!<CR>
