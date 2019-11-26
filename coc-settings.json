@@ -6,7 +6,7 @@
     "java.import.maven.enabled": true,
     "java.import.gradle.enabled": true,
     "java.jdt.ls.vmargs": "-javaagent:/home/litao.91/.vim_runtime/bin/lombok-edge.jar -Xbootclasspath/a:/home/litao.91/.vim_runtime/bin/lombok-edge.jar",
-    "java.format.settings.url": "https://raw.githubusercontent.com/alibaba/p3c/master/p3c-formatter/eclipse-codestyle.xml",
+    "java.format.settings.url": "https://raw.githubusercontent.com/litao91/eclipse_formatters/master/druid.xml",
     "yaml.format.enable": true,
     "git.addGBlameToBufferVar": true,
     "languageserver": {
