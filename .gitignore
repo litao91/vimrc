@@ -4,3 +4,4 @@ tags
 .DS_Store
 /sources_non_forked/
 .ccls-cache
+extra_plugins
