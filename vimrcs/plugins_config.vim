@@ -97,7 +97,7 @@ call defx#custom#option('_', {
       \ 'buffer_name': '',
       \ 'toggle': 1,
       \ 'resume': 1,
-      \ 'columns': 'indent:icons:filename:type'
+      \ 'columns': 'indent:icon:filename:type'
       \ })
 
 call defx#custom#column('mark', {
