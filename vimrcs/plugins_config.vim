@@ -17,6 +17,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('junegunn/vim-easy-align')
   call dein#add('Shougo/defx.nvim')
   call dein#add('kristijanhusak/defx-git')
+  call dein#add('kristijanhusak/defx-icons')
   call dein#add('chr4/nginx.vim', {'on_ft': 'nginx'})
   call dein#add('groenewege/vim-less', {'on_ft': 'less'})
   call dein#add('tpope/vim-surround')
@@ -95,7 +96,8 @@ call defx#custom#option('_', {
       \ 'show_ignored_files': 0,
       \ 'buffer_name': '',
       \ 'toggle': 1,
-      \ 'resume': 1
+      \ 'resume': 1,
+      \ 'columns': 'indent:icons:filename:type'
       \ })
 
 call defx#custom#column('mark', {
@@ -292,6 +294,21 @@ hi def link Defx_git_Untracked Tag
 hi def link Defx_git_Ignored Comment
 let g:defx_icons_parent_icon = ""
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Tree
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nnoremap <silent> <Space>z :<C-u>Tree -columns=mark:git:indent:icon:filename:size
+      \ -split=vertical
+      \ -direction=topleft
+      \ -winwidth=40
+      \ -listed
+      \ `expand('%:p:h')`<CR>
+
+autocmd FileType tree call s:set_tree()
+func! s:set_tree() abort
+    nnoremap <silent><buffer><expr> <CR> tree#action('drop')
+endf
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MD Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
