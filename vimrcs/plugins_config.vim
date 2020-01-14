@@ -90,14 +90,14 @@ let s:SYS = SpaceVim#api#import('system')
 map <silent> <C-e> :Defx <cr>
 
 call defx#custom#option('_', {
-      \ 'winwidth': 30,
+      \ 'winwidth': 45,
       \ 'split': 'vertical',
       \ 'direction': 'leftabove',
       \ 'show_ignored_files': 0,
       \ 'buffer_name': '',
       \ 'toggle': 1,
       \ 'resume': 1,
-      \ 'columns': 'indent:icon:filename:type'
+      \ 'columns': 'mark:indent:icon:filename:icons',
       \ })
 
 call defx#custom#column('mark', {
@@ -307,7 +307,10 @@ nnoremap <silent> <Space>z :<C-u>Tree -columns=mark:git:indent:icon:filename:siz
 
 autocmd FileType tree call s:set_tree()
 func! s:set_tree() abort
-    nnoremap <silent><buffer><expr> <CR> tree#action('drop')
+    nnoremap <silent><buffer><expr> <CR> 
+                \ tree#is_directory() ?
+                \ tree#action('open_directory') : tree#action('drop')
+    nnoremap <silent><buffer><expr> o tree#action('open_directory')
 endf
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MD Tree
