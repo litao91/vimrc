@@ -90,7 +90,7 @@ let s:SYS = SpaceVim#api#import('system')
 map <silent> <C-e> :Defx <cr>
 
 call defx#custom#option('_', {
-      \ 'winwidth': 45,
+      \ 'winwidth': 35,
       \ 'split': 'vertical',
       \ 'direction': 'leftabove',
       \ 'show_ignored_files': 0,
