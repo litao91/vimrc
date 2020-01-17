@@ -17,14 +17,11 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('junegunn/vim-easy-align')
   call dein#add('Shougo/defx.nvim')
   call dein#add('kristijanhusak/defx-git')
-  call dein#add('kristijanhusak/defx-icons')
-  call dein#add('chr4/nginx.vim', {'on_ft': 'nginx'})
-  call dein#add('groenewege/vim-less', {'on_ft': 'less'})
   call dein#add('tpope/vim-surround')
   call dein#add('terryma/vim-expand-region')
   " call dein#add('airblade/vim-gitgutter', {'on_cmd': ['GitGutterToggle']})
   call dein#add('itchyny/lightline.vim')
-  call dein#add('majutsushi/tagbar', {'on_cmd': ['TagbarToggle']})
+  " call dein#add('majutsushi/tagbar', {'on_cmd': ['TagbarToggle']})
   call dein#add('Yggdroot/indentLine')
   call dein#add('derekwyatt/vim-scala', {'on_ft': 'scala'})
   call dein#add('dylon/vim-antlr', {'on_ft': ['antlr3', 'antlr4']})
@@ -33,6 +30,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   " markdown {{{{
   call dein#add('plasticboy/vim-markdown', {'on_ft': ['markdown', 'md']})
   call dein#add('nelstrom/vim-markdown-folding', {'on_ft': 'markdown'})
+  call dein#add('vim-voom/VOoM')
   "}}}
   call dein#add('sharat87/roast.vim')
   call dein#add('godlygeek/tabular')
@@ -53,12 +51,12 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('mhartington/oceanic-next')
   call dein#add('joshdick/onedark.vim')
   "}}}
-  " javascript {{{
+  " web {{{
+  " call dein#add('groenewege/vim-less', {'on_ft': 'less'})
   call dein#add('othree/yajs.vim', {'on_ft': ['javascript.jsx', 'javascript']})
   call dein#add('mxw/vim-jsx', {'on_ft': ['javascript', 'javascript.jsx']})
   " }}}
   "
-  call dein#add('vim-voom/VOoM')
   if dein#check_install()
     call dein#install()
     let pluginsExist=1
@@ -90,14 +88,14 @@ let s:SYS = SpaceVim#api#import('system')
 map <silent> <C-e> :Defx <cr>
 
 call defx#custom#option('_', {
-      \ 'winwidth': 35,
+      \ 'winwidth': 30,
       \ 'split': 'vertical',
       \ 'direction': 'leftabove',
       \ 'show_ignored_files': 0,
       \ 'buffer_name': '',
       \ 'toggle': 1,
       \ 'resume': 1,
-      \ 'columns': 'git:indent:icon:filename',
+      \ 'columns': 'indent:icon:filename:type'
       \ })
 
 call defx#custom#column('mark', {
@@ -298,7 +296,7 @@ let g:defx_icons_parent_icon = ""
 " => Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nnoremap <silent> <Space>z :<C-u>Tree -columns=mark:git:indent:icon:filename:size
+nnoremap <silent> <Space>z :<C-u>Tree -columns=mark:git:indent:filename:size
       \ -split=vertical
       \ -direction=topleft
       \ -winwidth=40
@@ -307,10 +305,23 @@ nnoremap <silent> <Space>z :<C-u>Tree -columns=mark:git:indent:icon:filename:siz
 
 autocmd FileType tree call s:set_tree()
 func! s:set_tree() abort
-    nnoremap <silent><buffer><expr> <CR> 
+    nnoremap <silent><buffer><expr> <CR>
                 \ tree#is_directory() ?
-                \ tree#action('open_directory') : tree#action('drop')
-    nnoremap <silent><buffer><expr> o tree#action('open_directory')
+                \ tree#action('open_tree') : tree#action('drop')
+    nnoremap <silent><buffer><expr> H
+                \ tree#action('close_tree')
+    nnoremap <silent><buffer><expr> U tree#action('cd', ['..'])
+    nnoremap <silent><buffer><expr> o tree#action('open_or_close_tree')
+    nnoremap <silent><buffer><expr> sg
+          \ tree#action('drop', 'vsplit')
+    nnoremap <silent><buffer><expr> sv
+          \ tree#action('drop', 'split')
+    nnoremap <silent><buffer><expr> st
+          \ tree#action('drop', 'tabedit')
+    nnoremap <silent><buffer><expr> p
+        \ tree#action('open', 'pedit')
+  nnoremap <silent><buffer><expr> N
+        \ tree#action('new_file')
 endf
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MD Tree
