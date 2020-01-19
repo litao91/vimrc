@@ -85,7 +85,7 @@ let g:semshi#error_sign = v:false
 " => Defx -- faster than nerdtree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let s:SYS = SpaceVim#api#import('system')
-map <silent> <C-e> :Defx <cr>
+map <silent> <Space>z :Defx <cr>
 
 call defx#custom#option('_', {
       \ 'winwidth': 30,
@@ -296,7 +296,7 @@ let g:defx_icons_parent_icon = ""
 " => Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nnoremap <silent> <Space>z :<C-u>Tree -columns=mark:git:indent:filename:size
+nnoremap <silent> <C-e> :<C-u>Tree -columns=mark:git:indent:filename:size
       \ -split=vertical
       \ -direction=topleft
       \ -winwidth=40
@@ -328,6 +328,8 @@ func! s:set_tree() abort
         \ tree#action('toggle_select') . 'j'
   nnoremap <silent><buffer><expr> d
         \ tree#action('remove')
+  nnoremap <silent><buffer><expr> .
+        \ tree#action('toggle_ignored_files')
 endf
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MD Tree
