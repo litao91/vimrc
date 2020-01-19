@@ -85,7 +85,7 @@ let g:semshi#error_sign = v:false
 " => Defx -- faster than nerdtree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let s:SYS = SpaceVim#api#import('system')
-map <silent> <Space>z :Defx <cr>
+map <silent> <C-e> :Defx <cr>
 
 call defx#custom#option('_', {
       \ 'winwidth': 30,
@@ -296,11 +296,12 @@ let g:defx_icons_parent_icon = ""
 " => Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nnoremap <silent> <C-e> :<C-u>Tree -columns=mark:git:indent:filename:size
+nnoremap <silent> <Space>z :Tree -columns=mark:git:indent:filename:size
       \ -split=vertical
       \ -direction=topleft
-      \ -winwidth=40
+      \ -winwidth=30
       \ -listed
+      \ -toggle
       \ `expand('%:p:h')`<CR>
 
 autocmd FileType tree call s:set_tree()
