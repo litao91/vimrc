@@ -95,7 +95,7 @@ call defx#custom#option('_', {
       \ 'buffer_name': '',
       \ 'toggle': 1,
       \ 'resume': 1,
-      \ 'columns': 'indent:icon:filename:type'
+      \ 'columns': 'mark:indent:icon:filename:type'
       \ })
 
 call defx#custom#column('mark', {
@@ -322,6 +322,12 @@ func! s:set_tree() abort
         \ tree#action('open', 'pedit')
   nnoremap <silent><buffer><expr> N
         \ tree#action('new_file')
+  nnoremap <silent><buffer><expr> r
+        \ tree#action('rename')
+  nnoremap <silent><buffer><expr> '
+        \ tree#action('toggle_select') . 'j'
+  nnoremap <silent><buffer><expr> d
+        \ tree#action('remove')
 endf
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MD Tree
