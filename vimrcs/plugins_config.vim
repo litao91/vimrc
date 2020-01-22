@@ -50,6 +50,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('drewtempelmeyer/palenight.vim')
   call dein#add('mhartington/oceanic-next')
   call dein#add('joshdick/onedark.vim')
+  call dein#add('jreybert/vimagit')
   "}}}
   " web {{{
   " call dein#add('groenewege/vim-less', {'on_ft': 'less'})
@@ -256,12 +257,6 @@ function! DefxSmartH(_)
   call defx#call_action('close_tree')
 endfunction
 
-function! DefxYarkPath(_) abort
-  let candidate = defx#get_candidate()
-  let @+ = candidate['action__path']
-  echo 'yarked: ' . @+
-endfunction
-
 function! s:trim_right(str, trim)
   return substitute(a:str, printf('%s$', a:trim), '', 'g')
 endfunction
@@ -295,7 +290,7 @@ let g:defx_icons_parent_icon = ""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <silent> <C-e> :Tree -columns=mark:git:indent:icon:filename:size
+nnoremap <silent> <C-e> :Tree -columns=mark:indent:icon:filename:size
       \ -split=vertical
       \ -direction=topleft
       \ -winwidth=30
@@ -330,6 +325,12 @@ func! s:set_tree() abort
         \ tree#action('remove')
   nnoremap <silent><buffer><expr> .
         \ tree#action('toggle_ignored_files')
+  nnoremap <silent><buffer><expr> yy
+        \ tree#action('yank_path')
+  nnoremap <silent><buffer><expr> C
+        \ tree#action('clear_select_all')
+  nnoremap <silent><buffer><expr> V
+        \ tree#action('toggle_select_all')
 endf
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MD Tree
