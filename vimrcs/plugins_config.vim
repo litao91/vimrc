@@ -290,7 +290,7 @@ let g:defx_icons_parent_icon = ""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <silent> <C-e> :Tree -columns=mark:indent:icon:filename:size
+nnoremap <silent> <C-e> :Tree -columns=mark:indent:git:icon:filename:size
       \ -split=vertical
       \ -direction=topleft
       \ -winwidth=30
@@ -331,6 +331,14 @@ func! s:set_tree() abort
         \ tree#action('clear_select_all')
   nnoremap <silent><buffer><expr> V
         \ tree#action('toggle_select_all')
+  nnoremap <silent><buffer><expr> <C-r>
+        \ tree#action('redraw')
+  nnoremap <silent><buffer><expr> B
+        \ tree#action('resize', 90)
+  nnoremap <silent><buffer><expr> S
+        \ tree#action('resize', 30)
+  nnoremap <silent><buffer><expr> G
+        \ tree#action('update_git_map', 30)
 endf
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MD Tree
