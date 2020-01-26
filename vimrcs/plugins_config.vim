@@ -290,13 +290,18 @@ let g:defx_icons_parent_icon = ""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <silent> <C-e> :Tree -columns=mark:indent:git:icon:filename:size
-      \ -split=vertical
-      \ -direction=topleft
-      \ -winwidth=30
-      \ -listed
-      \ -toggle
-      \ `expand('%:p:h')`<CR>
+nnoremap <silent> <C-e> :Tree <CR>
+
+call tree#custom#option('_', {
+      \ 'winwidth': 30,
+      \ 'split': 'vertical',
+      \ 'direction': 'leftabove',
+      \ 'show_ignored_files': 0,
+      \ 'buffer_name': '',
+      \ 'toggle': 1,
+      \ 'resume': 1,
+      \ 'columns': 'mark:indent:icon:filename'
+      \ })
 
 autocmd FileType tree call s:set_tree()
 func! s:set_tree() abort
