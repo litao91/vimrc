@@ -473,7 +473,7 @@ nmap ga <Plug>(EasyAlign)
 " => vim-clap
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <C-P> :Clap files <CR>
-map <c-f> :Clap buffer <CR>
+map <c-f> :Clap buffers <CR>
 map <leader>a :Clap grep <CR>
 
 
