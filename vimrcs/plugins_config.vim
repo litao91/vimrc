@@ -39,10 +39,11 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('Shougo/neomru.vim')
   call dein#add('chemzqm/denite-git')
   " }}}
+  call dein#add('liuchengxu/vim-clap', { 'build': ':Clap install-binary' })
   call dein#add('easymotion/vim-easymotion')
   call dein#add('ntpeters/vim-better-whitespace')
   call dein#add('sheerun/vim-polyglot')
-  call dein#add('neoclide/coc.nvim', {'build': 'yarn install --frozen-lockfile'})
+  call dein#add('neoclide/coc.nvim', {'merged':0, 'build': 'yarn install --frozen-lockfile'})
   call dein#add('liuchengxu/vista.vim')
   call dein#add('jackguo380/vim-lsp-cxx-highlight')
   " theme {{{
