@@ -46,19 +46,21 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('neoclide/coc.nvim', {'merged':0, 'build': 'yarn install --frozen-lockfile'})
   call dein#add('liuchengxu/vista.vim')
   call dein#add('jackguo380/vim-lsp-cxx-highlight')
+  call dein#add('wellle/targets.vim')
   " theme {{{
   call dein#add('ayu-theme/ayu-vim')
   call dein#add('drewtempelmeyer/palenight.vim')
   call dein#add('mhartington/oceanic-next')
   call dein#add('joshdick/onedark.vim')
-  call dein#add('jreybert/vimagit')
   "}}}
   " web {{{
   " call dein#add('groenewege/vim-less', {'on_ft': 'less'})
+  call dein#add('jreybert/vimagit')
   call dein#add('othree/yajs.vim', {'on_ft': ['javascript.jsx', 'javascript']})
   call dein#add('mxw/vim-jsx', {'on_ft': ['javascript', 'javascript.jsx']})
   " }}}
   "
+  call dein#add('skywind3000/asyncrun.vim')
   if dein#check_install()
     call dein#install()
     let pluginsExist=1
