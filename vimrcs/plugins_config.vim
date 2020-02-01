@@ -468,6 +468,14 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-clap
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <C-P> :Clap files <CR>
+map <c-f> :Clap buffer <CR>
+map <leader>a :Clap grep <CR>
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Denite
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:wildignore
@@ -539,8 +547,9 @@ call denite#custom#option('default', {
     \ })
 
 " denite file search (c-p uses gitignore, c-o looks at everything)
-map <C-P> :DeniteProjectDir file/rec <CR>
-map <c-f> :Denite buffer<cr>
+" Use vim-clap instead
+" map <C-P> :DeniteProjectDir file/rec <CR> 
+"map <c-f> :Denite buffer<cr>
 map <leader>m :Denite file_mru<cr>
 
 
@@ -622,7 +631,7 @@ call denite#custom#source(
 
 " denite content search
 " map <leader>a :DeniteProjectDir -default-action=quickfix grep:::!<CR>
-map <leader>a :DeniteProjectDir grep:::!<CR>
+" map <leader>a :DeniteProjectDir grep:::!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => coc.nvim
