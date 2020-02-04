@@ -39,7 +39,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('Shougo/neomru.vim')
   call dein#add('chemzqm/denite-git')
   " }}}
-  call dein#add('liuchengxu/vim-clap', { 'build': ':Clap install-binary' })
+  call dein#add('liuchengxu/vim-clap')
   call dein#add('easymotion/vim-easymotion')
   call dein#add('ntpeters/vim-better-whitespace')
   call dein#add('sheerun/vim-polyglot')
