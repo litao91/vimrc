@@ -303,7 +303,7 @@ call tree#custom#option('_', {
       \ 'buffer_name': '',
       \ 'toggle': 1,
       \ 'resume': 1,
-      \ 'columns': 'mark:indent:git:icon:filename:size:time'
+      \ 'columns': 'mark:indent:git:icon:space:filename:size:time'
       \ })
 
 autocmd FileType tree call s:set_tree()

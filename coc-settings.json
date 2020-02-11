@@ -2,6 +2,7 @@
     "diagnostic.warningSign": "--",
     "coc.preferences.jumpCommand": "edit",
     "coc.preferences.currentFunctionSymbolAutoUpdate": true,
+    "rust-analyzer.raLspServerPath": "~/.local/bin/ra_lsp_server",
     "suggest.detailField": "preview",
     "java.import.maven.enabled": true,
     "java.import.gradle.enabled": true,
