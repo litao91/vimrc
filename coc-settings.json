@@ -8,6 +8,8 @@
     "java.import.gradle.enabled": true,
     "java.jdt.ls.vmargs": "-javaagent:/home/litao.91/.vim_runtime/bin/lombok-edge.jar -Xbootclasspath/a:/home/litao.91/.vim_runtime/bin/lombok-edge.jar",
     "java.format.settings.url": "https://raw.githubusercontent.com/litao91/eclipse_formatters/master/druid.xml",
+    "python.formatting.provider": "black",
+    "python.jediEnabled": false,
     "yaml.format.enable": true,
     "git.addGBlameToBufferVar": true,
     "languageserver": {
@@ -58,6 +60,18 @@
                 "highlight": {
                     "lsRanges": true
                 }
+            }
+        },
+        "cmake": {
+            "command": "cmake-language-server",
+            "filetypes": [
+                "cmake"
+            ],
+            "rootPatterns": [
+                "build/"
+            ],
+            "initializationOptions": {
+                "buildDirectory": "build"
             }
         }
     },
