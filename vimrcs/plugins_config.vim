@@ -310,7 +310,7 @@ autocmd FileType tree call s:set_tree()
 func! s:set_tree() abort
     nnoremap <silent><buffer><expr> <CR>
                 \ tree#is_directory() ?
-                \ tree#action('open_tree') : tree#action('drop')
+                \ tree#action('open_directory') : tree#action('drop')
     nnoremap <silent><buffer><expr> H
                 \ tree#action('close_tree')
     nnoremap <silent><buffer><expr> U tree#action('cd', ['..'])
@@ -345,7 +345,7 @@ func! s:set_tree() abort
         \ tree#action('resize', 90)
   nnoremap <silent><buffer><expr> S
         \ tree#action('resize', 30)
-  nnoremap <silent><buffer><expr> G
+  nnoremap <silent><buffer><expr> UG
         \ tree#action('update_git_map', 30)
 endf
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
