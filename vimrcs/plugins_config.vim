@@ -472,7 +472,7 @@ nmap ga <Plug>(EasyAlign)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-clap
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <C-P> :Clap files <CR>
+map <C-P> :Clap gfiles <CR>
 map <c-f> :Clap buffers <CR>
 map <leader>a :Clap grep <CR>
 
