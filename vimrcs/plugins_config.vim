@@ -61,6 +61,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   " }}}
   "
   call dein#add('skywind3000/asyncrun.vim')
+  call dein#add('voldikss/vim-floaterm')
   if dein#check_install()
     call dein#install()
     let pluginsExist=1
