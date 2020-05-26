@@ -475,7 +475,7 @@ nmap ga <Plug>(EasyAlign)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <C-P> :Clap files <CR>
 map <c-f> :Clap buffers <CR>
-map <leader>a :Clap grep <CR>
+map <leader>a :Clap grep2 <CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => float term
