@@ -44,6 +44,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('ntpeters/vim-better-whitespace')
   call dein#add('sheerun/vim-polyglot')
   call dein#add('neoclide/coc.nvim', {'merged':0, 'build': 'yarn install --frozen-lockfile'})
+  call dein#add('nvim-treesitter/nvim-treesitter')
   call dein#add('liuchengxu/vista.vim')
   call dein#add('jackguo380/vim-lsp-cxx-highlight')
   call dein#add('wellle/targets.vim')
@@ -769,3 +770,85 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 nnoremap <silent> <space>f  :<C-u>CocList files<CR>
 " Grep
 nnoremap <silent> <space>g  :<C-u>CocList grep<CR>
+
+" Tree-sitter
+" lua <<EOF
+" require'nvim-treesitter.configs'.setup {
+"     highlight = {
+"         enable = true,                    -- false will disable the whole extension
+"         disable = { 'c' },        -- list of language that will be disabled
+"     },
+"     incremental_selection = {
+"         enable = true,
+"         disable = { },
+"         keymaps = {                       -- mappings for incremental selection (visual mappings)
+"           init_selection = 'gnn',         -- maps in normal mode to init the node/scope selection
+"           node_incremental = "grn",       -- increment to the upper named parent
+"           scope_incremental = "grc",      -- increment to the upper scope (as defined in locals.scm)
+"           node_decremental = "grm",       -- decrement to the previous node
+"         }
+"     },
+"     refactor = {
+"       highlight_defintions = {
+"         enable = true
+"       },
+"       smart_rename = {
+"         enable = false,
+"         smart_rename = "grr"              -- mapping to rename reference under cursor
+"       },
+"       navigation = {
+"         enable = false,
+"         goto_definition = "gnd",          -- mapping to go to definition of symbol under cursor
+"         list_definitions = "gnD"          -- mapping to list all definitions in current file
+"       }
+"     },
+"     ensure_installed = 'all' -- one of 'all', 'language', or a list of languages
+" }
+" EOF
+
+lua <<EOF
+function isModuleAvailable(name)
+  if package.loaded[name] then
+    return true
+  else
+    for _, searcher in ipairs(package.searchers or package.loaders) do
+      local loader = searcher(name)
+      if type(loader) == 'function' then
+        package.preload[name] = loader
+        return true
+      end
+    end
+    return false
+  end
+end
+
+if isModuleAvailable('nvim-treesitter.configs') then
+    local treesitter = require'nvim-treesitter.configs'
+
+    -- treesitter setup
+    treesitter.setup {
+      highlight = {
+        enable = true,
+        disable = { 'c', 'python' },
+      },
+      incremental_selection = {
+        enable = true,
+        -- disable = { 'cpp', 'lua' },
+        keymaps = {
+          node_incremental = "grn",
+          scope_incremental = "grc"
+        }
+      },
+      node_movement = {
+        enable = true,
+        keymaps = {
+          move_up = "[N",
+          move_down = "]N",
+          move_left = "[n",
+          move_right = "]n",
+        }
+      },
+      ensure_installed = {'c', 'cpp', 'lua', 'rust'}
+    }
+end
+EOF
