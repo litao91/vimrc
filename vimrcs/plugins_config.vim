@@ -44,7 +44,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('ntpeters/vim-better-whitespace')
   call dein#add('sheerun/vim-polyglot')
   call dein#add('neoclide/coc.nvim', {'merged':0, 'build': 'yarn install --frozen-lockfile'})
-  call dein#add('nvim-treesitter/nvim-treesitter')
+  call dein#add('nvim-treesitter/nvim-treesitter', { 'merged': 0 })
   call dein#add('liuchengxu/vista.vim')
   call dein#add('jackguo380/vim-lsp-cxx-highlight')
   call dein#add('wellle/targets.vim')
@@ -829,7 +829,7 @@ if isModuleAvailable('nvim-treesitter.configs') then
     treesitter.setup {
       highlight = {
         enable = true,
-        disable = { 'c', 'python' },
+        disable = { 'c', 'python', 'cpp' },
       },
       incremental_selection = {
         enable = true,
