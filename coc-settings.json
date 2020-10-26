@@ -4,11 +4,17 @@
     "coc.preferences.currentFunctionSymbolAutoUpdate": true,
     "rust-analyzer.serverPath": "~/.local/bin/ra_lsp_server",
     "suggest.detailField": "preview",
-    "java.import.maven.enabled": true,
-    "java.import.gradle.enabled": true,
-    "java.jdt.ls.vmargs": "-javaagent:/home/litao.91/.vim_runtime/bin/lombok-edge.jar -Xbootclasspath/a:/home/litao.91/.vim_runtime/bin/lombok-edge.jar",
-    "java.format.settings.url": "https://raw.githubusercontent.com/litao91/eclipse_formatters/master/druid.xml",
     "python.formatting.provider": "black",
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-1.8",
+            "path": "/opt/tiger/jdk/jdk1.8"
+        },
+        {
+            "name": "JavaSE-11",
+            "path": "/opt/tiger/jdk/jdk11"
+        }
+    ],
     "python.jediEnabled": false,
     "yaml.format.enable": true,
     "git.addGBlameToBufferVar": true,

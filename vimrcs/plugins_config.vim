@@ -63,6 +63,8 @@ if dein#load_state('~/.local/share/nvim/plugged')
   "
   call dein#add('skywind3000/asyncrun.vim')
   call dein#add('voldikss/vim-floaterm')
+  call dein#add('vim-scripts/cup.vim')
+  call dein#add('wfxr/minimap.vim')
   if dein#check_install()
     call dein#install()
     let pluginsExist=1
@@ -90,7 +92,6 @@ let g:semshi#error_sign = v:false
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Defx -- faster than nerdtree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let s:SYS = SpaceVim#api#import('system')
 map <silent> <Space>z :Defx <cr>
 
 call defx#custom#option('_', {
@@ -250,7 +251,7 @@ function! DefxSmartH(_)
   " parent is root?
   let s:candidate = defx#get_candidate()
   let s:parent = fnamemodify(s:candidate['action__path'], s:candidate['is_directory'] ? ':p:h:h' : ':p:h')
-  let sep = s:SYS.isWindows ? '\\' :  '/'
+  let sep =  '/'
   if s:trim_right(s:parent, sep) == s:trim_right(b:defx.paths[0], sep)
     return defx#call_action('cd', ['..'])
   endif
@@ -829,7 +830,7 @@ if isModuleAvailable('nvim-treesitter.configs') then
     treesitter.setup {
       highlight = {
         enable = true,
-        disable = { 'c', 'python', 'cpp' },
+        disable = { 'c', 'python', 'cpp', 'rust'},
       },
       incremental_selection = {
         enable = true,
