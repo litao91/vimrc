@@ -2,20 +2,11 @@
     "diagnostic.warningSign": "--",
     "coc.preferences.jumpCommand": "edit",
     "coc.preferences.currentFunctionSymbolAutoUpdate": true,
-    "rust-analyzer.serverPath": "~/.local/bin/ra_lsp_server",
+    "rust-analyzer.serverPath": "~/.local/bin/rust-analyzer",
     "suggest.detailField": "preview",
     "python.formatting.provider": "black",
-    "java.configuration.runtimes": [
-        {
-            "name": "JavaSE-1.8",
-            "path": "/opt/tiger/jdk/jdk1.8"
-        },
-        {
-            "name": "JavaSE-11",
-            "path": "/opt/tiger/jdk/jdk11"
-        }
-    ],
     "python.jediEnabled": false,
+    "java.implementationsCodeLens.enabled": true,
     "yaml.format.enable": true,
     "git.addGBlameToBufferVar": true,
     "languageserver": {
@@ -82,5 +73,6 @@
             }
         }
     },
-    "git.enableGutters": true
+    "git.enableGutters": true,
+    "java.format.settings.url": "/Users/zhuanxin/.config/coc/extensions/node_modules/redhat.java/eclipse-formatter.xml"
 }
