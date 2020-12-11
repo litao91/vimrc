@@ -65,6 +65,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('voldikss/vim-floaterm')
   call dein#add('vim-scripts/cup.vim')
   call dein#add('wfxr/minimap.vim')
+  " call dein#add('datwaft/bubbly.nvim')
   if dein#check_install()
     call dein#install()
     let pluginsExist=1
