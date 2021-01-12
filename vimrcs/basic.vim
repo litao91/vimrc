@@ -158,6 +158,7 @@ if has("gui_running")
     set t_Co=256
     set guitablabel=%M\ %t
 endif
+set guifont=PragmataPro:12
 set shell=/bin/bash
 " set termencoding=utf8
 

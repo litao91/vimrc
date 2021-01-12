@@ -479,6 +479,7 @@ nmap ga <Plug>(EasyAlign)
 map <C-P> :Clap files <CR>
 map <c-f> :Clap buffers <CR>
 map <leader>a :Clap grep2 <CR>
+let g:clap_disable_run_rooter = v:true
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => float term
