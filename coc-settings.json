@@ -6,10 +6,17 @@
     "suggest.detailField": "preview",
     "python.formatting.provider": "black",
     "python.jediEnabled": false,
-    "java.implementationsCodeLens.enabled": true,
     "yaml.format.enable": true,
     "git.addGBlameToBufferVar": true,
-    "java.jdt.ls.vmargs": "-Xmx5G",
+    "java": {
+        "jdt.ls.vmargs": "-Xmx5G",
+        "signatureHelp.enabled": false,
+        "implementationsCodeLens.enabled": true,
+        "format": {
+            "comments.enabled": false,
+            "settings.url": "/Users/zhuanxin/.config/coc/extensions/node_modules/redhat.java/eclipse-formatter.xml"
+        },
+    },
     "languageserver": {
         "bash": {
             "command": "bash-language-server",
@@ -72,7 +79,7 @@
                         "-isystem",
                         "/usr/local/Cellar/llvm/11.0.0_1/lib/clang/11.0.0/include",
                         "-isystem",
-                        "/Library/Developer/CommandLineTools/SDKs/MacOSX11.0.sdk/usr/include"
+                        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
                     ]
                 },
             }
@@ -91,5 +98,4 @@
         }
     },
     "git.enableGutters": true,
-    "java.format.settings.url": "/Users/zhuanxin/.config/coc/extensions/node_modules/redhat.java/eclipse-formatter.xml"
 }
