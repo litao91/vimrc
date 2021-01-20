@@ -299,6 +299,7 @@ let g:defx_icons_parent_icon = ""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <silent> <C-e> :Tree <CR>
 
+try
 call tree#custom#option('_', {
       \ 'winwidth': 30,
       \ 'split': 'vertical',
@@ -311,6 +312,7 @@ call tree#custom#option('_', {
       \ })
 
 autocmd FileType tree call s:set_tree()
+
 func! s:set_tree() abort
     nnoremap <silent><buffer><expr> <CR>
                 \ tree#is_directory() ?
@@ -352,6 +354,39 @@ func! s:set_tree() abort
   nnoremap <silent><buffer><expr> UG
         \ tree#action('update_git_map', 30)
 endf
+catch
+lua << EOF
+vim.o.termguicolors = true
+vim.api.nvim_set_keymap('n', '<Space>z', ":<C-u>Tree -columns=mark:indent:git:icon:filename:size:time"..
+      " -split=vertical -direction=topleft -winwidth=40 -listed `expand('%:p:h')`<CR>", {noremap=true, silent=true})
+local custom = require 'tree/custom'
+custom.option('_', {root_marker='[in]:', })
+custom.column('filename', {
+  root_marker_highlight='Ignore',
+  max_width=60,
+})
+custom.column('time', {
+  format="%d-%M-%Y",
+})
+custom.column('mark', {
+  readonly_icon="X",
+  -- selected_icon="*",
+})
+local tree = require('tree')
+-- User interface design
+-- keymap(keys, action1, action2, ...)  action can be `vim action` or `tree action`
+tree.keymap('<CR>', 'drop')
+tree.keymap('H', 'close_tree')
+tree.keymap('U', {'cd', '..'})
+tree.keymap('o', 'open_or_close_tree')
+tree.keymap('sg', {'drop', 'vsplit'})
+tree.keymap('sv', {'drop', 'split'})
+tree.keymap('st', {'drop', 'tabedit'})
+tree.keymap('N', 'new_file')
+tree.keymap('r', 'rename')
+tree.keymap('\'', 'toggle_select', 'j')
+EOF
+endtry
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MD Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
