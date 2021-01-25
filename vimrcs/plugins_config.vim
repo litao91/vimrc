@@ -35,9 +35,9 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('sharat87/roast.vim')
   call dein#add('godlygeek/tabular')
   " denite {{{
-  call dein#add('Shougo/denite.nvim')
-  call dein#add('Shougo/neomru.vim')
-  call dein#add('chemzqm/denite-git')
+  " call dein#add('Shougo/denite.nvim')
+  " call dein#add('Shougo/neomru.vim')
+  " call dein#add('chemzqm/denite-git')
   " }}}
   call dein#add('liuchengxu/vim-clap')
   call dein#add('easymotion/vim-easymotion')
@@ -65,6 +65,9 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('voldikss/vim-floaterm')
   call dein#add('vim-scripts/cup.vim')
   call dein#add('wfxr/minimap.vim')
+  call dein#add('inkarkat/vim-mark')
+  call dein#add('inkarkat/vim-ingo-library')
+
   " call dein#add('datwaft/bubbly.nvim')
   if dein#check_install()
     call dein#install()
@@ -357,10 +360,17 @@ endf
 catch
 lua << EOF
 vim.o.termguicolors = true
-vim.api.nvim_set_keymap('n', '<Space>z', ":<C-u>Tree -columns=mark:indent:git:icon:filename:size:time"..
-      " -split=vertical -direction=topleft -winwidth=40 -listed `expand('%:p:h')`<CR>", {noremap=true, silent=true})
 local custom = require 'tree/custom'
-custom.option('_', {root_marker='[in]:', })
+custom.option('_', {
+  root_marker='[in]:',
+  columns='mark:indent:git:icon:space:filename:size:time',
+  winwidth=30,
+  split='vertical',
+  direction='leftabove',
+  show_ignored_files=0,
+  toggle=true,
+  resume=true
+})
 custom.column('filename', {
   root_marker_highlight='Ignore',
   max_width=60,
@@ -371,6 +381,8 @@ custom.column('time', {
 custom.column('mark', {
   readonly_icon="X",
   -- selected_icon="*",
+})
+custom.option('_', {
 })
 local tree = require('tree')
 -- User interface design
@@ -385,6 +397,16 @@ tree.keymap('st', {'drop', 'tabedit'})
 tree.keymap('N', 'new_file')
 tree.keymap('r', 'rename')
 tree.keymap('\'', 'toggle_select', 'j')
+tree.keymap('.', 'remove')
+tree.keymap('.', 'toggle_ignored_files')
+tree.keymap('yy', 'yank_path')
+tree.keymap('C', 'clear_select_all')
+tree.keymap('V', 'toggle_select_all')
+tree.keymap('<C-r>', 'redraw')
+tree.keymap('B', {'resize', 90})
+tree.keymap('S', {'resize', 30})
+tree.keymap('UG', 'update_git_map')
+tree.keymap('d', 'remove')
 EOF
 endtry
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -599,7 +621,7 @@ call denite#custom#option('default', {
 " Use vim-clap instead
 " map <C-P> :DeniteProjectDir file/rec <CR> 
 "map <c-f> :Denite buffer<cr>
-map <leader>m :Denite file_mru<cr>
+" map <leader>m :Denite file_mru<cr>
 
 
 call denite#custom#var(

@@ -2,21 +2,16 @@
     "diagnostic.warningSign": "--",
     "coc.preferences.jumpCommand": "edit",
     "coc.preferences.currentFunctionSymbolAutoUpdate": true,
-    "rust-analyzer.serverPath": "~/.local/bin/rust-analyzer",
+    "rust-analyzer.server.path": "~/.local/bin/rust-analyzer",
     "suggest.detailField": "preview",
     "python.formatting.provider": "black",
-    "python.jediEnabled": false,
-    "yaml.format.enable": true,
-    "git.addGBlameToBufferVar": true,
-    "java": {
-        "jdt.ls.vmargs": "-Xmx5G",
-        "signatureHelp.enabled": false,
-        "implementationsCodeLens.enabled": true,
-        "format": {
-            "comments.enabled": false,
-            "settings.url": "/Users/zhuanxin/.config/coc/extensions/node_modules/redhat.java/eclipse-formatter.xml"
-        },
-    },
+    "java.jdt.ls.vmargs":"-noverify -Xmx5G -XX:+UseG1GC -XX:+UseStringDeduplication",
+    "java.signatureHelp.enabled": false,
+    "java.implementationsCodeLens.enabled": true,
+    "java.format.settings.url": "/Users/zhuanxin/.config/coc/extensions/node_modules/redhat.java/eclipse-formatter.xml",
+    "java.format.comments.enabled": false,
+    "clangd.semanticHighlighting": true,
+    "clangd.arguments": ["-j=4"],
     "languageserver": {
         "bash": {
             "command": "bash-language-server",
@@ -43,6 +38,7 @@
                 "go"
             ]
         },
+        /*
         "ccls": {
             "command": "ccls",
             "filetypes": [
@@ -84,6 +80,7 @@
                 },
             }
         },
+        */
         "cmake": {
             "command": "cmake-language-server",
             "filetypes": [
