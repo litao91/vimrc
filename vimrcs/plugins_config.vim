@@ -30,7 +30,6 @@ if dein#load_state('~/.local/share/nvim/plugged')
   " markdown {{{{
   call dein#add('plasticboy/vim-markdown', {'on_ft': ['markdown', 'md']})
   call dein#add('nelstrom/vim-markdown-folding', {'on_ft': 'markdown'})
-  call dein#add('vim-voom/VOoM')
   "}}}
   call dein#add('sharat87/roast.vim')
   call dein#add('godlygeek/tabular')
@@ -549,74 +548,74 @@ let g:floaterm_shell='/bin/zsh'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Denite
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:wildignore
-      \ = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg,
-      \*.ttf,*.TTF,*.png,*/target/*,
-      \.git,.svn,.hg,.DS_Store,*.svg,
-      \*.pyc,.git,*.class,*zip,*.jar,temp_dirs'
-
-fu! Generate_ignore(ignore,tool, ...) abort
-  let ignore = []
-  if a:tool ==# 'ag'
-    for ig in split(a:ignore,',')
-      call add(ignore, '--ignore')
-      call add(ignore, "'" . ig . "'")
-    endfor
-  elseif a:tool ==# 'rg'
-    for ig in split(a:ignore,',')
-      call add(ignore, '-g')
-      if get(a:000, 0, 0) == 1
-        call add(ignore, "'!" . ig . "'")
-      else
-        call add(ignore, '!' . ig)
-      endif
-    endfor
-  endif
-  return ignore
-endf
-" Define mappings
-autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-  nnoremap <silent><buffer><expr> <CR>
-  \ denite#do_map('do_action')
-  nnoremap <silent><buffer><expr>v       denite#do_map('do_action', 'vsplitswitch')
-  nnoremap <silent><buffer><expr>s       denite#do_map('do_action', 'splitswitch')
-  "nnoremap <silent><buffer><expr>t       denite#do_map('do_action', 'tabswitch')
-  nnoremap <silent><buffer><expr>t       denite#do_map('do_action', 'tabopen')
-  nnoremap <silent><buffer><expr> d
-  \ denite#do_map('do_action', 'delete')
-  nnoremap <silent><buffer><expr> p
-  \ denite#do_map('do_action', 'preview')
-  nnoremap <silent><buffer><expr> q
-  \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> ESC
-  \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> i
-  \ denite#do_map('open_filter_buffer')
-  nnoremap <silent><buffer><expr> <Space>
-  \ denite#do_map('toggle_select').'j'
-endfunction
-let s:menus = {}
-let s:menus.vim = {'description': 'vim runtime.'}
-let s:menus.vim.command_candidates = [
-      \ ['upgrade: dein:deps', 'call dein#update()'],
-      \ ['dein clean', 'call map(dein#check_clean(), "delete(v:val, ''rf'')")']
-      \ ]
-call denite#custom#var('menu', 'menus', s:menus)
-
-call denite#custom#option('default', {
-    \ 'prompt': '❯',
-    \ 'split': 'floating',
-    \ 'winheight' : 15,
-    \ 'mode' : 'insert',
-    \ 'start_filter' : 1,
-    \ 'quit' : 1,
-    \ 'highlight_matched_char' : 'MoreMsg',
-    \ 'highlight_matched_range' : 'MoreMsg',
-    \ 'direction': 'rightbelow',
-    \ 'statusline' : has('patch-7.4.1154') ? v:false : 0,
-    \ })
-
+" let g:wildignore
+"       \ = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg,
+"       \*.ttf,*.TTF,*.png,*/target/*,
+"       \.git,.svn,.hg,.DS_Store,*.svg,
+"       \*.pyc,.git,*.class,*zip,*.jar,temp_dirs'
+" 
+" fu! Generate_ignore(ignore,tool, ...) abort
+"   let ignore = []
+"   if a:tool ==# 'ag'
+"     for ig in split(a:ignore,',')
+"       call add(ignore, '--ignore')
+"       call add(ignore, "'" . ig . "'")
+"     endfor
+"   elseif a:tool ==# 'rg'
+"     for ig in split(a:ignore,',')
+"       call add(ignore, '-g')
+"       if get(a:000, 0, 0) == 1
+"         call add(ignore, "'!" . ig . "'")
+"       else
+"         call add(ignore, '!' . ig)
+"       endif
+"     endfor
+"   endif
+"   return ignore
+" endf
+" " Define mappings
+" autocmd FileType denite call s:denite_my_settings()
+" function! s:denite_my_settings() abort
+"   nnoremap <silent><buffer><expr> <CR>
+"   \ denite#do_map('do_action')
+"   nnoremap <silent><buffer><expr>v       denite#do_map('do_action', 'vsplitswitch')
+"   nnoremap <silent><buffer><expr>s       denite#do_map('do_action', 'splitswitch')
+"   "nnoremap <silent><buffer><expr>t       denite#do_map('do_action', 'tabswitch')
+"   nnoremap <silent><buffer><expr>t       denite#do_map('do_action', 'tabopen')
+"   nnoremap <silent><buffer><expr> d
+"   \ denite#do_map('do_action', 'delete')
+"   nnoremap <silent><buffer><expr> p
+"   \ denite#do_map('do_action', 'preview')
+"   nnoremap <silent><buffer><expr> q
+"   \ denite#do_map('quit')
+"   nnoremap <silent><buffer><expr> ESC
+"   \ denite#do_map('quit')
+"   nnoremap <silent><buffer><expr> i
+"   \ denite#do_map('open_filter_buffer')
+"   nnoremap <silent><buffer><expr> <Space>
+"   \ denite#do_map('toggle_select').'j'
+" endfunction
+" let s:menus = {}
+" let s:menus.vim = {'description': 'vim runtime.'}
+" let s:menus.vim.command_candidates = [
+"       \ ['upgrade: dein:deps', 'call dein#update()'],
+"       \ ['dein clean', 'call map(dein#check_clean(), "delete(v:val, ''rf'')")']
+"       \ ]
+" call denite#custom#var('menu', 'menus', s:menus)
+" 
+" call denite#custom#option('default', {
+"     \ 'prompt': '❯',
+"     \ 'split': 'floating',
+"     \ 'winheight' : 15,
+"     \ 'mode' : 'insert',
+"     \ 'start_filter' : 1,
+"     \ 'quit' : 1,
+"     \ 'highlight_matched_char' : 'MoreMsg',
+"     \ 'highlight_matched_range' : 'MoreMsg',
+"     \ 'direction': 'rightbelow',
+"     \ 'statusline' : has('patch-7.4.1154') ? v:false : 0,
+"     \ })
+" 
 " denite file search (c-p uses gitignore, c-o looks at everything)
 " Use vim-clap instead
 " map <C-P> :DeniteProjectDir file/rec <CR> 
@@ -624,72 +623,72 @@ call denite#custom#option('default', {
 " map <leader>m :Denite file_mru<cr>
 
 
-call denite#custom#var(
-      \ 'buffer',
-      \ 'date_format', '%m-%d-%Y %H:%M:%S')
-
-if executable('rg')
-  " For ripgrep
-  " Note: It is slower than ag
-  call denite#custom#var('file/rec', 'command',
-        \ ['rg', '--hidden', '--files', '--glob', '!.git', '--glob', '']
-        \ + Generate_ignore(g:wildignore, 'rg')
-        \ )
-elseif executable('ag')
-  " Change file/rec command.
-  call denite#custom#var('file/rec', 'command',
-        \ ['ag' , '--nocolor', '--nogroup', '-g', '']
-        \ + Generate_ignore(g:wildignore, 'ag')
-        \ )
-endif
-
-" FIND and GREP COMMANDS
-if executable('rg')
-  " Ripgrep command on grep source
-  call denite#custom#var('grep', 'command', ['rg'])
-  call denite#custom#var('grep', 'default_opts',
-        \ ['--vimgrep', '--no-heading'])
-  call denite#custom#var('grep', 'recursive_opts', [])
-  call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-  call denite#custom#var('grep', 'separator', ['--'])
-  call denite#custom#var('grep', 'final_opts', [])
-
-elseif  executable('pt')
-  " Pt command on grep source
-  call denite#custom#var('grep', 'command', ['pt'])
-  call denite#custom#var('grep', 'default_opts',
-        \ ['--nogroup', '--nocolor', '--smart-case'])
-  call denite#custom#var('grep', 'recursive_opts', [])
-  call denite#custom#var('grep', 'pattern_opt', [])
-  call denite#custom#var('grep', 'separator', ['--'])
-  call denite#custom#var('grep', 'final_opts', [])
-elseif executable('ag')
-  call denite#custom#var('grep', 'command', ['ag'])
-  call denite#custom#var('grep', 'recursive_opts', [])
-  call denite#custom#var('grep', 'pattern_opt', [])
-  call denite#custom#var('grep', 'separator', ['--'])
-  call denite#custom#var('grep', 'final_opts', [])
-  call denite#custom#var('grep', 'default_opts',
-        \ [ '--vimgrep', '--smart-case' ])
-elseif executable('ack')
-  " Ack command
-  call denite#custom#var('grep', 'command', ['ack'])
-  call denite#custom#var('grep', 'recursive_opts', [])
-  call denite#custom#var('grep', 'pattern_opt', ['--match'])
-  call denite#custom#var('grep', 'separator', ['--'])
-  call denite#custom#var('grep', 'final_opts', [])
-  call denite#custom#var('grep', 'default_opts',
-        \ ['--ackrc', $HOME.'/.config/ackrc', '-H',
-        \ '--nopager', '--nocolor', '--nogroup', '--column'])
-endif
-
-call denite#custom#alias('source', 'file/rec/git', 'file/rec')
-call denite#custom#var('file/rec/git', 'command',
-      \ ['git', 'ls-files', '-co', '--exclude-standard'])
-
-
-call denite#custom#source(
-\ 'grep', 'matchers', ['matcher_regexp'])
+" call denite#custom#var(
+"       \ 'buffer',
+"       \ 'date_format', '%m-%d-%Y %H:%M:%S')
+" 
+" if executable('rg')
+"   " For ripgrep
+"   " Note: It is slower than ag
+"   call denite#custom#var('file/rec', 'command',
+"         \ ['rg', '--hidden', '--files', '--glob', '!.git', '--glob', '']
+"         \ + Generate_ignore(g:wildignore, 'rg')
+"         \ )
+" elseif executable('ag')
+"   " Change file/rec command.
+"   call denite#custom#var('file/rec', 'command',
+"         \ ['ag' , '--nocolor', '--nogroup', '-g', '']
+"         \ + Generate_ignore(g:wildignore, 'ag')
+"         \ )
+" endif
+" 
+" " FIND and GREP COMMANDS
+" if executable('rg')
+"   " Ripgrep command on grep source
+"   call denite#custom#var('grep', 'command', ['rg'])
+"   call denite#custom#var('grep', 'default_opts',
+"         \ ['--vimgrep', '--no-heading'])
+"   call denite#custom#var('grep', 'recursive_opts', [])
+"   call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+"   call denite#custom#var('grep', 'separator', ['--'])
+"   call denite#custom#var('grep', 'final_opts', [])
+" 
+" elseif  executable('pt')
+"   " Pt command on grep source
+"   call denite#custom#var('grep', 'command', ['pt'])
+"   call denite#custom#var('grep', 'default_opts',
+"         \ ['--nogroup', '--nocolor', '--smart-case'])
+"   call denite#custom#var('grep', 'recursive_opts', [])
+"   call denite#custom#var('grep', 'pattern_opt', [])
+"   call denite#custom#var('grep', 'separator', ['--'])
+"   call denite#custom#var('grep', 'final_opts', [])
+" elseif executable('ag')
+"   call denite#custom#var('grep', 'command', ['ag'])
+"   call denite#custom#var('grep', 'recursive_opts', [])
+"   call denite#custom#var('grep', 'pattern_opt', [])
+"   call denite#custom#var('grep', 'separator', ['--'])
+"   call denite#custom#var('grep', 'final_opts', [])
+"   call denite#custom#var('grep', 'default_opts',
+"         \ [ '--vimgrep', '--smart-case' ])
+" elseif executable('ack')
+"   " Ack command
+"   call denite#custom#var('grep', 'command', ['ack'])
+"   call denite#custom#var('grep', 'recursive_opts', [])
+"   call denite#custom#var('grep', 'pattern_opt', ['--match'])
+"   call denite#custom#var('grep', 'separator', ['--'])
+"   call denite#custom#var('grep', 'final_opts', [])
+"   call denite#custom#var('grep', 'default_opts',
+"         \ ['--ackrc', $HOME.'/.config/ackrc', '-H',
+"         \ '--nopager', '--nocolor', '--nogroup', '--column'])
+" endif
+" 
+" call denite#custom#alias('source', 'file/rec/git', 'file/rec')
+" call denite#custom#var('file/rec/git', 'command',
+"       \ ['git', 'ls-files', '-co', '--exclude-standard'])
+" 
+" 
+" call denite#custom#source(
+" \ 'grep', 'matchers', ['matcher_regexp'])
 
 " use ag for content search
 " call denite#custom#var('grep', 'command', ['ag'])
