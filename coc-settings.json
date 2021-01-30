@@ -12,6 +12,7 @@
     "java.format.comments.enabled": false,
     "clangd.semanticHighlighting": true,
     "clangd.arguments": ["-j=4"],
+    "python.pythonPath": "~/miniconda3/bin/python",
     "languageserver": {
         "bash": {
             "command": "bash-language-server",

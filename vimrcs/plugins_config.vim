@@ -40,7 +40,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   " }}}
   call dein#add('liuchengxu/vim-clap')
   call dein#add('easymotion/vim-easymotion')
-  call dein#add('ntpeters/vim-better-whitespace')
+  " call dein#add('ntpeters/vim-better-whitespace')
   call dein#add('sheerun/vim-polyglot')
   call dein#add('neoclide/coc.nvim', {'merged':0, 'build': 'yarn install --frozen-lockfile'})
   call dein#add('nvim-treesitter/nvim-treesitter', { 'merged': 0 })
@@ -386,6 +386,9 @@ custom.option('_', {
 local tree = require('tree')
 -- User interface design
 -- keymap(keys, action1, action2, ...)  action can be `vim action` or `tree action`
+tree.keymap('cp', 'copy')
+tree.keymap('m', 'move')
+tree.keymap('p', 'paste')
 tree.keymap('<CR>', 'drop')
 tree.keymap('H', 'close_tree')
 tree.keymap('U', {'cd', '..'})
