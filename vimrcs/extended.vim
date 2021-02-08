@@ -50,19 +50,23 @@ endif
 "colorscheme palenight
 "let g:lightline.colorscheme = 'palenight'
 
-"colorscheme OceanicNext
-"let g:lightline.colorscheme = 'oceanicnext'
+colorscheme OceanicNext
+let g:lightline.colorscheme = 'oceanicnext'
+
+" colorscheme nord
+" let g:lightline.colorscheme = 'oceanicnext'
 
 
 "let ayucolor="light"  " for light version of theme
-let ayucolor="mirage" " for mirage version of theme
+" let ayucolor="mirage" " for mirage version of theme
 "let ayucolor="dark"   " for dark version of theme
-colorscheme ayu
-let g:lightline.colorscheme = 'ayu'
+" colorscheme ayu
+" let g:lightline.colorscheme = 'ayu'
 
 " let g:onedark_termcolors=256
 " colorscheme onedark
 " hi Comment cterm=italic
+" let g:lightline.colorschema = 'onedark'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fast editing and reloading of vimrc configs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

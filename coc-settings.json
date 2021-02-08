@@ -14,7 +14,7 @@
     "java.completion.maxResults": 5,
     "java.progressReports.enabled": false,
     "clangd.semanticHighlighting": true,
-    "clangd.arguments": ["-j=4"],
+    "clangd.arguments": ["-j=4", "-background-index", "-index"],
     "python.pythonPath": "~/miniconda3/bin/python",
     "languageserver": {
         "bash": {
@@ -42,49 +42,6 @@
                 "go"
             ]
         },
-        /*
-        "ccls": {
-            "command": "ccls",
-            "filetypes": [
-                "c",
-                "cpp",
-                "objc",
-                "objcpp",
-                "cuda"
-            ],
-            "rootPatterns": [
-                ".ccls",
-                "compile_commands.json",
-                ".vim/",
-                ".git/",
-                ".hg/"
-            ],
-            "initializationOptions": {
-                "compilationDatabaseDirectory": "build",
-                "cache": {
-                    "directory": "/Users/zhuanxin/.ccls_cache"
-                },
-                "highlight": {
-                    "lsRanges": true
-                },
-                "clang": {
-                    "resourceDir": "/usr/local/Cellar/llvm/11.0.0_1/lib/clang/11.0.0",
-                    "extraArgs": [
-                        "-std=c++2a",
-                        "-stdlib=libc++",
-                        "-isystem",
-                        "/usr/local/include",
-                        "-isystem",
-                        "/usr/local/Cellar/llvm/11.0.0_1/include/c++/v1",
-                        "-isystem",
-                        "/usr/local/Cellar/llvm/11.0.0_1/lib/clang/11.0.0/include",
-                        "-isystem",
-                        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
-                    ]
-                },
-            }
-        },
-        */
         "cmake": {
             "command": "cmake-language-server",
             "filetypes": [
@@ -98,5 +55,5 @@
             }
         }
     },
-    "git.enableGutters": true,
+    "git.enableGutters": true
 }
