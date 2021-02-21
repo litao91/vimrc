@@ -976,9 +976,9 @@ set foldexpr=nvim_treesitter#foldexpr()
 lua <<EOF
 require'clipboard-image'.setup {
   img_dir = function () return 'media/' .. vim.api.nvim_call_function('expand', {'%:t:r'}) end,
-  img_dir_txt = function () return '/' .. vim.api.nvim_call_function('expand', {'%:t:r'}) end,
+  img_dir_txt = function () return 'media/' .. vim.api.nvim_call_function('expand', {'%:t:r'}) end,
   img_name = function ()
-    return '' ..  require'socket'.gettime()
+    return '' ..  os.time() * 1000
   end,
   prefix = function () return '![](' end,
   suffix = function () return ')' end
