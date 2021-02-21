@@ -44,6 +44,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   " call dein#add('sheerun/vim-polyglot')
   call dein#add('neoclide/coc.nvim', {'merged':0, 'build': 'yarn install --frozen-lockfile'})
   call dein#add('nvim-treesitter/nvim-treesitter', { 'merged': 0 })
+  call dein#add('nvim-treesitter/nvim-treesitter-textobjects')
   call dein#add('liuchengxu/vista.vim')
   call dein#add('jackguo380/vim-lsp-cxx-highlight')
   call dein#add('wellle/targets.vim')
@@ -919,15 +920,40 @@ if isModuleAvailable('nvim-treesitter.configs') then
     treesitter.setup {
       highlight = {
         enable = true,
-        disable = { 'c', 'python', 'cpp', 'rust'},
+        disable = { 'c', 'python', 'cpp'},
       },
       incremental_selection = {
         enable = true,
-        -- disable = { 'cpp', 'lua' },
         keymaps = {
+          init_selection = "gnn",
           node_incremental = "grn",
-          scope_incremental = "grc"
-        }
+          scope_incremental = "grc",
+          node_decremental = "grm",
+        },
+      },
+      indent = {
+        enable = true
+      },
+      textobjects = {
+        move = {
+          enable = true,
+          goto_next_start = {
+            ["]m"] = "@function.outer",
+            ["]]"] = "@class.outer",
+          },
+          goto_next_end = {
+            ["]M"] = "@function.outer",
+            ["]["] = "@class.outer",
+          },
+          goto_previous_start = {
+            ["[m"] = "@function.outer",
+            ["[["] = "@class.outer",
+          },
+          goto_previous_end = {
+            ["[M"] = "@function.outer",
+            ["[]"] = "@class.outer",
+          },
+        },
       },
       node_movement = {
         enable = true,
@@ -942,3 +968,5 @@ if isModuleAvailable('nvim-treesitter.configs') then
     }
 end
 EOF
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
