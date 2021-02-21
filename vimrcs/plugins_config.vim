@@ -970,3 +970,17 @@ end
 EOF
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
+
+" PasteImage
+
+lua <<EOF
+require'clipboard-image'.setup {
+  img_dir = function () return 'media/' .. vim.api.nvim_call_function('expand', {'%:t:r'}) end,
+  img_dir_txt = function () return '/' .. vim.api.nvim_call_function('expand', {'%:t:r'}) end,
+  img_name = function ()
+    return '' ..  require'socket'.gettime()
+  end,
+  prefix = function () return '![](' end,
+  suffix = function () return ')' end
+}
+EOF
