@@ -30,6 +30,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   " markdown {{{{
   call dein#add('plasticboy/vim-markdown', {'on_ft': ['markdown', 'md']})
   call dein#add('nelstrom/vim-markdown-folding', {'on_ft': 'markdown'})
+  call dein#add('litao91/clipboard-image.nvim')
   "}}}
   call dein#add('sharat87/roast.vim')
   call dein#add('godlygeek/tabular')
@@ -975,7 +976,7 @@ set foldexpr=nvim_treesitter#foldexpr()
 
 lua <<EOF
 require'clipboard-image'.setup {
-  img_dir = function () return 'media/' .. vim.api.nvim_call_function('expand', {'%:t:r'}) end,
+  img_dir = function () return 'docs/media/' .. vim.api.nvim_call_function('expand', {'%:t:r'}) end,
   img_dir_txt = function () return 'media/' .. vim.api.nvim_call_function('expand', {'%:t:r'}) end,
   img_name = function ()
     return '' ..  os.time() * 1000
