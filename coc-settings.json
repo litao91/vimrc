@@ -9,7 +9,7 @@
     "java.signatureHelp.enabled": false,
     "java.implementationsCodeLens.enabled": true,
     "java.format.settings.url": "/Users/zhuanxin/.config/coc/extensions/node_modules/redhat.java/eclipse-formatter.xml",
-    "java.format.comments.enabled": false,
+    "java.format.comments.enabled": true,
     "java.completion.importOrder": ["com", "org", "javax", "java"],
     "java.completion.maxResults": 5,
     "java.progressReports.enabled": false,
@@ -55,5 +55,10 @@
             }
         }
     },
-    "git.enableGutters": true
+    "git.enableGutters": true,
+    "cSpell.userWords": [
+      "Deque",
+      "rvalue",
+      "struct"
+    ]
 }
