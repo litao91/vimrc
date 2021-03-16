@@ -11,11 +11,13 @@
     "java.format.settings.url": "/Users/zhuanxin/.config/coc/extensions/node_modules/redhat.java/eclipse-formatter.xml",
     "java.format.comments.enabled": true,
     "java.completion.importOrder": ["com", "org", "javax", "java"],
-    "java.completion.maxResults": 5,
-    "java.progressReports.enabled": false,
+    "java.completion.maxResults": 15,
+    "java.progressReports.enabled": true,
     "clangd.semanticHighlighting": true,
     "clangd.arguments": ["-j=4", "-background-index", "-index"],
-    "python.pythonPath": "~/miniconda3/bin/python",
+    "python.pythonPath": "/Users/zhuanxin/miniconda3/bin/python",
+    "python.venvPath": "/Users/zhuanxin/miniconda3/envs",
+    "python.venv": "py38",
     "languageserver": {
         "bash": {
             "command": "bash-language-server",
@@ -56,8 +58,13 @@
         }
     },
     "git.enableGutters": true,
+    "git.addGBlameToBufferVar": true,
     "cSpell.userWords": [
       "Deque",
+      "Nontype",
+      "decltype",
+      "lvalue",
+      "nullptr",
       "rvalue",
       "struct"
     ]

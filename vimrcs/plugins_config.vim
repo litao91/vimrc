@@ -40,12 +40,15 @@ if dein#load_state('~/.local/share/nvim/plugged')
   " call dein#add('chemzqm/denite-git')
   " }}}
   call dein#add('liuchengxu/vim-clap')
-  call dein#add('easymotion/vim-easymotion')
+  " call dein#add('easymotion/vim-easymotion')
+  call dein#add('phaazon/hop.nvim')
   " call dein#add('ntpeters/vim-better-whitespace')
   " call dein#add('sheerun/vim-polyglot')
   call dein#add('neoclide/coc.nvim', {'merged':0, 'build': 'yarn install --frozen-lockfile'})
   call dein#add('nvim-treesitter/nvim-treesitter', { 'merged': 0 })
   call dein#add('nvim-treesitter/nvim-treesitter-textobjects')
+  call dein#add('p00f/nvim-ts-rainbow')
+
   call dein#add('liuchengxu/vista.vim')
   call dein#add('jackguo380/vim-lsp-cxx-highlight')
   call dein#add('wellle/targets.vim')
@@ -58,7 +61,7 @@ if dein#load_state('~/.local/share/nvim/plugged')
   "}}}
   " web {{{
   " call dein#add('groenewege/vim-less', {'on_ft': 'less'})
-  call dein#add('jreybert/vimagit')
+  call dein#add('TimUntersberger/neogit')
   call dein#add('othree/yajs.vim', {'on_ft': ['javascript.jsx', 'javascript']})
   call dein#add('mxw/vim-jsx', {'on_ft': ['javascript', 'javascript.jsx']})
   " }}}
@@ -69,6 +72,10 @@ if dein#load_state('~/.local/share/nvim/plugged')
   call dein#add('wfxr/minimap.vim')
   call dein#add('inkarkat/vim-mark')
   call dein#add('inkarkat/vim-ingo-library')
+  call dein#add('unblevable/quick-scope')
+  call dein#add('psliwka/vim-smoothie')
+  call dein#add('tpope/vim-sleuth')
+
 
   " call dein#add('datwaft/bubbly.nvim')
   if dein#check_install()
@@ -814,10 +821,10 @@ omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 
-nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-nnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+" nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+" nnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+" inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+" inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
 " Remap <C-f> and <C-b> for scroll float windows/popups.
 " nnoremap <silent><nowait><expr> <C-k> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-k>"
 " nnoremap <silent><nowait><expr> <C-j> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-j>"
@@ -937,7 +944,7 @@ if isModuleAvailable('nvim-treesitter.configs') then
         },
       },
       indent = {
-        enable = true
+        enable = false
       },
       textobjects = {
         move = {
@@ -989,3 +996,14 @@ require'clipboard-image'.setup {
   suffix = function () return ')' end
 }
 EOF
+
+" quick scope
+
+" Trigger a highlight in the appropriate direction when pressing these keys:
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+" hop
+nnoremap <silent> <leader><leader>w :HopWord<CR>
+nnoremap <silent> <leader><leader>f :HopChar1<CR>
+nnoremap <silent> <leader><leader>t :HopChar2<CR>
+nnoremap <silent> <leader><leader>l :HopLine<CR>
